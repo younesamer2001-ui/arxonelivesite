@@ -60,7 +60,7 @@ export default function CommandCenter({ lang = 'no' }: CommandCenterProps) {
   const chartData = [35, 55, 45, 70, 60, 85, 75, 90, 80, 95, 85, 100];
 
   return (
-    <section className="relative py-24 px-6 bg-black">
+    <section className="relative py-12 md:py-24 px-6 bg-black">
       <div className="max-w-6xl mx-auto">
         {/* Main Card */}
         <motion.div
@@ -71,7 +71,7 @@ export default function CommandCenter({ lang = 'no' }: CommandCenterProps) {
           className="rounded-3xl bg-gradient-to-br from-zinc-900 to-black border border-zinc-800 overflow-hidden"
         >
           {/* Header */}
-          <div className="p-6 border-b border-zinc-800 flex items-center justify-between">
+          <div className="p-4 md:p-6 border-b border-zinc-800 flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center">
                 <div className="w-5 h-5 rounded-full bg-emerald-400" />
@@ -95,13 +95,13 @@ export default function CommandCenter({ lang = 'no' }: CommandCenterProps) {
           </div>
 
           {/* Main Content */}
-          <div className="p-6 grid md:grid-cols-3 gap-6">
+          <div className="p-4 md:p-6 grid md:grid-cols-3 gap-4 md:gap-6">
             {/* Left - Main Stats */}
             <div className="md:col-span-2 space-y-6">
               {/* Big Number */}
               <div className="flex items-end gap-4">
                 <div>
-                  <div className="text-7xl font-bold text-white">147</div>
+                  <div className="text-4xl md:text-6xl lg:text-7xl font-bold text-white">147</div>
                   <div className="text-sm text-zinc-400 mt-1">{t.callsToday}</div>
                 </div>
                 <div className="flex items-center gap-1 text-emerald-400 text-sm mb-2">

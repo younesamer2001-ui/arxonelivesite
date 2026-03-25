@@ -48,7 +48,7 @@ export default function Contact({ lang = 'no' }: ContactProps) {
   const t = content[lang]
   
   return (
-    <section className="relative py-32 px-6 bg-black">
+    <section className="relative py-16 md:py-32 px-6 bg-black">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -57,7 +57,7 @@ export default function Contact({ lang = 'no' }: ContactProps) {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">{t.title}</h2>
+          <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-4">{t.title}</h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
             {t.subtitle}
           </p>
@@ -100,9 +100,9 @@ export default function Contact({ lang = 'no' }: ContactProps) {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="p-8 rounded-2xl bg-white/5 border border-white/10"
+            className="p-4 md:p-8 rounded-2xl bg-white/5 border border-white/10"
           >
-            <h3 className="text-xl font-semibold mb-6">{t.formTitle}</h3>
+            <h3 className="text-lg md:text-xl font-semibold mb-6">{t.formTitle}</h3>
             
             <form className="space-y-4">
               <div>

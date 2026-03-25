@@ -134,7 +134,7 @@ export default function Pricing({ lang = 'no' }: PricingProps) {
           transition={{ duration: 0.6 }}
           className="mx-auto max-w-2xl space-y-6 text-center mb-16"
         >
-          <h1 className="text-center text-4xl font-semibold lg:text-5xl text-white">{t.title}</h1>
+          <h1 className="text-center text-2xl md:text-4xl font-semibold lg:text-5xl text-white">{t.title}</h1>
           <p className="text-gray-400">{t.subtitle}</p>
         </motion.div>
 
@@ -147,7 +147,7 @@ export default function Pricing({ lang = 'no' }: PricingProps) {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Card className={`flex flex-col bg-white/5 border-white/10 rounded-3xl transition-all duration-300 hover:bg-white/10 hover:scale-[1.02] hover:shadow-2xl hover:shadow-white/10 ${plan.popular ? 'relative' : ''}`}>
+              <Card className={`flex flex-col bg-white/5 border-white/10 rounded-2xl md:rounded-3xl transition-all duration-300 hover:bg-white/10 hover:scale-[1.02] hover:shadow-2xl hover:shadow-white/10 ${plan.popular ? 'relative' : ''}`}>
                 {plan.popular && (
                   <span className="absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full bg-blue-500 px-3 py-1 text-xs font-medium text-white">
                     Mest populær

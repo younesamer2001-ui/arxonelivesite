@@ -25,12 +25,12 @@ function Reveal({ children, className = '', delay = 0 }: {
 function StatStrip({ stats }: { stats: { value: string; label: string }[] }) {
   return (
     <Reveal>
-      <div className="relative -mx-6 md:-mx-16 my-16 py-14 px-6 md:px-16
+      <div className="relative -mx-6 md:-mx-16 my-8 md:my-16 py-10 md:py-14 px-6 md:px-16
         bg-[#080810] border-y border-white/[0.04]">
         <div className="max-w-[660px] mx-auto grid grid-cols-3 gap-6">
           {stats.map((s) => (
             <div key={s.label} className="text-center">
-              <div className="text-2xl md:text-[2.75rem] font-light tracking-tight text-white leading-none">
+              <div className="text-xl md:text-[2.75rem] font-light tracking-tight text-white leading-none">
                 {s.value}
               </div>
               <div className="mt-3 text-[11px] text-white/30 tracking-wide uppercase leading-relaxed">

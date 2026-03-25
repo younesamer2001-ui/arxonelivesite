@@ -97,7 +97,7 @@ export default function Dashboard({ lang = 'no' }: DashboardProps) {
   ];
 
   return (
-    <section className="relative py-24 px-6 bg-black">
+    <section className="relative py-12 md:py-24 px-6 bg-black">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div

@@ -89,7 +89,7 @@ export default function Hero({ lang = 'no' }: HeroProps) {
                 delay: 0.3 + (i * 0.2),
                 ease: "easeOut"
               }}
-              className="inline-block whitespace-nowrap text-4xl md:text-6xl lg:text-7xl font-black"
+              className="inline-block whitespace-nowrap text-2xl md:text-4xl lg:text-6xl font-black"
               style={{
                 fontFamily: '"SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
                 opacity: 1 - (i * 0.15),
@@ -115,7 +115,7 @@ export default function Hero({ lang = 'no' }: HeroProps) {
         {/* Integrations - Circular scrolling marquee */}
         <motion.div variants={itemVariants} className="flex flex-col items-center gap-4 mb-12 w-full overflow-hidden">
           <span className="text-gray-500 text-sm">{t.badgesLabel}</span>
-          <div className="relative w-64 mx-auto overflow-hidden">
+          <div className="relative w-full md:w-64 mx-auto overflow-hidden">
             <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none"></div>
             <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none"></div>
             
@@ -180,7 +180,7 @@ export default function Hero({ lang = 'no' }: HeroProps) {
         </motion.div>
 
         {/* Buttons with Liquid Metal effect */}
-        <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-6 items-center">
+        <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 md:gap-6 items-center">
           <LiquidMetalButton 
             label={t.cta1} 
             onClick={() => window.location.href = '#kontakt'}

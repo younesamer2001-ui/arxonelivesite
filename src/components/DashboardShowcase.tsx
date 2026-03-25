@@ -24,7 +24,7 @@ export default function DashboardShowcase({ lang = 'no' }: DashboardShowcaseProp
   const imageSrc = lang === 'no' ? '/images/dashboard-no.jpg' : '/images/dashboard-en.jpg';
 
   return (
-    <section className="relative py-24 px-6 bg-black">
+    <section className="relative py-12 md:py-24 px-6 bg-black">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <motion.div
@@ -37,7 +37,7 @@ export default function DashboardShowcase({ lang = 'no' }: DashboardShowcaseProp
           <span className="text-sm font-semibold tracking-wider text-gray-500 mb-4 block">
             {t.eyebrow}
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-white">
             {t.title}
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">

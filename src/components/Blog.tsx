@@ -15,7 +15,7 @@ const fade = {
 
 export default function Blog() {
   return (
-    <div className="max-w-4xl mx-auto px-6 pt-20 pb-24 md:pt-28 md:pb-32">
+    <div className="max-w-4xl mx-auto px-6 pt-12 md:pt-20 pb-24 md:pb-32">
 
       <motion.div initial="hidden" animate="visible" variants={fade} custom={0} className="mb-16">
         <h1 className="text-3xl md:text-5xl font-semibold text-white tracking-tight mb-4">

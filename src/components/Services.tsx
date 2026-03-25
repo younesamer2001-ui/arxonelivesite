@@ -116,7 +116,7 @@ export default function Services({ lang = 'no' }: ServicesProps) {
   const receptionists = aiReceptionists[lang];
 
   return (
-    <section id="tjenester" className="relative py-32 px-6 bg-black">
+    <section id="tjenester" className="relative py-16 md:py-32 px-6 bg-black">
       <div className="max-w-7xl mx-auto">
         <VoiceTestimonial 
           mode="dark" 

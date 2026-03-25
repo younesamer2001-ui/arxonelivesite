@@ -45,27 +45,27 @@ export default function HomePage() {
         <Hero lang={currentLang} />
       </section>
       
-      <SectionWrapper className="py-20 md:py-28">
+      <SectionWrapper className="py-12 md:py-28">
         <section id="ai-resepsjonister">
           <Services lang={currentLang} />
         </section>
       </SectionWrapper>
 
-      <SectionWrapper className="py-20 md:py-28" delay={0.1}>
+      <SectionWrapper className="py-12 md:py-28" delay={0.1}>
         <WorkflowExplainer lang={currentLang} />
       </SectionWrapper>
 
-      <SectionWrapper className="py-20 md:py-28" delay={0.1}>
+      <SectionWrapper className="py-12 md:py-28" delay={0.1}>
         <DashboardShowcase lang={currentLang} />
       </SectionWrapper>
       
-      <SectionWrapper className="py-20 md:py-28" delay={0.1}>
+      <SectionWrapper className="py-12 md:py-28" delay={0.1}>
         <section id="prosess">
           <Process />
         </section>
       </SectionWrapper>
       
-      <SectionWrapper className="py-20 md:py-28" delay={0.1}>
+      <SectionWrapper className="py-12 md:py-28" delay={0.1}>
         <section id="priser">
           <Pricing lang={currentLang} />
         </section>
