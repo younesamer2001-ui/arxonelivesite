@@ -4,10 +4,11 @@ import { motion, useInView, Variants } from 'framer-motion';
 import { useRef, ReactNode } from 'react';
 
 interface TimelineContentProps {
+  [key: string]: unknown;
   children: ReactNode;
-  as?: keyof JSX.IntrinsicElements;
+  as?: React.ElementType;
   animationNum?: number;
-  timelineRef?: React.RefObject<HTMLElement>;
+  timelineRef?: React.RefObject<HTMLElement | null>;
   customVariants?: Variants;
   className?: string;
 }

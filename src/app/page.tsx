@@ -61,7 +61,7 @@ export default function HomePage() {
       
       <SectionWrapper className="py-20 md:py-28" delay={0.1}>
         <section id="prosess">
-          <Process lang={currentLang} />
+          <Process />
         </section>
       </SectionWrapper>
       
