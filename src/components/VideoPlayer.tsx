@@ -1,0 +1,64 @@
+'use client'
+
+import { useEffect, useRef, memo } from 'react'
+import Hls from 'hls.js'
+
+interface VideoPlayerProps {
+  src: string
+  className?: string
+}
+
+const VideoPlayer = memo(function VideoPlayer({ src, className = '' }: VideoPlayerProps) {
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const hlsRef = useRef<Hls | null>(null)
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    // Check if HLS is supported
+    if (Hls.isSupported()) {
+      const hls = new Hls({
+        autoStartLoad: true,
+        debug: false,
+      })
+      
+      hls.loadSource(src)
+      hls.attachMedia(video)
+      
+      hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        video.play().catch(() => {
+          // Autoplay blocked, user interaction needed
+        })
+      })
+      
+      hlsRef.current = hls
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      // Native HLS support (Safari)
+      video.src = src
+      video.play().catch(() => {
+        // Autoplay blocked
+      })
+    }
+
+    return () => {
+      if (hlsRef.current) {
+        hlsRef.current.destroy()
+        hlsRef.current = null
+      }
+    }
+  }, [src])
+
+  return (
+    <video
+      ref={videoRef}
+      className={`w-full h-full object-cover ${className}`}
+      autoPlay
+      muted
+      loop
+      playsInline
+    />
+  )
+})
+
+export default VideoPlayer
