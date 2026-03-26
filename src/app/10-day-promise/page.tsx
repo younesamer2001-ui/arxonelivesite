@@ -23,19 +23,19 @@ const content = {
     },
     steps: [
       {
-        icon: Clock,
+        icon: 'clock',
         day: 'Dag 1-2',
         title: 'Avklaring',
         description: '30-minutters samtale om dine behov. Vi setter opp kalender og CRM-integrasjon.',
       },
       {
-        icon: Rocket,
+        icon: 'rocket',
         day: 'Dag 3-10',
         title: 'Oppsett',
         description: 'Vi bygger og trener din AI-resepsjonist. Du får teste underveis.',
       },
       {
-        icon: Check,
+        icon: 'check',
         day: 'Dag 11-30',
         title: 'Testing',
         description: '30 dager med justeringer og support. Ser du ikke verdi? Betal ingenting.',
@@ -148,16 +148,19 @@ export default function TenDayPromisePage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold mb-12 text-center">Slik fungerer det</h2>
           <div className="grid md:grid-cols-3 gap-8">
-            {t.steps.map((step, i) => (
-              <div key={i} className="p-6 rounded-2xl bg-white/5 border border-white/10">
-                <div className="text-emerald-400 text-sm font-medium mb-2">{step.day}</div>
-                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mb-4">
-                  <step.icon className="w-5 h-5 text-white" />
+            {t.steps.map((step, i) => {
+              const IconComponent = step.icon === 'clock' ? Clock : step.icon === 'rocket' ? Rocket : Check;
+              return (
+                <div key={i} className="p-6 rounded-2xl bg-white/5 border border-white/10">
+                  <div className="text-emerald-400 text-sm font-medium mb-2">{step.day}</div>
+                  <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mb-4">
+                    <IconComponent className="w-5 h-5 text-white" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
+                  <p className="text-gray-400 text-sm">{step.description}</p>
                 </div>
-                <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-                <p className="text-gray-400 text-sm">{step.description}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
