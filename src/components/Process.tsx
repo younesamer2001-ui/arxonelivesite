@@ -70,7 +70,7 @@ export default function Process() {
               >
                 risikofri måte
               </TimelineContent>{" "}
-              å teste det på — 10 dager, eller du betaler ingenting.
+              å teste det på — 50% depositum, resten etter 20 dager. Ikke fornøyd? Full refusjon.
             </TimelineContent>
 
             <TimelineContent
@@ -82,10 +82,10 @@ export default function Process() {
             >
               <a
                 href="/10-day-promise"
-                className="bg-blue-600 gap-2 font-medium shadow-lg shadow-blue-600 text-white h-12 px-6 rounded-full text-sm inline-flex items-center cursor-pointer hover:bg-blue-700 transition-colors"
+                className="bg-emerald-600 gap-2 font-medium shadow-lg shadow-emerald-600/50 text-white h-12 px-6 rounded-full text-sm inline-flex items-center cursor-pointer hover:bg-emerald-700 transition-colors"
               >
                 <Zap fill="white" size={16} />
-                10-Day Promise
+                Se hvordan det fungerer
               </a>
             </TimelineContent>
           </div>
