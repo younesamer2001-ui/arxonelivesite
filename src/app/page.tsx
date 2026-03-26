@@ -137,6 +137,18 @@ export default function HomePage() {
                 />
               </div>
               <div className="space-y-2">
+                <Label htmlFor="phone" className="text-white">
+                  {currentLang === 'no' ? 'Telefon (valgfritt)' : 'Phone (optional)'}
+                </Label>
+                <Input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  placeholder={currentLang === 'no' ? '+47 000 00 000' : '+1 000 000 0000'}
+                  className="bg-white/5 border-white/10 text-white placeholder:text-gray-500"
+                />
+              </div>
+              <div className="space-y-2">
                 <Label htmlFor="message" className="text-white">
                   {currentLang === 'no' ? 'Melding' : 'Message'}
                 </Label>
