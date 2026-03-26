@@ -71,8 +71,34 @@ export function NavBar({ items, currentLang, onLangChange, className }: NavBarPr
               })}
             </div>
           </div>
-          {/* desktop CTA — hidden on mobile */}
+          {/* desktop CTA + Lang switcher — hidden on mobile */}
           <div className="hidden md:flex items-center gap-3">
+            {/* Language switcher */}
+            <div className="flex items-center gap-1 bg-white/5 border border-white/10 rounded-full p-1">
+              <button
+                onClick={() => onLangChange('no')}
+                className={cn(
+                  "px-3 py-1.5 rounded-full text-xs font-medium transition-all",
+                  currentLang === 'no' 
+                    ? 'bg-white/20 text-white' 
+                    : 'text-white/50 hover:text-white/80'
+                )}
+              >
+                NO
+              </button>
+              <button
+                onClick={() => onLangChange('en')}
+                className={cn(
+                  "px-3 py-1.5 rounded-full text-xs font-medium transition-all",
+                  currentLang === 'en' 
+                    ? 'bg-white/20 text-white' 
+                    : 'text-white/50 hover:text-white/80'
+                )}
+              >
+                EN
+              </button>
+            </div>
+            
             <Link href="/#kontakt"
               className="px-5 py-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white rounded-full text-sm font-semibold transition-all">
               Book konsultasjon
