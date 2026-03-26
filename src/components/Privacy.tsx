@@ -24,7 +24,7 @@ export default function Privacy() {
       {[
         {
           title: '1. Behandlingsansvarlig',
-          text: 'Arxon, organisasjonsnummer under registrering, ved Younes Amer, er behandlingsansvarlig for personopplysninger som samles inn via arxon.no og våre tjenester. Kontakt: younes@arxon.no.',
+          text: 'Arxon, organisasjonsnummer under registrering, ved Younes Amer, er behandlingsansvarlig for personopplysninger som samles inn via arxon.no og våre tjenester. Kontakt: Kontakt@arxon.no.',
         },
         {
           title: '2. Hvilke opplysninger vi samler inn',
@@ -48,7 +48,7 @@ export default function Privacy() {
         },
         {
           title: '7. Dine rettigheter',
-          text: 'Du har rett til innsyn, retting, sletting, begrensning av behandling, dataportabilitet og å protestere mot behandling. For å utøve dine rettigheter, kontakt oss på younes@arxon.no. Vi svarer innen 30 dager. Du kan også klage til Datatilsynet (datatilsynet.no).',
+          text: 'Du har rett til innsyn, retting, sletting, begrensning av behandling, dataportabilitet og å protestere mot behandling. For å utøve dine rettigheter, kontakt oss på Kontakt@arxon.no. Vi svarer innen 30 dager. Du kan også klage til Datatilsynet (datatilsynet.no).',
         },
         {
           title: '8. Informasjonskapsler (cookies)',
@@ -60,7 +60,7 @@ export default function Privacy() {
         },
         {
           title: '10. Kontakt',
-          text: 'Spørsmål om personvern? Kontakt Younes Amer på younes@arxon.no. Arxon, Oslo, Norge.',
+          text: 'Spørsmål om personvern? Kontakt Younes Amer på Kontakt@arxon.no. Arxon, Oslo, Norge.',
         },
       ].map((section, i) => (
         <motion.div key={section.title} initial="hidden" whileInView="visible"
