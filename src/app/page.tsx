@@ -105,7 +105,7 @@ export default function HomePage() {
             formSectionClassName="bg-white/5 border-white/10"
           >
             <form 
-              action="https://formspree.io/f/xnnjvekj" 
+              action="https://formspree.io/f/mjgpkprj" 
               method="POST"
               className="w-full space-y-4"
             >
