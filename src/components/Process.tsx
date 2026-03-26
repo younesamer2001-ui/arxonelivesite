@@ -81,7 +81,7 @@ export default function Process() {
 
             <TimelineContent
               as="div"
-              animationNum={3}
+              animationNum={4}
               timelineRef={heroRef}
               customVariants={textVariants}
               className="mt-12"
