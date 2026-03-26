@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { NavBar } from '@/components/ui/tube-light-navbar';
 import { Footer } from '@/components/ui/footer-section';
-import { Home, Briefcase, Users, FileText, Mail, Check, Clock, Shield, Rocket, ArrowRight, CreditCard } from 'lucide-react';
+import { Home, Briefcase, Users, FileText, Mail, Check, Clock, Shield, Rocket, ArrowRight, CreditCard, Percent } from 'lucide-react';
 import { SectionWrapper } from '@/components/SectionWrapper';
 
 const navItems = [
@@ -58,7 +58,7 @@ export default function TenDayPromisePage() {
           <motion.div variants={itemVariants} className="mb-8">
             <span className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 text-emerald-400 text-sm font-medium rounded-full">
               <Shield className="w-4 h-4" />
-              20-Day Money-Back Guarantee
+              50/50 Depositum + 20-Dagers Garanti
             </span>
           </motion.div>
 
@@ -76,7 +76,7 @@ export default function TenDayPromisePage() {
             variants={itemVariants}
             className="text-center text-lg md:text-xl text-gray-400 max-w-2xl mb-8"
           >
-            Betal ved oppstart. 20 dager pengene-tilbake-garanti. 
+            50% depositum ved oppstart. 50% etter 20 dager. 
             Full refusjon hvis du ikke ser verdi.
           </motion.p>
 
@@ -99,6 +99,89 @@ export default function TenDayPromisePage() {
         </motion.div>
       </section>
 
+      {/* Payment Model Section */}
+      <SectionWrapper className="py-24 px-6 border-t border-white/5">
+        <div className="max-w-6xl mx-auto">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">50/50 Depositum-modell</h2>
+            <p className="text-gray-400 text-lg">Delt risiko. Delt tillit.</p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* Step 1 */}
+            <motion.div
+              className="p-8 rounded-2xl bg-white/5 border border-white/10"
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-16 h-16 rounded-2xl bg-blue-500/20 flex items-center justify-center">
+                  <Percent className="w-8 h-8 text-blue-400" />
+                </div>
+                <div>
+                  <div className="text-3xl font-bold">50%</div>
+                  <div className="text-gray-400">Ved oppstart</div>
+                </div>
+              </div>
+              <ul className="space-y-3 text-gray-300">
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-emerald-400" />
+                  <span>Etter avklaringssamtale</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-emerald-400" />
+                  <span>Starter 20-dagers garanti</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-emerald-400" />
+                  <span>Vi begynner oppsettet</span>
+                </li>
+              </ul>
+            </motion.div>
+
+            {/* Step 2 */}
+            <motion.div
+              className="p-8 rounded-2xl bg-white/5 border border-white/10"
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-16 h-16 rounded-2xl bg-emerald-500/20 flex items-center justify-center">
+                  <CreditCard className="w-8 h-8 text-emerald-400" />
+                </div>
+                <div>
+                  <div className="text-3xl font-bold">50%</div>
+                  <div className="text-gray-400">Etter 20 dager</div>
+                </div>
+              </div>
+              <ul className="space-y-3 text-gray-300">
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-emerald-400" />
+                  <span>Kun hvis du ser verdi</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-emerald-400" />
+                  <span>Ikke fornøyd? Full refusjon</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-emerald-400" />
+                  <span>Ingen spørsmål</span>
+                </li>
+              </ul>
+            </motion.div>
+          </div>
+        </div>
+      </SectionWrapper>
+
       {/* What is Section */}
       <SectionWrapper className="py-24 px-6 border-t border-white/5">
         <div id="hvordan" className="max-w-6xl mx-auto">
@@ -117,8 +200,8 @@ export default function TenDayPromisePage() {
                 Fra første samtale til ferdig løsning i din bedrift.
               </p>
               <p className="text-gray-400 text-lg leading-relaxed">
-                Du betaler ved oppstart, men har 20 dager på deg til å evaluere. 
-                Ser du ikke verdi? Full refusjon, ingen spørsmål.
+                Med 50/50 depositum-modellen deler vi risikoen. Du betaler halvparten ved oppstart, 
+                resten etter 20 dager - kun hvis du ser verdi.
               </p>
             </motion.div>
             
@@ -140,7 +223,7 @@ export default function TenDayPromisePage() {
               </div>
               <div className="flex items-center gap-6">
                 <div className="w-20 h-20 rounded-2xl bg-blue-500/20 flex items-center justify-center">
-                  <CreditCard className="w-10 h-10 text-blue-400" />
+                  <Shield className="w-10 h-10 text-blue-400" />
                 </div>
                 <div>
                   <div className="text-5xl font-bold text-white">20</div>
@@ -175,10 +258,10 @@ export default function TenDayPromisePage() {
                 color: 'bg-blue-500/20 text-blue-400'
               },
               {
-                icon: CreditCard,
+                icon: Percent,
                 day: 'Dag 3',
-                title: 'Betaling',
-                description: 'Du betaler ved oppstart. Nå starter 20-dagers garantiperioden.',
+                title: '50% Depositum',
+                description: 'Du betaler 50% ved oppstart. Nå starter 20-dagers garantiperioden.',
                 color: 'bg-purple-500/20 text-purple-400'
               },
               {
@@ -224,17 +307,17 @@ export default function TenDayPromisePage() {
             </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">20-dagers pengene-tilbake-garanti</h2>
             <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-6">
-              Du betaler ved oppstart, men har 20 dager på deg til å evaluere løsningen. 
-              Hvis du ikke ser verdi, får du full refusjon. Ingen spørsmål. Ingen binding.
+              Du betaler 50% ved oppstart. Etter 20 dager betaler du resten - 
+              kun hvis du ser verdi. Hvis ikke, får du full refusjon av depositumet.
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm">
               <span className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full">
                 <Check className="w-4 h-4 text-emerald-400" />
-                Full refusjon
+                Full refusjon av 50%
               </span>
               <span className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full">
                 <Check className="w-4 h-4 text-emerald-400" />
-                Inge spørsmål
+                Ingen spørsmål
               </span>
               <span className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full">
                 <Check className="w-4 h-4 text-emerald-400" />
@@ -261,11 +344,11 @@ export default function TenDayPromisePage() {
           <div className="space-y-6">
             {[
               { day: 'Dag 1-2', text: 'Gratis avklaringssamtale', highlight: false },
-              { day: 'Dag 3', text: 'Betaling ved oppstart', highlight: true },
+              { day: 'Dag 3', text: '50% depositum + oppstart', highlight: true },
               { day: 'Dag 3-10', text: 'Oppsett og integrasjon', highlight: false },
               { day: 'Dag 10', text: 'AI går live', highlight: false },
               { day: 'Dag 11-20', text: 'Testing og evaluering', highlight: false },
-              { day: 'Dag 20', text: 'Garantiperiode slutter', highlight: true },
+              { day: 'Dag 20', text: 'Restbetaling (eller full refusjon)', highlight: true },
             ].map((item, i) => (
               <motion.div
                 key={i}
