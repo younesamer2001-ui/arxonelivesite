@@ -1,10 +1,7 @@
-'use client';
-
-import { useParams } from 'next/navigation';
 import BlogPostComponent from '@/components/BlogPost';
 import { NavBar } from '@/components/ui/tube-light-navbar';
 import { Footer } from '@/components/ui/footer-section';
-import { getPostBySlug } from '@/lib/blog-data';
+import { getPostBySlug, getAllPosts } from '@/lib/blog-data';
 import { Home, Briefcase, Users, FileText, Mail } from 'lucide-react';
 import Link from 'next/link';
 
@@ -16,10 +13,22 @@ const navItems = [
   { name: 'Kontakt', url: '/#kontakt', icon: Mail },
 ];
 
-export default function BlogSlugPage() {
-  const params = useParams();
-  const slug = typeof params.slug === 'string' ? params.slug : '';
-  const post = getPostBySlug(slug);
+// Generate static params for all blog posts
+export function generateStaticParams() {
+  const posts = getAllPosts();
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+
+interface BlogSlugPageProps {
+  params: {
+    slug: string;
+  };
+}
+
+export default function BlogSlugPage({ params }: BlogSlugPageProps) {
+  const post = getPostBySlug(params.slug);
 
   if (!post) {
     return (
