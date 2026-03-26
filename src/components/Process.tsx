@@ -70,12 +70,18 @@ export default function Process() {
               >
                 risikofri måte
               </TimelineContent>{" "}
-              å teste det på — 50% depositum, resten etter 20 dager. Ikke fornøyd? <span className="bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 px-2 py-1 rounded-md">Full refusjon</span>.
+              å teste det på — 50% depositum, resten etter 20 dager. Ikke fornøyd? <TimelineContent
+                as="span"
+                animationNum={3}
+                timelineRef={heroRef}
+                customVariants={textVariants}
+                className="text-orange-400 border-2 border-orange-400/50 inline-block border-dotted px-2 rounded-md"
+              >Full refusjon</TimelineContent>.
             </TimelineContent>
 
             <TimelineContent
               as="div"
-              animationNum={4}
+              animationNum={3}
               timelineRef={heroRef}
               customVariants={textVariants}
               className="mt-12"
