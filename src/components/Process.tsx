@@ -87,8 +87,8 @@ export default function Process() {
               className="mt-12"
             >
               <a
-                href="/10-day-promise"
-                className="bg-emerald-600 gap-2 font-medium shadow-lg shadow-emerald-600/50 text-white h-12 px-6 rounded-full text-sm inline-flex items-center cursor-pointer hover:bg-emerald-700 transition-colors"
+                href="/garanti"
+                className="bg-blue-600 gap-2 font-medium shadow-lg shadow-blue-600/50 text-white h-12 px-6 rounded-full text-sm inline-flex items-center cursor-pointer hover:bg-blue-700 transition-colors"
               >
                 <Zap fill="white" size={16} />
                 Se hvordan det fungerer
