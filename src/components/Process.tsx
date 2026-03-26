@@ -70,7 +70,7 @@ export default function Process() {
               >
                 risikofri måte
               </TimelineContent>{" "}
-              å teste det på — 50% depositum, resten etter 20 dager. Ikke fornøyd? Full refusjon.
+              å teste det på — 50% depositum, resten etter 20 dager. Ikke fornøyd? <span class="bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 px-2 py-1 rounded-md">Full refusjon</span>.
             </TimelineContent>
 
             <TimelineContent
