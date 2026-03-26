@@ -66,7 +66,7 @@ export default function TenDayPromisePage() {
             variants={fadeInUp}
             className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-12"
           >
-            Ellers betaler du ingenting. Ingen binding. Ingen risiko.
+            10 dager oppsett + 30 dager gratis prøveperiode. Ingen binding. Ingen risiko.
           </motion.p>
           
           <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -103,10 +103,10 @@ export default function TenDayPromisePage() {
                 <span className="text-blue-400">10-Day Promise?</span>
               </h2>
               <p className="text-lg text-gray-400 leading-relaxed mb-6">
-                Vi lover å sette opp din første AI-resepsjonist på 10 dager. Fra første samtale til ferdig løsning. 
+                Vi lover å sette opp og integrere din AI-resepsjonist på kun 10 dager. Fra første samtale til ferdig løsning i din bedrift.
               </p>
               <p className="text-lg text-gray-400 leading-relaxed">
-                Hvis vi ikke klarer det, betaler du ingenting. Det er vår garanti til deg.
+                Etter oppsettet får du 30 dager gratis prøveperiode. Hvis du ikke ser verdi, betaler du ingenting.
               </p>
             </div>
             <div className="relative">
@@ -218,8 +218,8 @@ export default function TenDayPromisePage() {
               </div>
               <h2 className="text-4xl font-bold mb-4">30-dagers garanti</h2>
               <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-                Du betaler ingenting de første 30 dagene. Hvis du ikke ser verdi i løsningen, 
-                kan du avslutte uten kostnad. Ingen spørsmål. Ingen binding.
+                Etter at vi har satt opp din AI på 10 dager, får du 30 dager gratis prøveperiode. 
+                Hvis du ikke ser verdi, kan du avslutte uten kostnad. Ingen spørsmål. Ingen binding.
               </p>
             </div>
           </motion.div>
