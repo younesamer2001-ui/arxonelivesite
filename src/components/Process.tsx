@@ -73,19 +73,21 @@ export default function Process() {
               å teste det på — 10 dager, eller du betaler ingenting.
             </TimelineContent>
 
-            <div className="mt-12">
-              <TimelineContent
-                as="a"
+            <TimelineContent
+              as="div"
+              animationNum={3}
+              timelineRef={heroRef}
+              customVariants={textVariants}
+              className="mt-12"
+            >
+              <a
                 href="/10-day-promise"
-                animationNum={3}
-                timelineRef={heroRef}
-                customVariants={textVariants}
                 className="bg-blue-600 gap-2 font-medium shadow-lg shadow-blue-600 text-white h-12 px-6 rounded-full text-sm inline-flex items-center cursor-pointer hover:bg-blue-700 transition-colors"
               >
                 <Zap fill="white" size={16} />
                 10-Day Promise
-              </TimelineContent>
-            </div>
+              </a>
+            </TimelineContent>
           </div>
         </div>
       </div>
