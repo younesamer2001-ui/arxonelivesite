@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Home, Briefcase, Users, FileText, Mail } from 'lucide-react'
+import { Home, Briefcase, Users, FileText, Mail, Phone, MapPin } from 'lucide-react'
 import { NavBar } from "@/components/ui/tube-light-navbar"
 import Hero from "@/components/Hero"
 import Services from "@/components/Services"
@@ -11,6 +11,11 @@ import Process from "@/components/Process"
 import Pricing from "@/components/Pricing"
 import { Footer } from "@/components/ui/footer-section"
 import { SectionWrapper } from "@/components/SectionWrapper"
+import { ContactCard } from "@/components/ui/contact-card"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
 
 const navItems = {
   no: [
@@ -68,6 +73,90 @@ export default function HomePage() {
       <SectionWrapper className="py-12 md:py-28" delay={0.1}>
         <section id="priser">
           <Pricing lang={currentLang} />
+        </section>
+      </SectionWrapper>
+
+      <SectionWrapper className="py-12 md:py-28" delay={0.1}>
+        <section id="kontakt" className="max-w-6xl mx-auto px-4">
+          <ContactCard
+            title={currentLang === 'no' ? 'Kontakt oss' : 'Contact Us'}
+            description={currentLang === 'no' 
+              ? 'Har du spørsmål om våre tjenester eller trenger hjelp? Fyll ut skjemaet under. Vi svarer innen 1 virkedag.'
+              : 'Have questions about our services or need help? Fill out the form below. We respond within 1 business day.'
+            }
+            contactInfo={[
+              {
+                icon: Mail,
+                label: currentLang === 'no' ? 'E-post' : 'Email',
+                value: 'kontakt@arxon.no',
+              },
+              {
+                icon: Phone,
+                label: currentLang === 'no' ? 'Telefon' : 'Phone',
+                value: '+47 993 53 596',
+              },
+              {
+                icon: MapPin,
+                label: currentLang === 'no' ? 'Organisasjon' : 'Organization',
+                value: 'Org: 837 230 012',
+              },
+            ]}
+            className="bg-white/5 border-white/10 text-white"
+            formSectionClassName="bg-white/5 border-white/10"
+          >
+            <form 
+              action="https://formspree.io/f/xnnjvekj" 
+              method="POST"
+              className="w-full space-y-4"
+            >
+              <input type="hidden" name="_to" value="kontakt@arxon.no" />
+              <div className="space-y-2">
+                <Label htmlFor="name" className="text-white">
+                  {currentLang === 'no' ? 'Navn' : 'Name'}
+                </Label>
+                <Input
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder={currentLang === 'no' ? 'Ditt navn' : 'Your name'}
+                  required
+                  className="bg-white/5 border-white/10 text-white placeholder:text-gray-500"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-white">
+                  {currentLang === 'no' ? 'E-post' : 'Email'}
+                </Label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder={currentLang === 'no' ? 'din@epost.no' : 'you@example.com'}
+                  required
+                  className="bg-white/5 border-white/10 text-white placeholder:text-gray-500"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="message" className="text-white">
+                  {currentLang === 'no' ? 'Melding' : 'Message'}
+                </Label>
+                <Textarea
+                  id="message"
+                  name="message"
+                  placeholder={currentLang === 'no' ? 'Hva kan vi hjelpe deg med?' : 'How can we help you?'}
+                  required
+                  rows={4}
+                  className="bg-white/5 border-white/10 text-white placeholder:text-gray-500 resize-none"
+                />
+              </div>
+              <Button
+                type="submit"
+                className="w-full bg-white text-black hover:bg-gray-200"
+              >
+                {currentLang === 'no' ? 'Send melding' : 'Send message'}
+              </Button>
+            </form>
+          </ContactCard>
         </section>
       </SectionWrapper>
 
