@@ -76,7 +76,7 @@ export default function Process() {
             <div className="mt-12">
               <TimelineContent
                 as="a"
-                href="#kontakt"
+                href="/10-day-promise"
                 animationNum={3}
                 timelineRef={heroRef}
                 customVariants={textVariants}
