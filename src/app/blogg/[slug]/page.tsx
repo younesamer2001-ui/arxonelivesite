@@ -1,7 +1,7 @@
 import BlogPostComponent from '@/components/BlogPost';
 import { NavBar } from '@/components/ui/tube-light-navbar';
 import { Footer } from '@/components/ui/footer-section';
-import { getPostBySlug, getAllPosts } from '@/lib/blog-data';
+import { getPostBySlug, getAllSlugs } from '@/lib/blog-data';
 import { Home, Briefcase, Users, FileText, Mail } from 'lucide-react';
 import Link from 'next/link';
 
@@ -15,9 +15,9 @@ const navItems = [
 
 // Generate static params for all blog posts
 export function generateStaticParams() {
-  const posts = getAllPosts();
-  return posts.map((post) => ({
-    slug: post.slug,
+  const slugs = getAllSlugs();
+  return slugs.map((slug) => ({
+    slug: slug,
   }));
 }
 
