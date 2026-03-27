@@ -43,7 +43,7 @@ export default function HomePage() {
   const items = navItems[currentLang]
 
   useEffect(() => {
-    emailjs.init('Vy-evp6-E8wcwwLf1')
+    emailjs.init('Vy-evp6-EBwcwwLf1')
   }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -68,7 +68,7 @@ export default function HomePage() {
         body: JSON.stringify({
           service_id: 'service_3azd1ic',
           template_id: 'template_qbt6k52',
-          user_id: 'Vy-evp6-E8wcwwLf1',
+          user_id: 'Vy-evp6-EBwcwwLf1',
           template_params: data,
         }),
       })
@@ -132,7 +132,7 @@ export default function HomePage() {
           <ContactCard
             title={currentLang === 'no' ? 'Kontakt oss' : 'Contact Us'}
             description={currentLang === 'no' 
-              ? 'Har du spørsmål om våre tjenester eller trenger hjelp? Fyll ut skjemaet under. Vi svarer innen 1 virkedag.'
+              ? 'Har du spÃ¸rsmÃ¥l om vÃ¥re tjenester eller trenger hjelp? Fyll ut skjemaet under. Vi svarer innen 1 virkedag.'
               : 'Have questions about our services or need help? Fill out the form below. We respond within 1 business day.'
             }
             contactInfo={[
@@ -218,7 +218,7 @@ export default function HomePage() {
               )}
               {submitStatus === 'error' && (
                 <div className="p-3 rounded-lg bg-red-500/20 border border-red-500/40 text-red-400 text-sm">
-                  {currentLang === 'no' ? 'Noe gikk galt. Prøv igjen eller send e-post direkte til kontakt@arxon.no' : 'Something went wrong. Please try again or email us directly at kontakt@arxon.no'}
+                  {currentLang === 'no' ? 'Noe gikk galt. PrÃ¸v igjen eller send e-post direkte til kontakt@arxon.no' : 'Something went wrong. Please try again or email us directly at kontakt@arxon.no'}
                 </div>
               )}
               <Button
