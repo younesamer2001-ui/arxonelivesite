@@ -5,11 +5,7 @@ import { Home, Briefcase, Users, FileText, Mail, Phone, MapPin } from 'lucide-re
 import emailjs from 'emailjs-com'
 import { NavBar } from "@/components/ui/tube-light-navbar"
 import Hero from "@/components/Hero"
-import Services from "@/components/Services"
-import WorkflowExplainer from "@/components/WorkflowExplainer"
-import DashboardShowcase from "@/components/DashboardShowcase"
-import Process from "@/components/Process"
-import Pricing from "@/components/Pricing"
+
 import { Footer } from "@/components/ui/footer-section"
 import { SectionWrapper } from "@/components/SectionWrapper"
 import { ContactCard } from "@/components/ui/contact-card"
@@ -17,6 +13,14 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+
+import dynamic from 'next/dynamic'
+
+const Services = dynamic(() => import("@/components/Services"))
+const WorkflowExplainer = dynamic(() => import("@/components/WorkflowExplainer"))
+const DashboardShowcase = dynamic(() => import("@/components/DashboardShowcase"))
+const Process = dynamic(() => import("@/components/Process"))
+const Pricing = dynamic(() => import("@/components/Pricing"))
 
 const navItems = {
   no: [
