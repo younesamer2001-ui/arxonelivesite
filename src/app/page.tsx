@@ -51,15 +51,34 @@ export default function HomePage() {
     setIsSubmitting(true)
     setSubmitStatus('idle')
 
+    const formData = new FormData(formRef.current!)
+    const data = {
+      from_name: formData.get('from_name'),
+      from_email: formData.get('from_email'),
+      phone: formData.get('phone'),
+      message: formData.get('message'),
+    }
+
     try {
-      await emailjs.sendForm(
-        'service_f79wkms',
-        'template_qbt6k52',
-        formRef.current!,
-        'Vy-evp6-E8wcwwLf1'
-      )
-      setSubmitStatus('success')
-      formRef.current?.reset()
+      const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          service_id: 'service_f79wkms',
+          template_id: 'template_qbt6k52',
+          user_id: 'Vy-evp6-E8wcwwLf1',
+          template_params: data,
+        }),
+      })
+
+      if (response.ok) {
+        setSubmitStatus('success')
+        formRef.current?.reset()
+      } else {
+        throw new Error('Failed to send')
+      }
     } catch (error) {
       console.error('EmailJS error:', error)
       setSubmitStatus('error')
