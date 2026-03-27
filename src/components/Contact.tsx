@@ -3,6 +3,11 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Phone, MapPin, ArrowRight, Loader2, CheckCircle } from 'lucide-react'
+import emailjs from 'emailjs-com'
+
+const EMAILJS_SERVICE_ID = 'service_3azd1ic'
+const EMAILJS_TEMPLATE_ID = 'template_qbt6k52'
+const EMAILJS_PUBLIC_KEY = 'Vy-evp6-EBwcwwLf1'
 
 const content = {
   no: {
@@ -26,6 +31,7 @@ const content = {
     sending: 'Sender...',
     successTitle: 'Melding sendt!',
     successText: 'Takk for din henvendelse. Vi tar kontakt innen 24 timer.',
+    sendNewMessage: 'Send ny melding',
     errorText: 'Noe gikk galt. Prøv igjen eller send e-post direkte til Kontakt@arxon.no'
   },
   en: {
@@ -49,6 +55,7 @@ const content = {
     sending: 'Sending...',
     successTitle: 'Message sent!',
     successText: 'Thank you for your inquiry. We\'ll get back to you within 24 hours.',
+    sendNewMessage: 'Send new message',
     errorText: 'Something went wrong. Try again or email us directly at Kontakt@arxon.no'
   }
 }
@@ -73,13 +80,19 @@ export default function Contact({ lang = 'no' }: ContactProps) {
     setStatus('sending')
 
     try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      })
-
-      if (!res.ok) throw new Error('Failed to send')
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          name: formData.name,
+          email: formData.email,
+          company: formData.company,
+          phone: formData.phone,
+          message: formData.message,
+        },
+        EMAILJS_PUBLIC_KEY
+      )
 
       setStatus('success')
       setFormData({ name: '', email: '', company: '', phone: '', message: '' })
@@ -154,7 +167,7 @@ export default function Contact({ lang = 'no' }: ContactProps) {
                   onClick={() => setStatus('idle')}
                   className="mt-6 px-6 py-2 text-sm border border-white/20 rounded-lg hover:bg-white/5 transition-colors"
                 >
-                  Send ny melding
+                  {t.sendNewMessage}
                 </button>
               </div>
             ) : (
