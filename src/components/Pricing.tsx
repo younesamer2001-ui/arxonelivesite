@@ -134,7 +134,7 @@ export default function Pricing({ lang = 'no' }: PricingProps) {
           transition={{ duration: 0.6 }}
           className="mx-auto max-w-2xl space-y-6 text-center mb-16"
         >
-          <h1 className="text-center text-2xl md:text-4xl font-semibold lg:text-5xl text-white">{t.title}</h1>
+          <h2 className="text-center text-2xl md:text-4xl font-semibold lg:text-5xl text-white">{t.title}</h2>
           <p className="text-gray-400">{t.subtitle}</p>
         </motion.div>
 
