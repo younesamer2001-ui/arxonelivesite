@@ -1,7 +1,8 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Mail, Phone, MapPin, ArrowRight } from 'lucide-react'
+import { Mail, Phone, MapPin, ArrowRight, Loader2, CheckCircle } from 'lucide-react'
 
 const content = {
   no: {
@@ -17,9 +18,15 @@ const content = {
     emailPlaceholder: 'din@epost.no',
     companyLabel: 'Bedrift',
     companyPlaceholder: 'Din bedrift',
+    phoneLabel: 'Telefon',
+    phonePlaceholder: '+47 xxx xx xxx',
     messageLabel: 'Melding',
     messagePlaceholder: 'Fortell oss om dine behov...',
-    submitButton: 'Send melding'
+    submitButton: 'Send melding',
+    sending: 'Sender...',
+    successTitle: 'Melding sendt!',
+    successText: 'Takk for din henvendelse. Vi tar kontakt innen 24 timer.',
+    errorText: 'Noe gikk galt. Prøv igjen eller send e-post direkte til Kontakt@arxon.no'
   },
   en: {
     title: 'Contact',
@@ -34,9 +41,15 @@ const content = {
     emailPlaceholder: 'your@email.com',
     companyLabel: 'Company',
     companyPlaceholder: 'Your company',
+    phoneLabel: 'Phone',
+    phonePlaceholder: '+47 xxx xx xxx',
     messageLabel: 'Message',
     messagePlaceholder: 'Tell us about your needs...',
-    submitButton: 'Send message'
+    submitButton: 'Send message',
+    sending: 'Sending...',
+    successTitle: 'Message sent!',
+    successText: 'Thank you for your inquiry. We\'ll get back to you within 24 hours.',
+    errorText: 'Something went wrong. Try again or email us directly at Kontakt@arxon.no'
   }
 }
 
@@ -46,7 +59,35 @@ interface ContactProps {
 
 export default function Contact({ lang = 'no' }: ContactProps) {
   const t = content[lang]
-  
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    company: '',
+    phone: '',
+    message: ''
+  })
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setStatus('sending')
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+
+      if (!res.ok) throw new Error('Failed to send')
+
+      setStatus('success')
+      setFormData({ name: '', email: '', company: '', phone: '', message: '' })
+    } catch {
+      setStatus('error')
+    }
+  }
+
   return (
     <section className="relative py-16 md:py-32 px-6 bg-black">
       <div className="max-w-7xl mx-auto">
@@ -71,7 +112,7 @@ export default function Contact({ lang = 'no' }: ContactProps) {
             transition={{ duration: 0.5 }}
           >
             <h3 className="text-xl font-semibold mb-6">{t.infoTitle}</h3>
-            
+
             <div className="space-y-4">
               <a href="mailto:Kontakt@arxon.no" className="flex items-center text-gray-300 hover:text-white transition-colors">
                 <Mail className="w-5 h-5 mr-4 text-white/50" />
@@ -103,44 +144,97 @@ export default function Contact({ lang = 'no' }: ContactProps) {
             className="p-4 md:p-8 rounded-2xl bg-white/5 border border-white/10"
           >
             <h3 className="text-lg md:text-xl font-semibold mb-6">{t.formTitle}</h3>
-            
-            <form className="space-y-4">
-              <div>
-                <label className="block text-sm text-gray-400 mb-2">{t.nameLabel}</label>
-                <input 
-                  type="text" 
-                  className="w-full px-4 py-3 rounded-lg bg-black border border-white/20 text-white placeholder-gray-500 focus:outline-none focus:border-white/40"
-                  placeholder={t.namePlaceholder}
-                />
+
+            {status === 'success' ? (
+              <div className="flex flex-col items-center justify-center py-12 text-center">
+                <CheckCircle className="w-12 h-12 text-emerald-400 mb-4" />
+                <h4 className="text-xl font-semibold mb-2">{t.successTitle}</h4>
+                <p className="text-gray-400">{t.successText}</p>
+                <button
+                  onClick={() => setStatus('idle')}
+                  className="mt-6 px-6 py-2 text-sm border border-white/20 rounded-lg hover:bg-white/5 transition-colors"
+                >
+                  Send ny melding
+                </button>
               </div>
-              <div>
-                <label className="block text-sm text-gray-400 mb-2">{t.emailLabel}</label>
-                <input 
-                  type="email" 
-                  className="w-full px-4 py-3 rounded-lg bg-black border border-white/20 text-white placeholder-gray-500 focus:outline-none focus:border-white/40"
-                  placeholder={t.emailPlaceholder}
-                />
-              </div>
-              <div>
-                <label className="block text-sm text-gray-400 mb-2">{t.companyLabel}</label>
-                <input 
-                  type="text" 
-                  className="w-full px-4 py-3 rounded-lg bg-black border border-white/20 text-white placeholder-gray-500 focus:outline-none focus:border-white/40"
-                  placeholder={t.companyPlaceholder}
-                />
-              </div>
-              <div>
-                <label className="block text-sm text-gray-400 mb-2">{t.messageLabel}</label>
-                <textarea 
-                  rows={4}
-                  className="w-full px-4 py-3 rounded-lg bg-black border border-white/20 text-white placeholder-gray-500 focus:outline-none focus:border-white/40 resize-none"
-                  placeholder={t.messagePlaceholder}
-                />
-              </div>
-              <button className="w-full py-3 bg-white text-black rounded-lg font-semibold hover:bg-gray-200 transition-all flex items-center justify-center">
-                {t.submitButton} <ArrowRight className="w-4 h-4 ml-2" />
-              </button>
-            </form>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <label className="block text-sm text-gray-400 mb-2">{t.nameLabel}</label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.name}
+                    onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                    className="w-full px-4 py-3 rounded-lg bg-black border border-white/20 text-white placeholder-gray-500 focus:outline-none focus:border-white/40"
+                    placeholder={t.namePlaceholder}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-400 mb-2">{t.emailLabel}</label>
+                  <input
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                    className="w-full px-4 py-3 rounded-lg bg-black border border-white/20 text-white placeholder-gray-500 focus:outline-none focus:border-white/40"
+                    placeholder={t.emailPlaceholder}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-400 mb-2">{t.companyLabel}</label>
+                  <input
+                    type="text"
+                    value={formData.company}
+                    onChange={(e) => setFormData(prev => ({ ...prev, company: e.target.value }))}
+                    className="w-full px-4 py-3 rounded-lg bg-black border border-white/20 text-white placeholder-gray-500 focus:outline-none focus:border-white/40"
+                    placeholder={t.companyPlaceholder}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-400 mb-2">{t.phoneLabel}</label>
+                  <input
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
+                    className="w-full px-4 py-3 rounded-lg bg-black border border-white/20 text-white placeholder-gray-500 focus:outline-none focus:border-white/40"
+                    placeholder={t.phonePlaceholder}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-400 mb-2">{t.messageLabel}</label>
+                  <textarea
+                    rows={4}
+                    required
+                    value={formData.message}
+                    onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
+                    className="w-full px-4 py-3 rounded-lg bg-black border border-white/20 text-white placeholder-gray-500 focus:outline-none focus:border-white/40 resize-none"
+                    placeholder={t.messagePlaceholder}
+                  />
+                </div>
+
+                {status === 'error' && (
+                  <p className="text-red-400 text-sm">{t.errorText}</p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={status === 'sending'}
+                  className="w-full py-3 bg-white text-black rounded-lg font-semibold hover:bg-gray-200 transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {status === 'sending' ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      {t.sending}
+                    </>
+                  ) : (
+                    <>
+                      {t.submitButton} <ArrowRight className="w-4 h-4 ml-2" />
+                    </>
+                  )}
+                </button>
+              </form>
+            )}
           </motion.div>
         </div>
       </div>
