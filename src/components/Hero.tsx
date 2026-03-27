@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import VideoPlayer from './VideoPlayer'
+const VideoPlayer = dynamic(() => import('./VideoPlayer'), { ssr: false })
 import { HubSpotLogo, AirtableLogo, GmailLogo, SlackLogo, MicrosoftTeamsLogo, SalesforceLogo } from './Logos'
 import dynamic from 'next/dynamic'
 
