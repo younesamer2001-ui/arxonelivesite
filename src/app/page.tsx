@@ -66,7 +66,7 @@ export default function HomePage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          service_id: 'service_f79wkms',
+          service_id: 'service_3azd1ic',
           template_id: 'template_qbt6k52',
           user_id: 'Vy-evp6-E8wcwwLf1',
           template_params: data,
@@ -77,6 +77,8 @@ export default function HomePage() {
         setSubmitStatus('success')
         formRef.current?.reset()
       } else {
+        const errorText = await response.text()
+        console.error('EmailJS response error:', errorText)
         throw new Error('Failed to send')
       }
     } catch (error) {
