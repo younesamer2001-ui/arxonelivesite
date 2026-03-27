@@ -13,7 +13,8 @@ const aiReceptionists = {
       text: 'Jeg hjelper klinikker med timebooking, påminnelser og pasienthenvendelser. Jeg kan snakke om behandlinger og tilgjengelighet.',
       phoneNumber: '+47 123 45 678',
       audio: '/audio/lisa-demo.mp3',
-      icon: Heart
+      icon: Heart,
+      assistantId: '3e6bee7b-00b2-41e9-8225-f314800d8e5e'
     },
     {
       name: 'Marcus',
@@ -21,7 +22,8 @@ const aiReceptionists = {
       text: 'Jeg hjelper eiendomsmeglere med visningsbooking, salgsspørsmål og kundeoppfølging. Jeg kjenner alle eiendommene.',
       phoneNumber: '+47 123 45 679',
       audio: '/audio/marcus-demo.mp3',
-      icon: Home
+      icon: Home,
+      assistantId: '4b2b63e9-eabf-4662-9dc0-05948413103f'
     },
     {
       name: 'Emma',
@@ -29,7 +31,8 @@ const aiReceptionists = {
       text: 'Jeg hjelper regnskapsførere med kundehenvendelser, fakturaspørsmål og booking av møter.',
       phoneNumber: '+47 123 45 680',
       audio: '/audio/emma-demo.mp3',
-      icon: Calculator
+      icon: Calculator,
+      assistantId: 'f0739e18-7732-4a69-93ea-7645b0e22a31'
     },
     {
       name: 'Leo',
@@ -37,7 +40,8 @@ const aiReceptionists = {
       text: 'Jeg ringer opp leads fra Facebook Ads og andre kanaler. Jeg kvalifiserer leads, booker møter og oppdaterer CRM automatisk.',
       phoneNumber: '+47 123 45 681',
       audio: '/audio/leo-demo.mp3',
-      icon: Target
+      icon: Target,
+      assistantId: '0ee55cd5-bdf3-46d7-be9f-fd7c695a2a66'
     },
     {
       name: 'Max',
@@ -45,7 +49,8 @@ const aiReceptionists = {
       text: 'Jeg hjelper bilverksteder med timebooking, påminnelser, henting/levering og kundeoppfølging. Jeg kan snakke om reparasjoner og priser.',
       phoneNumber: '+47 123 45 682',
       audio: '/audio/max-demo.mp3',
-      icon: Car
+      icon: Car,
+      assistantId: '178f4aeb-80e9-4d2b-b9c2-0678f9aacc37'
     },
     {
       name: 'Ella',
@@ -53,7 +58,8 @@ const aiReceptionists = {
       text: 'Jeg hjelper elektrikere med henvendelser, befaringer, tilbud og timebooking. Jeg kan svare på tekniske spørsmål og hasteoppdrag.',
       phoneNumber: '+47 123 45 683',
       audio: '/audio/ella-demo.mp3',
-      icon: Zap
+      icon: Zap,
+      assistantId: '7ed59a22-0a03-4ca0-a818-610f0584da6a'
     }
   ],
   en: [
@@ -63,7 +69,8 @@ const aiReceptionists = {
       text: 'I help clinics with appointment booking, reminders, and patient inquiries. I can talk about treatments and availability.',
       phoneNumber: '+47 123 45 678',
       audio: '/audio/lisa-demo.mp3',
-      icon: Heart
+      icon: Heart,
+      assistantId: '3e6bee7b-00b2-41e9-8225-f314800d8e5e'
     },
     {
       name: 'Marcus',
@@ -71,7 +78,8 @@ const aiReceptionists = {
       text: 'I help real estate agents with viewing bookings, sales questions, and customer follow-up. I know all the properties.',
       phoneNumber: '+47 123 45 679',
       audio: '/audio/marcus-demo.mp3',
-      icon: Home
+      icon: Home,
+      assistantId: '4b2b63e9-eabf-4662-9dc0-05948413103f'
     },
     {
       name: 'Emma',
@@ -79,7 +87,8 @@ const aiReceptionists = {
       text: 'I help accountants with customer inquiries, invoice questions, and meeting bookings.',
       phoneNumber: '+47 123 45 680',
       audio: '/audio/emma-demo.mp3',
-      icon: Calculator
+      icon: Calculator,
+      assistantId: 'f0739e18-7732-4a69-93ea-7645b0e22a31'
     },
     {
       name: 'Leo',
@@ -87,7 +96,8 @@ const aiReceptionists = {
       text: 'I call leads from Facebook Ads and other channels. I qualify leads, book meetings and update CRM automatically.',
       phoneNumber: '+47 123 45 681',
       audio: '/audio/leo-demo.mp3',
-      icon: Target
+      icon: Target,
+      assistantId: '0ee55cd5-bdf3-46d7-be9f-fd7c695a2a66'
     },
     {
       name: 'Max',
@@ -95,7 +105,8 @@ const aiReceptionists = {
       text: 'I help auto repair shops with booking, reminders, pickup/delivery and customer follow-up. I can talk about repairs and prices.',
       phoneNumber: '+47 123 45 682',
       audio: '/audio/max-demo.mp3',
-      icon: Car
+      icon: Car,
+      assistantId: '178f4aeb-80e9-4d2b-b9c2-0678f9aacc37'
     },
     {
       name: 'Ella',
@@ -103,7 +114,8 @@ const aiReceptionists = {
       text: 'I help electricians with inquiries, inspections, quotes and booking. I can answer technical questions and urgent requests.',
       phoneNumber: '+47 123 45 683',
       audio: '/audio/ella-demo.mp3',
-      icon: Zap
+      icon: Zap,
+      assistantId: '7ed59a22-0a03-4ca0-a818-610f0584da6a'
     }
   ]
 };
