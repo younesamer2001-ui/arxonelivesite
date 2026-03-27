@@ -69,7 +69,7 @@ function CallButton({
           className="flex items-center justify-center gap-2 flex-1 py-3 rounded-lg font-medium bg-red-500 text-white hover:bg-red-600 transition-all"
         >
           <PhoneOff className="w-4 h-4" />
-          Legg p\u00e5
+          Legg på
         </button>
         <button
           onClick={onToggleMute}
@@ -78,7 +78,7 @@ function CallButton({
               ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30'
               : 'bg-white/10 text-white hover:bg-white/20'
           }`}
-          title={isMuted ? 'Sl\u00e5 p\u00e5 mikrofon' : 'Demp mikrofon'}
+          title={isMuted ? 'Slå på mikrofon' : 'Demp mikrofon'}
         >
           {isMuted ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
         </button>
@@ -110,7 +110,7 @@ function CallButton({
         }`}
       >
         <Phone className="w-4 h-4" />
-        Ring n\u00e5
+        Ring nå
       </button>
     </div>
   );
