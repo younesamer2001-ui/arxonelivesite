@@ -37,7 +37,7 @@ const itemVariants = {
 const content = {
   no: {
     headline: ['Automatiser.', 'Vokst.', 'Vinn.'],
-    subtext: 'Vi hjelper norske bedrifter med å automatisere kundeservice, booking og salg med AI som gir målbart resultat.',
+    subtext: 'Arxon er din AI-resepsjonist og AI-telefonsvarer. Vi hjelper norske bedrifter med å automatisere kundeservice, booking og salg — med AI som gir målbart resultat.',
     badgesLabel: 'Integrert med',
     badges: ['HubSpot', 'Airtable', 'Gmail', 'Slack', 'Microsoft Teams', 'Salesforce'],
     cta1: 'Book gratis konsultasjon',
@@ -78,7 +78,7 @@ export default function Hero({ lang = 'no' }: HeroProps) {
         className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 pt-20"
       >
         {/* Headline - Staggered words on one line */}
-        <div className="text-white text-center mb-6 flex flex-wrap justify-center gap-x-4 md:gap-x-8">
+        <h1 className="text-white text-center mb-6 flex flex-wrap justify-center gap-x-4 md:gap-x-8">
           {t.headline.map((word, i) => (
             <motion.span
               key={i}
@@ -98,7 +98,7 @@ export default function Hero({ lang = 'no' }: HeroProps) {
               {word}
             </motion.span>
           ))}
-        </div>
+        </h1>
 
         {/* Subtext */}
         <motion.p
