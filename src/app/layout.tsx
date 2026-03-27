@@ -11,11 +11,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://arxon.no"),
   title: {
-    default: "Arxon — AI-drevet kundeservice, booking og salg for norske bedrifter",
+    default: "Arxon \u2014 AI-drevet kundeservice, booking og salg for norske bedrifter",
     template: "%s | Arxon",
   },
   description:
-    "Arxon leverer AI-agenter som automatiserer kundeservice, booking og salg for norske bedrifter. Spar tid, kutt kostnader og gi kundene raskere svar — 24/7. Fra 4 990 kr/mnd.",
+    "Arxon leverer AI-agenter som automatiserer kundeservice, booking og salg for norske bedrifter. Spar tid, kutt kostnader og gi kundene raskere svar \u2014 24/7. Fra 4 990 kr/mnd.",
   keywords: [
     "AI kundeservice",
     "AI agent Norge",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     "AI resepsjonist",
     "kundeservice automatisering",
     "Arxon",
-    "AI-løsning for bedrifter",
+    "AI-l\u00f8sning for bedrifter",
     "kunstig intelligens bedrift",
   ],
   authors: [{ name: "Arxon", url: "https://arxon.no" }],
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     locale: "nb_NO",
     url: "https://arxon.no",
     siteName: "Arxon",
-    title: "Arxon — AI som jobber for deg",
+    title: "Arxon \u2014 AI som jobber for deg",
     description:
       "Automatiser kundeservice, booking og salg med norsk AI. Spar tid og kutt kostnader med intelligente AI-agenter. Fra 4 990 kr/mnd.",
     images: [
@@ -60,13 +60,13 @@ export const metadata: Metadata = {
         url: "/images/og-arxon.jpg",
         width: 1200,
         height: 630,
-        alt: "Arxon — AI-drevet kundeservice for norske bedrifter",
+        alt: "Arxon \u2014 AI-drevet kundeservice for norske bedrifter",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Arxon — AI som jobber for deg",
+    title: "Arxon \u2014 AI som jobber for deg",
     description:
       "Automatiser kundeservice, booking og salg med norsk AI. Fra 4 990 kr/mnd.",
     images: ["/images/og-arxon.jpg"],
@@ -74,9 +74,6 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
     apple: "/apple-touch-icon.png",
-  },
-  verification: {
-    google: "LEGG_TIL_GOOGLE_VERIFICATION_KODE",
   },
 }
 
@@ -113,11 +110,11 @@ const jsonLd = {
       "@type": "WebPage",
       "@id": "https://arxon.no/#webpage",
       url: "https://arxon.no",
-      name: "Arxon — AI-drevet kundeservice, booking og salg for norske bedrifter",
+      name: "Arxon \u2014 AI-drevet kundeservice, booking og salg for norske bedrifter",
       isPartOf: { "@id": "https://arxon.no/#website" },
       about: { "@id": "https://arxon.no/#organization" },
       description:
-        "Arxon leverer AI-agenter som automatiserer kundeservice, booking og salg for norske bedrifter. Spar tid, kutt kostnader og gi kundene raskere svar — 24/7.",
+        "Arxon leverer AI-agenter som automatiserer kundeservice, booking og salg for norske bedrifter.",
       inLanguage: "nb-NO",
     },
     {
@@ -126,7 +123,7 @@ const jsonLd = {
       name: "AI Resepsjonist",
       provider: { "@id": "https://arxon.no/#organization" },
       description:
-        "AI-drevet resepsjonist som svarer på telefon, chat og e-post 24/7. Håndterer booking, kundehenvendelser og salg automatisk.",
+        "AI-drevet resepsjonist som svarer p\u00e5 telefon, chat og e-post 24/7. H\u00e5ndterer booking, kundehenvendelser og salg automatisk.",
       offers: {
         "@type": "Offer",
         price: "4990",
@@ -161,7 +158,7 @@ const jsonLd = {
           name: "Hva koster Arxon?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Arxon starter fra 4 990 kr per måned for AI Resepsjonist-pakken. Vi tilbyr også Custom AI og Enterprise-løsninger for større behov.",
+            text: "Arxon starter fra 4 990 kr per m\u00e5ned for AI Resepsjonist-pakken. Vi tilbyr ogs\u00e5 Custom AI og Enterprise-l\u00f8sninger for st\u00f8rre behov.",
           },
         },
         {
@@ -169,7 +166,7 @@ const jsonLd = {
           name: "Hvordan fungerer AI-resepsjonisten?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "AI-resepsjonisten håndterer innkommende henvendelser via telefon, chat og e-post. Den kan svare på spørsmål, booke avtaler og kvalifisere leads — helt automatisk, 24 timer i døgnet.",
+            text: "AI-resepsjonisten h\u00e5ndterer innkommende henvendelser via telefon, chat og e-post. Den kan svare p\u00e5 sp\u00f8rsm\u00e5l, booke avtaler og kvalifisere leads \u2014 helt automatisk, 24 timer i d\u00f8gnet.",
           },
         },
         {
