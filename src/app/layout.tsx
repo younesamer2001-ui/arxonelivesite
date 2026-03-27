@@ -29,6 +29,21 @@ export const metadata: Metadata = {
     "Arxon",
     "AI-l\u00f8sning for bedrifter",
     "kunstig intelligens bedrift",
+    "AI telefonsvarer",
+    "virtuell resepsjonist",
+    "AI sentralbord",
+    "automatisk telefonsvar bedrift",
+    "AI kundebehandler",
+    "smart resepsjonist",
+    "AI telefon Norge",
+    "automatisert booking system",
+    "AI svartjeneste",
+    "kundeservice automatisering Norge",
+    "AI-drevet telefonsvar",
+    "digital resepsjonist",
+    "automatisk kundeservice",
+    "AI for SMB",
+    "AI bedriftsløsning Norge",
   ],
   authors: [{ name: "Arxon", url: "https://arxon.no" }],
   creator: "Arxon",
@@ -46,6 +61,10 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://arxon.no",
+    languages: {
+      "nb-NO": "https://arxon.no",
+      "x-default": "https://arxon.no",
+    },
   },
   openGraph: {
     type: "website",
@@ -188,7 +207,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="no" className={`${inter.variable} antialiased`} suppressHydrationWarning>
+    <html lang="nb" className={`${inter.variable} antialiased`} suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
