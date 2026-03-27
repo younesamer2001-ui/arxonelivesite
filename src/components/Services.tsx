@@ -5,7 +5,15 @@ import VoiceTestimonial from './ui/voice-testimonial';
 import { Heart, Home, Calculator, Target, Car, Zap } from 'lucide-react';
 
 // Demo AI receptionists
-const aiReceptionists = {
+const aiReceptionists: Record<string, Array<{
+  name: string;
+  jobtitle: string;
+  text: string;
+  phoneNumber: string;
+  audio: string;
+  icon: React.ComponentType<{ className?: string }>;
+  assistantId: string;
+}>> = {
   no: [
     {
       name: 'Lisa',
@@ -64,8 +72,9 @@ const aiReceptionists = {
   ],
 };
 
-export default function Services() {
-  const testimonials = aiReceptionists.no.map((r) => ({
+export default function Services({ lang = 'no' }: { lang?: string }) {
+  const receptionists = aiReceptionists[lang] || aiReceptionists.no;
+  const testimonials = receptionists.map((r) => ({
     name: r.name,
     jobtitle: r.jobtitle,
     text: r.text,
