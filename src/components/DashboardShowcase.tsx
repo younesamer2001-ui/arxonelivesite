@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image'
 
 const content = {
   no: {
@@ -53,12 +54,7 @@ export default function DashboardShowcase({ lang = 'no' }: DashboardShowcaseProp
           transition={{ duration: 0.8, delay: 0.2 }}
           className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black"
         >
-          <img
-            src={imageSrc}
-            alt={lang === 'no' ? 'Arxon Dashboard' : 'Arxon Dashboard'}
-            className="w-full h-auto bg-black"
-            style={{ backgroundColor: 'black' }}
-          />
+          <Image src="/images/dashboard-no.jpg" alt="Arxon Dashboard" width={1376} height={768} quality={80} priority={false} className="w-full h-auto bg-black" style={{backgroundColor: "black"}} />
         </motion.div>
       </div>
     </section>
