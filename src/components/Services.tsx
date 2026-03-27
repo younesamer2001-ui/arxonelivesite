@@ -18,7 +18,7 @@ const aiReceptionists: Record<string, Array<{
     {
       name: 'Lisa',
       jobtitle: 'Helse & Klinikk',
-      text: 'Jeg hjelper klinikker med timebooking, p\u00e5minnelser og pasienthenvendelser. Jeg kan snakke om behandlinger og tilgjengelighet.',
+      text: 'Jeg hjelper klinikker med timebooking, påminnelser og pasienthenvendelser. Jeg kan snakke om behandlinger og tilgjengelighet.',
       phoneNumber: '+47 123 45 678',
       audio: '/audio/lisa-demo.mp3',
       icon: Heart,
@@ -27,7 +27,7 @@ const aiReceptionists: Record<string, Array<{
     {
       name: 'Marcus',
       jobtitle: 'Eiendom',
-      text: 'Jeg hjelper eiendomsmeglere med visningsbooking, salgssp\u00f8rsm\u00e5l og kundeoppf\u00f8lging. Jeg kjenner alle eiendommene.',
+      text: 'Jeg hjelper eiendomsmeglere med visningsbooking, salgsspørsmål og kundeoppfølging. Jeg kjenner alle eiendommene.',
       phoneNumber: '+47 123 45 679',
       audio: '/audio/marcus-demo.mp3',
       icon: Home,
@@ -35,8 +35,8 @@ const aiReceptionists: Record<string, Array<{
     },
     {
       name: 'Emma',
-      jobtitle: 'Regnskap & \u00d8konomi',
-      text: 'Jeg hjelper regnskapsf\u00f8rere med kundehenvendelser, fakturasp\u00f8rsm\u00e5l og booking av m\u00f8ter.',
+      jobtitle: 'Regnskap & Økonomi',
+      text: 'Jeg hjelper regnskapsførere med kundehenvendelser, fakturaspørsmål og booking av møter.',
       phoneNumber: '+47 123 45 680',
       audio: '/audio/emma-demo.mp3',
       icon: Calculator,
@@ -45,7 +45,7 @@ const aiReceptionists: Record<string, Array<{
     {
       name: 'Leo',
       jobtitle: 'Lead Generation',
-      text: 'Jeg kvalifiserer leads og booker m\u00f8ter for salgsteamet. Jeg stiller de riktige sp\u00f8rsm\u00e5lene for \u00e5 finne de beste kundene.',
+      text: 'Jeg kvalifiserer leads og booker møter for salgsteamet. Jeg stiller de riktige spørsmålene for å finne de beste kundene.',
       phoneNumber: '+47 123 45 681',
       audio: '/audio/leo-demo.mp3',
       icon: Target,
@@ -54,7 +54,7 @@ const aiReceptionists: Record<string, Array<{
     {
       name: 'Max',
       jobtitle: 'Bilverksted',
-      text: 'Jeg tar imot henvendelser for verkstedet \u2013 service, EU-kontroll, dekkskift og reparasjoner. Rask og effektiv booking.',
+      text: 'Jeg tar imot henvendelser for verkstedet – service, EU-kontroll, dekkskift og reparasjoner. Rask og effektiv booking.',
       phoneNumber: '+47 123 45 682',
       audio: '/audio/max-demo.mp3',
       icon: Car,
@@ -93,7 +93,7 @@ export default function Services({ lang = 'no' }: { lang?: string }) {
           viewport={{ once: true }}
           className="text-3xl md:text-4xl font-bold text-white mb-4"
         >
-          M\u00f8t v\u00e5re AI-resepsjonister
+          Møt våre AI-resepsjonister
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -102,7 +102,7 @@ export default function Services({ lang = 'no' }: { lang?: string }) {
           transition={{ delay: 0.1 }}
           className="text-white/60 max-w-2xl mx-auto"
         >
-          Hver bransje har sin egen AI \u2013 trent p\u00e5 relevante scenarier. Trykk \u00abRing n\u00e5\u00bb for \u00e5 teste direkte i nettleseren.
+          Hver bransje har sin egen AI – trent på relevante scenarier. Trykk «Ring nå» for å teste direkte i nettleseren.
         </motion.p>
       </div>
       <VoiceTestimonial testimonials={testimonials} />
