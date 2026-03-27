@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Home, Briefcase, Users, FileText, Mail, Phone, MapPin } from 'lucide-react'
 import emailjs from 'emailjs-com'
 import { NavBar } from "@/components/ui/tube-light-navbar"
@@ -41,6 +41,10 @@ export default function HomePage() {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const formRef = useRef<HTMLFormElement>(null)
   const items = navItems[currentLang]
+
+  useEffect(() => {
+    emailjs.init('Vy-evp6-E8wcwwLf1')
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
