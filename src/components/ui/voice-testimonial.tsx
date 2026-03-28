@@ -335,9 +335,9 @@ export const VoiceTestimonial: React.FC<VoiceTestimonialProps> = ({
       </div>
 
       <div className="hidden md:block">
-        <div className="flex justify-center items-stretch gap-5 flex-wrap">
+        <div className="grid grid-cols-3 justify-items-center gap-5 max-w-[1080px] mx-auto px-4">
           {testimonials.map((testimonial, index) => (
-            <div key={index} className="w-80">
+            <div key={index} className="w-full max-w-sm">
               <TestimonialCard
                 testimonial={testimonial}
                 isDark={isDark}
