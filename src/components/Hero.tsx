@@ -7,6 +7,7 @@ import dynamic from 'next/dynamic'
 
 const LiquidMetalButton = dynamic(() => import('./ui/liquid-metal-button').then(mod => ({ default: mod.LiquidMetalButton })), {
   ssr: false,
+  loading: () => null,
 })
 
 // Animation variants
@@ -62,8 +63,8 @@ export default function Hero({ lang = 'no' }: HeroProps) {
   
   return (
     <section className="relative min-h-screen bg-black overflow-hidden pt-20">
-      {/* Video Background */}
-      <div className="absolute bottom-[25vh] left-0 right-0 h-[80vh] z-0">
+      {/* Video Background - hidden on mobile for performance */}
+      <div className="absolute bottom-[25vh] left-0 right-0 h-[80vh] z-0 hidden md:block">
         <VideoPlayer 
           src="https://stream.mux.com/9JXDljEVWYwWu01PUkAemafDugK89o01BR6zqJ3aS9u00A.m3u8"
           className="w-full h-full"
@@ -179,17 +180,35 @@ export default function Hero({ lang = 'no' }: HeroProps) {
           </div>
         </motion.div>
 
-        {/* Buttons with Liquid Metal effect */}
+        {/* Buttons - LiquidMetal on desktop, simple buttons on mobile */}
         <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 md:gap-6 items-center">
-          <LiquidMetalButton 
-            label={t.cta1} 
-            onClick={() => window.location.href = '#kontakt'}
-          />
-          <LiquidMetalButton 
-            label={t.cta2}
-            viewMode="icon"
-            onClick={() => window.location.href = '#tjenester'}
-          />
+          {/* Mobile: simple buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 md:hidden">
+            <a
+              href="#kontakt"
+              className="bg-white text-black font-medium h-12 px-6 rounded-full text-sm inline-flex items-center justify-center hover:bg-gray-200 transition-colors"
+            >
+              {t.cta1}
+            </a>
+            <a
+              href="#tjenester"
+              className="border border-white/20 text-white font-medium h-12 px-6 rounded-full text-sm inline-flex items-center justify-center hover:bg-white/10 transition-colors"
+            >
+              {t.cta2}
+            </a>
+          </div>
+          {/* Desktop: LiquidMetal shader buttons */}
+          <div className="hidden md:flex gap-6 items-center">
+            <LiquidMetalButton 
+              label={t.cta1} 
+              onClick={() => window.location.href = '#kontakt'}
+            />
+            <LiquidMetalButton 
+              label={t.cta2}
+              viewMode="icon"
+              onClick={() => window.location.href = '#tjenester'}
+            />
+          </div>
         </motion.div>
 
 

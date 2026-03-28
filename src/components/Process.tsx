@@ -10,14 +10,12 @@ export default function Process() {
     visible: (i: number) => ({
       y: 0,
       opacity: 1,
-      filter: 'blur(0px)',
       transition: {
         delay: i * 1.5,
         duration: 0.7,
       },
     }),
     hidden: {
-      filter: 'blur(10px)',
       y: 40,
       opacity: 0,
     },
@@ -25,7 +23,6 @@ export default function Process() {
   
   const textVariants = {
     visible: (i: number) => ({
-      filter: 'blur(0px)',
       opacity: 1,
       transition: {
         delay: i * 0.3,
@@ -33,7 +30,6 @@ export default function Process() {
       },
     }),
     hidden: {
-      filter: 'blur(10px)',
       opacity: 0,
     },
   };

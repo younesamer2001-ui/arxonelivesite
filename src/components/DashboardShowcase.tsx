@@ -54,7 +54,17 @@ export default function DashboardShowcase({ lang = 'no' }: DashboardShowcaseProp
           transition={{ duration: 0.8, delay: 0.2 }}
           className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black"
         >
-          <Image src="/images/dashboard-no.jpg" alt="Arxon Dashboard" width={1376} height={768} quality={80} priority={false} className="w-full h-auto bg-black" style={{backgroundColor: "black"}} />
+          <Image
+            src={imageSrc}
+            alt="Arxon Dashboard"
+            width={1376}
+            height={768}
+            quality={75}
+            priority={false}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+            className="w-full h-auto bg-black"
+            style={{backgroundColor: "black"}}
+          />
         </motion.div>
       </div>
     </section>
