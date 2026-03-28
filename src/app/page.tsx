@@ -136,7 +136,7 @@ export default function HomePage() {
           <ContactCard
             title={currentLang === 'no' ? 'Kontakt oss' : 'Contact Us'}
             description={currentLang === 'no' 
-              ? 'Har du spÃ¸rsmÃ¥l om vÃ¥re tjenester eller trenger hjelp? Fyll ut skjemaet under. Vi svarer innen 1 virkedag.'
+              ? 'Har du spørsmål om våre tjenester eller trenger hjelp? Fyll ut skjemaet under. Vi svarer innen 1 virkedag.'
               : 'Have questions about our services or need help? Fill out the form below. We respond within 1 business day.'
             }
             contactInfo={[
@@ -222,7 +222,7 @@ export default function HomePage() {
               )}
               {submitStatus === 'error' && (
                 <div className="p-3 rounded-lg bg-red-500/20 border border-red-500/40 text-red-400 text-sm">
-                  {currentLang === 'no' ? 'Noe gikk galt. PrÃ¸v igjen eller send e-post direkte til kontakt@arxon.no' : 'Something went wrong. Please try again or email us directly at kontakt@arxon.no'}
+                  {currentLang === 'no' ? 'Noe gikk galt. Prøv igjen eller send e-post direkte til kontakt@arxon.no' : 'Something went wrong. Please try again or email us directly at kontakt@arxon.no'}
                 </div>
               )}
               <Button
