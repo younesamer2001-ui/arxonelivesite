@@ -209,6 +209,8 @@ export default function RootLayout({
   return (
     <html lang="nb" className={`${inter.variable} antialiased`} suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://stream.mux.com" />
+        <link rel="dns-prefetch" href="https://stream.mux.com" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

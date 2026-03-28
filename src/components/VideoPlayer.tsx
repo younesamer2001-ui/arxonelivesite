@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef, memo } from 'react'
-import Hls from 'hls.js'
 
 interface VideoPlayerProps {
   src: string
@@ -10,35 +9,43 @@ interface VideoPlayerProps {
 
 const VideoPlayer = memo(function VideoPlayer({ src, className = '' }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const hlsRef = useRef<Hls | null>(null)
+  const hlsRef = useRef<any>(null)
 
   useEffect(() => {
     const video = videoRef.current
     if (!video) return
 
-    // Check if HLS is supported
-    if (Hls.isSupported()) {
-      const hls = new Hls({
-        autoStartLoad: true,
-        debug: false,
+    // Defer HLS initialization to reduce Total Blocking Time
+    const initHls = () => {
+      import('hls.js').then(({ default: Hls }) => {
+        if (!videoRef.current) return
+
+        if (Hls.isSupported()) {
+          const hls = new Hls({
+            autoStartLoad: true,
+            debug: false,
+          })
+
+          hls.loadSource(src)
+          hls.attachMedia(videoRef.current)
+
+          hls.on(Hls.Events.MANIFEST_PARSED, () => {
+            videoRef.current?.play().catch(() => {})
+          })
+
+          hlsRef.current = hls
+        } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
+          videoRef.current.src = src
+          videoRef.current.play().catch(() => {})
+        }
       })
-      
-      hls.loadSource(src)
-      hls.attachMedia(video)
-      
-      hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        video.play().catch(() => {
-          // Autoplay blocked, user interaction needed
-        })
-      })
-      
-      hlsRef.current = hls
-    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      // Native HLS support (Safari)
-      video.src = src
-      video.play().catch(() => {
-        // Autoplay blocked
-      })
+    }
+
+    // Use requestIdleCallback to defer heavy HLS loading
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(initHls, { timeout: 2000 })
+    } else {
+      setTimeout(initHls, 100)
     }
 
     return () => {
