@@ -28,7 +28,7 @@ const VideoPlayer = memo(function VideoPlayer({ src, className = '' }: VideoPlay
       muted
       loop
       playsInline
-      preload="auto"
+      preload="none"
     />
   )
 })
