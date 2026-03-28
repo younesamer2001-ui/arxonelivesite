@@ -1,13 +1,13 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-const VideoPlayer = dynamic(() => import('./VideoPlayer'), { ssr: false })
 import { HubSpotLogo, AirtableLogo, GmailLogo, SlackLogo, MicrosoftTeamsLogo, SalesforceLogo } from './Logos'
 import dynamic from 'next/dynamic'
 
+const VideoPlayer = dynamic(() => import('./VideoPlayer'), { ssr: false })
 const LiquidMetalButton = dynamic(() => import('./ui/liquid-metal-button').then(mod => ({ default: mod.LiquidMetalButton })), {
   ssr: false,
-  loading: () => null,
 })
 
 // Animation variants
@@ -60,16 +60,26 @@ interface HeroProps {
 
 export default function Hero({ lang = 'no' }: HeroProps) {
   const t = content[lang]
-  
+  const [isDesktop, setIsDesktop] = useState(false)
+
+  useEffect(() => {
+    const check = () => setIsDesktop(window.innerWidth >= 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
   return (
     <section className="relative min-h-screen bg-black overflow-hidden pt-20">
-      {/* Video Background - hidden on mobile for performance */}
-      <div className="absolute bottom-[25vh] left-0 right-0 h-[80vh] z-0 hidden md:block">
-        <VideoPlayer 
-          src="https://stream.mux.com/9JXDljEVWYwWu01PUkAemafDugK89o01BR6zqJ3aS9u00A.m3u8"
-          className="w-full h-full"
-        />
-      </div>
+      {/* Video Background - only rendered on desktop to avoid loading hls.js on mobile */}
+      {isDesktop && (
+        <div className="absolute bottom-[25vh] left-0 right-0 h-[80vh] z-0">
+          <VideoPlayer
+            src="https://stream.mux.com/9JXDljEVWYwWu01PUkAemafDugK89o01BR6zqJ3aS9u00A.m3u8"
+            className="w-full h-full"
+          />
+        </div>
+      )}
 
       {/* Content */}
       <motion.div
@@ -85,8 +95,8 @@ export default function Hero({ lang = 'no' }: HeroProps) {
               key={i}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ 
-                duration: 0.5, 
+              transition={{
+                duration: 0.5,
                 delay: 0.3 + (i * 0.2),
                 ease: "easeOut"
               }}
@@ -119,7 +129,7 @@ export default function Hero({ lang = 'no' }: HeroProps) {
           <div className="relative w-full md:w-64 mx-auto overflow-hidden">
             <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none"></div>
             <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none"></div>
-            
+
             <motion.div
               className="flex items-center"
               animate={{
@@ -180,37 +190,38 @@ export default function Hero({ lang = 'no' }: HeroProps) {
           </div>
         </motion.div>
 
-        {/* Buttons - LiquidMetal on desktop, simple buttons on mobile */}
-        <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 md:gap-6 items-center">
-          {/* Mobile: simple buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 md:hidden">
+        {/* Mobile: simple lightweight buttons (no shader JS loaded) */}
+        {!isDesktop && (
+          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 items-center">
             <a
               href="#kontakt"
-              className="bg-white text-black font-medium h-12 px-6 rounded-full text-sm inline-flex items-center justify-center hover:bg-gray-200 transition-colors"
+              className="bg-white text-black font-semibold px-8 py-3 rounded-full text-sm hover:bg-gray-200 transition-colors"
             >
               {t.cta1}
             </a>
             <a
               href="#tjenester"
-              className="border border-white/20 text-white font-medium h-12 px-6 rounded-full text-sm inline-flex items-center justify-center hover:bg-white/10 transition-colors"
+              className="border border-white/30 text-white font-semibold px-8 py-3 rounded-full text-sm hover:bg-white/10 transition-colors"
             >
               {t.cta2}
             </a>
-          </div>
-          {/* Desktop: LiquidMetal shader buttons */}
-          <div className="hidden md:flex gap-6 items-center">
-            <LiquidMetalButton 
-              label={t.cta1} 
+          </motion.div>
+        )}
+
+        {/* Desktop: fancy liquid metal buttons */}
+        {isDesktop && (
+          <motion.div variants={itemVariants} className="flex gap-6 items-center">
+            <LiquidMetalButton
+              label={t.cta1}
               onClick={() => window.location.href = '#kontakt'}
             />
-            <LiquidMetalButton 
+            <LiquidMetalButton
               label={t.cta2}
               viewMode="icon"
               onClick={() => window.location.href = '#tjenester'}
             />
-          </div>
-        </motion.div>
-
+          </motion.div>
+        )}
 
       </motion.div>
     </section>
