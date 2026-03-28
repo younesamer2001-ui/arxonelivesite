@@ -21,7 +21,34 @@ export interface Testimonial {
 interface VoiceTestimonialProps {
   mode?: Mode;
   testimonials: Testimonial[];
+  lang?: string;
 }
+
+const callButtonText: Record<string, {
+  connecting: string;
+  hangUp: string;
+  ended: string;
+  callNow: string;
+  unmute: string;
+  mute: string;
+}> = {
+  no: {
+    connecting: 'Kobler til...',
+    hangUp: 'Legg på',
+    ended: 'Samtale avsluttet',
+    callNow: 'Ring nå',
+    unmute: 'Slå på mikrofon',
+    mute: 'Demp mikrofon',
+  },
+  en: {
+    connecting: 'Connecting...',
+    hangUp: 'Hang up',
+    ended: 'Call ended',
+    callNow: 'Call now',
+    unmute: 'Unmute',
+    mute: 'Mute',
+  },
+};
 
 /* call button (WebRTC via Vapi) */
 function CallButton({
@@ -34,6 +61,7 @@ function CallButton({
   onStop,
   onToggleMute,
   disabled,
+  lang = 'no',
 }: {
   assistantId?: string;
   isDark: boolean;
@@ -44,7 +72,10 @@ function CallButton({
   onStop: () => void;
   onToggleMute: () => void;
   disabled: boolean;
+  lang?: string;
 }) {
+  const t = callButtonText[lang] || callButtonText.no;
+
   if (!assistantId) return null;
 
   if (isThisCall && status === 'connecting') {
@@ -55,7 +86,7 @@ function CallButton({
           className="flex items-center justify-center gap-2 w-full py-3 rounded-lg font-medium bg-yellow-500 text-black cursor-wait"
         >
           <Loader2 className="w-4 h-4 animate-spin" />
-          Kobler til...
+          {t.connecting}
         </button>
       </div>
     );
@@ -69,7 +100,7 @@ function CallButton({
           className="flex items-center justify-center gap-2 flex-1 py-3 rounded-lg font-medium bg-red-500 text-white hover:bg-red-600 transition-all"
         >
           <PhoneOff className="w-4 h-4" />
-          Legg på
+          {t.hangUp}
         </button>
         <button
           onClick={onToggleMute}
@@ -78,7 +109,7 @@ function CallButton({
               ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30'
               : 'bg-white/10 text-white hover:bg-white/20'
           }`}
-          title={isMuted ? 'Slå på mikrofon' : 'Demp mikrofon'}
+          title={isMuted ? t.unmute : t.mute}
         >
           {isMuted ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
         </button>
@@ -90,7 +121,7 @@ function CallButton({
     return (
       <div className="flex gap-2 mt-4">
         <span className="flex items-center justify-center gap-2 w-full py-3 rounded-lg font-medium bg-white/10 text-white/60">
-          Samtale avsluttet
+          {t.ended}
         </span>
       </div>
     );
@@ -110,7 +141,7 @@ function CallButton({
         }`}
       >
         <Phone className="w-4 h-4" />
-        Ring nå
+        {t.callNow}
       </button>
     </div>
   );
@@ -127,6 +158,7 @@ function TestimonialCard({
   onStart,
   onStop,
   onToggleMute,
+  lang,
 }: {
   testimonial: Testimonial;
   isDark: boolean;
@@ -138,6 +170,7 @@ function TestimonialCard({
   onStart: (id: string) => void;
   onStop: () => void;
   onToggleMute: () => void;
+  lang?: string;
 }) {
   return (
     <motion.div
@@ -180,7 +213,7 @@ function TestimonialCard({
             {testimonial.name || 'AI Assistant'}
           </span>
           <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-            {testimonial.jobtitle || 'AI Resepsjonist'}
+            {testimonial.jobtitle || (lang === 'en' ? 'AI Receptionist' : 'AI Resepsjonist')}
           </span>
         </div>
       </div>
@@ -201,6 +234,7 @@ function TestimonialCard({
         onStop={onStop}
         onToggleMute={onToggleMute}
         disabled={isAnyCallActive && !isThisCall}
+        lang={lang}
       />
     </motion.div>
   );
@@ -209,6 +243,7 @@ function TestimonialCard({
 export const VoiceTestimonial: React.FC<VoiceTestimonialProps> = ({
   mode = 'dark',
   testimonials,
+  lang = 'no',
 }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
@@ -289,6 +324,7 @@ export const VoiceTestimonial: React.FC<VoiceTestimonialProps> = ({
                 onStart={handleStart}
                 onStop={handleStop}
                 onToggleMute={toggleMute}
+                lang={lang}
               />
             </motion.div>
           </AnimatePresence>
@@ -349,6 +385,7 @@ export const VoiceTestimonial: React.FC<VoiceTestimonialProps> = ({
                 onStart={handleStart}
                 onStop={handleStop}
                 onToggleMute={toggleMute}
+                lang={lang}
               />
             </div>
           ))}
