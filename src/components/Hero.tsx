@@ -1,8 +1,15 @@
 'use client'
 
-import { useState, useEffect, ComponentType } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { HubSpotLogo, AirtableLogo, GmailLogo, SlackLogo, MicrosoftTeamsLogo, SalesforceLogo } from './Logos'
+import dynamic from 'next/dynamic'
+
+// Module-level dynamic imports — chunks start loading during hydration (fast for desktop)
+const VideoPlayer = dynamic(() => import('./VideoPlayer'), { ssr: false })
+const LiquidMetalButton = dynamic(() => import('./ui/liquid-metal-button').then(mod => ({ default: mod.LiquidMetalButton })), {
+  ssr: false,
+})
 
 // Animation variants
 const containerVariants = {
@@ -52,23 +59,22 @@ interface HeroProps {
 
 export default function Hero({ lang = 'no' }: HeroProps) {
   const t = content[lang]
-  const [DesktopVideo, setDesktopVideo] = useState<ComponentType<any> | null>(null)
-  const [DesktopButton, setDesktopButton] = useState<ComponentType<any> | null>(null)
+  // Default to true so desktop renders video + fancy buttons immediately.
+  // On mobile, useEffect quickly sets this to false before chunks finish loading.
+  const [showHeavy, setShowHeavy] = useState(true)
 
   useEffect(() => {
-    // Only load heavy components on desktop (>= 768px)
-    if (window.innerWidth >= 768) {
-      import('./VideoPlayer').then(mod => setDesktopVideo(() => mod.default))
-      import('./ui/liquid-metal-button').then(mod => setDesktopButton(() => mod.LiquidMetalButton))
+    if (window.innerWidth < 768) {
+      setShowHeavy(false)
     }
   }, [])
 
   return (
     <section className="relative min-h-screen bg-black overflow-hidden pt-20">
-      {/* Video Background - only loaded on desktop via dynamic import */}
-      {DesktopVideo && (
+      {/* Video Background — renders immediately on desktop, removed on mobile before chunk loads */}
+      {showHeavy && (
         <div className="absolute bottom-[25vh] left-0 right-0 h-[80vh] z-0">
-          <DesktopVideo
+          <VideoPlayer
             src="https://stream.mux.com/9JXDljEVWYwWu01PUkAemafDugK89o01BR6zqJ3aS9u00A.m3u8"
             className="w-full h-full"
           />
@@ -151,13 +157,13 @@ export default function Hero({ lang = 'no' }: HeroProps) {
 
         {/* CTA Buttons */}
         <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 md:gap-6 items-center">
-          {DesktopButton ? (
+          {showHeavy ? (
             <>
-              <DesktopButton
+              <LiquidMetalButton
                 label={t.cta1}
                 onClick={() => window.location.href = '#kontakt'}
               />
-              <DesktopButton
+              <LiquidMetalButton
                 label={t.cta2}
                 viewMode="icon"
                 onClick={() => window.location.href = '#tjenester'}
