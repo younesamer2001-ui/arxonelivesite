@@ -15,38 +15,31 @@ const VideoPlayer = memo(function VideoPlayer({ src, className = '' }: VideoPlay
     const video = videoRef.current
     if (!video) return
 
-    // Defer HLS initialization to reduce Total Blocking Time
-    const initHls = () => {
-      import('hls.js').then(({ default: Hls }) => {
-        if (!videoRef.current) return
+    // Dynamic import of hls.js — keeps it out of main bundle
+    // No requestIdleCallback — dynamic import() is already async enough
+    import('hls.js').then(({ default: Hls }) => {
+      if (!videoRef.current) return
 
-        if (Hls.isSupported()) {
-          const hls = new Hls({
-            autoStartLoad: true,
-            debug: false,
-          })
+      if (Hls.isSupported()) {
+        const hls = new Hls({
+          autoStartLoad: true,
+          debug: false,
+        })
 
-          hls.loadSource(src)
-          hls.attachMedia(videoRef.current)
+        hls.loadSource(src)
+        hls.attachMedia(videoRef.current)
 
-          hls.on(Hls.Events.MANIFEST_PARSED, () => {
-            videoRef.current?.play().catch(() => {})
-          })
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          videoRef.current?.play().catch(() => {})
+        })
 
-          hlsRef.current = hls
-        } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
-          videoRef.current.src = src
-          videoRef.current.play().catch(() => {})
-        }
-      })
-    }
-
-    // Use requestIdleCallback to defer heavy HLS loading
-    if ('requestIdleCallback' in window) {
-      (window as any).requestIdleCallback(initHls, { timeout: 2000 })
-    } else {
-      setTimeout(initHls, 100)
-    }
+        hlsRef.current = hls
+      } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
+        // Safari native HLS
+        videoRef.current.src = src
+        videoRef.current.play().catch(() => {})
+      }
+    })
 
     return () => {
       if (hlsRef.current) {
