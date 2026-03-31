@@ -66,13 +66,13 @@ export default function Process() {
               >
                 risikofri måte
               </TimelineContent>{" "}
-              å teste det på — 50% depositum, resten etter 20 dager. Ikke fornøyd? <TimelineContent
+              å teste det på — ferdig på 10 dager, 30 dager gratis prøveperiode. Ikke fornøyd? <TimelineContent
                 as="span"
                 animationNum={3}
                 timelineRef={heroRef}
                 customVariants={textVariants}
                 className="text-orange-400 border-2 border-orange-400/50 inline-block border-dotted px-2 rounded-md"
-              >Full refusjon</TimelineContent>.
+              >Du betaler ingenting</TimelineContent>.
             </TimelineContent>
 
             <TimelineContent

@@ -9,22 +9,27 @@ import { motion } from 'framer-motion';
 const content = {
   no: {
     title: 'Priser som vokser med deg',
-    subtitle: 'Velg pakken som passer din bedrift. Ingen skjulte gebyrer.',
+    subtitle: '30 dager gratis prøveperiode på alle pakker. Setup faktureres ved oppstart.',
+    trialBadge: '30 dager gratis',
+    bindingNote: 'Spar med binding:',
     plans: [
       {
         name: 'P1: AI Resepsjonist',
         price: '4 990',
         period: 'kr/mnd',
         description: 'Per bedrift',
+        priceYearly: '3 990',
+        priceHalf: '4 490',
         features: [
           'AI telefon & chat',
           '24/7 tilgjengelig',
           'Kalender-integrasjon',
           'CRM-tilkobling',
           'Norsk stemme',
-          'Månedlig rapport'
+          'Månedlig rapport',
+          '30 dagers prøveperiode'
         ],
-        cta: 'Kom i gang',
+        cta: 'Start gratis prøveperiode',
         popular: false
       },
       {
@@ -32,15 +37,18 @@ const content = {
         price: 'Fra 8 000',
         period: 'kr/mnd',
         description: 'Per prosjekt',
+        priceYearly: 'Fra 6 400',
+        priceHalf: 'Fra 7 200',
         features: [
           'Alt fra P1',
           'Custom workflows',
           'Flere integrasjoner',
           'Prioritet support',
           'Utvikler-tilgang',
-          'Workshops'
+          'Workshops',
+          '30 dagers prøveperiode'
         ],
-        cta: 'Kontakt oss',
+        cta: 'Book konsultasjon',
         popular: true
       },
       {
@@ -48,6 +56,8 @@ const content = {
         price: 'Custom',
         period: '',
         description: 'For store organisasjoner',
+        priceYearly: '',
+        priceHalf: '',
         features: [
           'Alt fra P2',
           'Dedikert utvikler',
@@ -63,22 +73,27 @@ const content = {
   },
   en: {
     title: 'Pricing that scales with you',
-    subtitle: 'Choose the plan that fits your business. No hidden fees.',
+    subtitle: '30-day free trial on all plans. Setup fee billed at start.',
+    trialBadge: '30 days free',
+    bindingNote: 'Save with commitment:',
     plans: [
       {
         name: 'P1: AI Receptionist',
         price: '4 990',
         period: 'NOK/mo',
         description: 'Per company',
+        priceYearly: '3 990',
+        priceHalf: '4 490',
         features: [
           'AI phone & chat',
           '24/7 available',
           'Calendar integration',
           'CRM connection',
           'Norwegian voice',
-          'Monthly report'
+          'Monthly report',
+          '30-day free trial'
         ],
-        cta: 'Get started',
+        cta: 'Start free trial',
         popular: false
       },
       {
@@ -86,15 +101,18 @@ const content = {
         price: 'From 8 000',
         period: 'NOK/mo',
         description: 'Per project',
+        priceYearly: 'From 6 400',
+        priceHalf: 'From 7 200',
         features: [
           'Everything in P1',
           'Custom workflows',
           'More integrations',
           'Priority support',
           'Developer access',
-          'Workshops'
+          'Workshops',
+          '30-day free trial'
         ],
-        cta: 'Contact us',
+        cta: 'Book consultation',
         popular: true
       },
       {
@@ -102,6 +120,8 @@ const content = {
         price: 'Custom',
         period: '',
         description: 'For large organizations',
+        priceYearly: '',
+        priceHalf: '',
         features: [
           'Everything in P2',
           'Dedicated developer',
@@ -158,6 +178,12 @@ export default function Pricing({ lang = 'no' }: PricingProps) {
                   <CardTitle className="font-medium text-white">{plan.name}</CardTitle>
                   <span className="my-3 block text-2xl font-semibold text-white">{plan.price} <span className="text-lg text-gray-400">{plan.period}</span></span>
                   <CardDescription className="text-sm text-gray-500">{plan.description}</CardDescription>
+                  {plan.priceHalf && (
+                    <div className="mt-3 space-y-1 text-xs text-gray-500">
+                      <p>6 mnd: <span className="text-gray-300">{plan.priceHalf} {plan.period}</span></p>
+                      <p>12 mnd: <span className="text-gray-300">{plan.priceYearly} {plan.period}</span></p>
+                    </div>
+                  )}
                 </CardHeader>
 
                 <CardContent className="space-y-4">
@@ -179,7 +205,7 @@ export default function Pricing({ lang = 'no' }: PricingProps) {
                     variant={plan.popular ? 'default' : 'outline'}
                     className={`w-full ${plan.popular ? 'bg-white text-black hover:bg-gray-200' : 'border-white/20 text-white hover:bg-white/10'}`}
                   >
-                    <Link href="#kontakt">{plan.cta}</Link>
+                    <a href="https://cal.com/arxon/30min" target="_blank" rel="noopener noreferrer">{plan.cta}</a>
                   </Button>
                 </CardFooter>
               </Card>

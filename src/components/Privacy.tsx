@@ -24,7 +24,7 @@ export default function Privacy() {
       {[
         {
           title: '1. Behandlingsansvarlig',
-          text: 'Arxon, organisasjonsnummer under registrering, ved Younes Amer, er behandlingsansvarlig for personopplysninger som samles inn via arxon.no og våre tjenester. Kontakt: kontakt@arxon.no.',
+          text: 'Arxon, org.nr. 837 230 012, ved Younes Amer, er behandlingsansvarlig for personopplysninger som samles inn via arxon.no og våre tjenester. Kontakt: kontakt@arxon.no.',
         },
         {
           title: '2. Hvilke opplysninger vi samler inn',
