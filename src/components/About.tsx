@@ -190,7 +190,7 @@ export default function About({ lang = 'no' }: AboutProps) {
         variants={fade} custom={0.1}
         className="py-16 md:py-20 border-t border-white/[0.08] flex justify-center"
       >
-        <a href="/#kontakt"
+        <a href="https://cal.com/arxon/30min" target="_blank" rel="noopener noreferrer"
           className="inline-flex items-center gap-2 bg-white text-black px-8 py-3.5 rounded-full font-medium text-sm hover:bg-white/90 transition-colors"
         >
           {t.cta}

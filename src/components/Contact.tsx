@@ -127,9 +127,9 @@ export default function Contact({ lang = 'no' }: ContactProps) {
             <h3 className="text-xl font-semibold mb-6">{t.infoTitle}</h3>
 
             <div className="space-y-4">
-              <a href="mailto:Kontakt@arxon.no" className="flex items-center text-gray-300 hover:text-white transition-colors">
+              <a href="mailto:kontakt@arxon.no" className="flex items-center text-gray-300 hover:text-white transition-colors">
                 <Mail className="w-5 h-5 mr-4 text-white/50" />
-                Kontakt@arxon.no
+                kontakt@arxon.no
               </a>
               <div className="flex items-center text-gray-300">
                 <Phone className="w-5 h-5 mr-4 text-white/50" />

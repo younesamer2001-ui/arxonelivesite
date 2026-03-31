@@ -36,7 +36,7 @@ const footerLinks: FooterSection[] = [
   {
     label: 'Kontakt',
     links: [
-      { title: 'Kontakt@arxon.no', href: 'mailto:Kontakt@arxon.no', icon: Mail },
+      { title: 'kontakt@arxon.no', href: 'mailto:kontakt@arxon.no', icon: Mail },
       { title: '+47 993 53 596', href: 'tel:+4799353596', icon: Phone },
       { title: 'Org: 837 230 012', href: '#', icon: MapPin },
       { title: 'arxon.no', href: 'https://arxon.no', icon: Globe },
