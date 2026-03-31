@@ -99,10 +99,10 @@ export function NavBar({ items, currentLang, onLangChange, className }: NavBarPr
               </button>
             </div>
             
-            <Link href="/#kontakt"
+            <a href="https://cal.com/arxon/30min" target="_blank" rel="noopener noreferrer"
               className="px-5 py-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white rounded-full text-sm font-semibold transition-all">
               Book konsultasjon
-            </Link>
+            </a>
           </div>
 
           {/* mobile hamburger */}
@@ -141,10 +141,10 @@ export function NavBar({ items, currentLang, onLangChange, className }: NavBarPr
               })}
             </nav>
             <div className="mt-8 pt-6 border-t border-white/10 space-y-4">
-              <Link href="/#kontakt" onClick={() => setMenuOpen(false)}
+              <a href="https://cal.com/arxon/30min" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)}
                 className="block w-full text-center py-3 bg-white text-black rounded-full font-semibold text-base">
                 Book konsultasjon
-              </Link>
+              </a>
               <div className="flex justify-center gap-4 text-sm">
                 <button onClick={() => { onLangChange('no'); setMenuOpen(false); }}
                   className={cn("px-3 py-1.5 rounded-full", currentLang === 'no' ? 'bg-white/10 text-white' : 'text-white/50')}>

@@ -11,7 +11,7 @@ const LiquidMetalButton = dynamic(() => import('./ui/liquid-metal-button').then(
 
 const content = {
   no: {
-    headline: ['Automatiser.', 'Vokst.', 'Vinn.'],
+    headline: ['Automatiser.', 'Voks.', 'Vinn.'],
     subtext: 'Arxon er din AI-resepsjonist og AI-telefonsvarer. Vi hjelper norske bedrifter med å automatisere kundeservice, booking og salg — med AI som gir målbart resultat.',
     badgesLabel: 'Integrert med',
     cta1: 'Book gratis konsultasjon',
