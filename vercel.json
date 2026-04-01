@@ -2,7 +2,7 @@
   "redirects": [
     {
       "source": "/handzon",
-      "destination": "https://arxon-handzon-pitch-81e6yomxv-yoyokoks-projects.vercel.app/",
+      "destination": "https://arxon-handzon-pitch.vercel.app/",
       "permanent": false
     }
   ],
