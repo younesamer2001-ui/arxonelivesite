@@ -42,10 +42,10 @@ export default function CommandCenter({ lang = 'no' }: CommandCenterProps) {
   const t = content[lang];
 
   const agents = [
-    { name: 'Lisa', role: 'Helse', status: 'active', color: 'bg-emerald-400' },
-    { name: 'Marcus', role: 'Eiendom', status: 'active', color: 'bg-blue-400' },
-    { name: 'Emma', role: 'Regnskap', status: 'active', color: 'bg-purple-400' },
-    { name: 'Leo', role: 'Leads', status: 'idle', color: 'bg-amber-400' },
+    { name: 'Lisa', role: 'Helse', status: 'active', color: 'bg-zinc-500' },
+    { name: 'Marcus', role: 'Eiendom', status: 'active', color: 'bg-zinc-600' },
+    { name: 'Emma', role: 'Regnskap', status: 'active', color: 'bg-zinc-500' },
+    { name: 'Leo', role: 'Leads', status: 'idle', color: 'bg-zinc-500' },
   ];
 
   const recentCalls = [
@@ -73,8 +73,8 @@ export default function CommandCenter({ lang = 'no' }: CommandCenterProps) {
           {/* Header */}
           <div className="p-4 md:p-6 border-b border-zinc-800 flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center">
-                <div className="w-5 h-5 rounded-full bg-emerald-400" />
+              <div className="w-10 h-10 rounded-xl bg-zinc-500/20 flex items-center justify-center">
+                <div className="w-5 h-5 rounded-full bg-zinc-500" />
               </div>
               <div>
                 <h2 className="text-xl font-semibold text-white">{t.title}</h2>
@@ -104,7 +104,7 @@ export default function CommandCenter({ lang = 'no' }: CommandCenterProps) {
                   <div className="text-4xl md:text-6xl lg:text-7xl font-bold text-white">147</div>
                   <div className="text-sm text-zinc-400 mt-1">{t.callsToday}</div>
                 </div>
-                <div className="flex items-center gap-1 text-emerald-400 text-sm mb-2">
+                <div className="flex items-center gap-1 text-zinc-500 text-sm mb-2">
                   <TrendingUp className="w-4 h-4" />
                   <span>+12%</span>
                 </div>
@@ -115,7 +115,7 @@ export default function CommandCenter({ lang = 'no' }: CommandCenterProps) {
                 <div className="text-4xl font-bold text-white">94%</div>
                 <div className="text-sm text-zinc-400">{t.satisfaction}</div>
                 <div className="flex-1 h-2 bg-zinc-800 rounded-full overflow-hidden">
-                  <div className="h-full w-[94%] bg-gradient-to-r from-emerald-400 to-emerald-500 rounded-full" />
+                  <div className="h-full w-[94%] bg-gradient-to-r from-zinc-500 to-zinc-600 rounded-full" />
                 </div>
               </div>
 
@@ -129,7 +129,7 @@ export default function CommandCenter({ lang = 'no' }: CommandCenterProps) {
                       whileInView={{ height: `${height}%` }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.5, delay: index * 0.05 }}
-                      className="flex-1 bg-emerald-400/30 hover:bg-emerald-400/50 transition-colors rounded-t"
+                      className="flex-1 bg-zinc-400/30 hover:bg-zinc-400/50 transition-colors rounded-t"
                       style={{ minHeight: '4px' }}
                     />
                   ))}
@@ -162,7 +162,7 @@ export default function CommandCenter({ lang = 'no' }: CommandCenterProps) {
                         <div className="text-sm font-medium text-white">{agent.name}</div>
                         <div className="text-xs text-zinc-500">{agent.role}</div>
                       </div>
-                      <div className={`w-2 h-2 rounded-full ${agent.status === 'active' ? 'bg-emerald-400' : 'bg-zinc-600'}`} />
+                      <div className={`w-2 h-2 rounded-full ${agent.status === 'active' ? 'bg-zinc-500' : 'bg-zinc-600'}`} />
                     </div>
                   ))}
                 </div>

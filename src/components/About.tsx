@@ -1,203 +1,216 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { motion, useInView } from 'framer-motion';
+import { useRef } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Phone, Globe, TrendingUp, ArrowRight } from 'lucide-react';
 
+/* ─── Content ─── */
 const content = {
   no: {
-    headline: 'AI for norske bedrifter.',
-    sub: 'Ikke enterprise-priser. Ikke månedsvis med venting. Bare resultater.',
-    originLabel: 'Bakgrunn',
-    originP1: 'I 2025 så vi et tydelig gap i det norske markedet. Store aktører som Cognite, Bouvet og Bekk betjener enterprise-kunder med massive budsjetter. Men hvem hjelper tannlegen med 8 ansatte? Eller eiendomsmegleren som misser 30% av henvendelsene?',
-    originP2: 'Svaret var: nesten ingen. Så vi bygde Arxon — et AI-konsulentselskap som kombinerer enterprise-kvalitet med SMB-hastighet og priser.',
-    promiseLabel: 'Vårt løfte',
-    promiseHeadline: '10 dager.',
-    promiseText: 'Fra første samtale til live AI-løsning. Funker det ikke? Du betaler ingenting.',
-    pillars: [
-      { number: '10', unit: 'dager', text: 'Fra oppstart til live AI' },
-      { number: '30', unit: 'dagers garanti', text: 'Full refusjon, ingen spørsmål' },
-      { number: '23+', unit: 'bookinger/mnd', text: 'Gjennomsnittlig økning' },
+    label: 'Om Arxon',
+    heading: 'Vi bygger fremtidens resepsjon',
+    story:
+      'Hver dag mister norske bedrifter kunder fordi ingen svarer telefonen. Arxon er en AI-resepsjonist som tar imot samtaler, booker avtaler og gir bedrifter full oversikt — 24 timer i døgnet, 365 dager i året.',
+    founderName: 'Younes Amer',
+    founderRole: 'Grunnlegger & daglig leder',
+    founderStory:
+      'Det begynte med en bulk på bilen. Jeg ringte et verksted — ingen svarte. Prøvde igjen neste dag, samme kø. Til slutt gikk jeg bare til en konkurrent. Det fikk meg til å tenke: hvor mange kunder mister denne bedriften hver uke, uten å vite det?',
+    founderStory2:
+      'Jeg begynte å bygge på kveldene. Først en enkel AI-resepsjonist for én bilvask, bare for å se om det fungerte. Det gjorde det — og det som startet som et eksperiment, viste raskt hvor stort problemet egentlig var.',
+    founderMission:
+      'Etter hvert ble det tydelig at dette handlet om mer enn å svare telefonen. Bedrifter trengte systemer som fanget opp informasjon, strukturerte den og gjorde den brukbar i driften. Derfor ble Arxon et helhetlig system: AI-resepsjonist, dashboard som analyserer og organiserer data, og verktøy som gir bedrifter mer kontroll, bedre flyt og færre tapte muligheter.',
+    valuesHeading: 'Det vi står for',    values: [
+      {
+        title: 'Alltid tilgjengelig',
+        desc: 'Kundene dine ringer når det passer dem. Vi sørger for at noen alltid svarer.',
+        icon: Phone,
+      },
+      {
+        title: 'Bygget for Norge',
+        desc: 'Vi forstår norsk, dialekter, og hvordan norske bedrifter faktisk jobber.',
+        icon: Globe,
+      },
+      {
+        title: 'Resultater, ikke buzzwords',
+        desc: 'Ingen AI-hype. Bare flere bookinger, færre tapte samtaler, og mer tid til det som betyr noe.',
+        icon: TrendingUp,
+      },
     ],
-    whoLabel: 'Hvem vi hjelper',
-    whoText: 'Helseklinikker som misser anrop. Eiendomsmeglere som ikke følger opp leads. Servicebedrifter som drukner i admin. Har du 3–200 ansatte og bruker mer tid på telefon og epost enn på det du faktisk er god på — da er Arxon for deg.',
-    buildLabel: 'Hva vi leverer',
-    buildItems: [
-      { title: 'AI-resepsjonist', desc: 'Tar imot anrop, booker timer og svarer kunder — 24/7, på norsk.' },
-      { title: 'Workflow-automasjon', desc: 'Fjerner repetitive oppgaver. Faktura, oppfølging, rapporter.' },
-      { title: 'CRM + integrasjoner', desc: 'Kobler seg på Fiken, Tripletex, HubSpot og systemene du bruker.' },
-      { title: 'Skreddersydde AI-agenter', desc: 'Bygget for din bedrift. Ikke et generisk SaaS-produkt.' },
-    ],
-    marketNumbers: [
-      { value: '1.79 mrd', unit: 'USD', label: 'Norsk konsulentmarked' },
-      { value: '80%', unit: '', label: 'Regjeringens AI-mål' },
-      { value: '< 5', unit: '', label: 'AI-konsulenter for SMB i Norge' },
-    ],
-    cta: 'Book en samtale',
+    ctaHeading: 'Klar for å se hvordan Arxon fungerer?',
+    ctaButton: 'Kom i gang',
   },
   en: {
-    headline: 'AI for Norwegian businesses.',
-    sub: 'No enterprise pricing. No months of waiting. Just results.',
-    originLabel: 'Background',
-    originP1: 'In 2025, we saw a clear gap in the Norwegian market. Big players like Cognite, Bouvet, and Bekk serve enterprise clients with massive budgets. But who helps the dentist with 8 employees? Or the real estate agent missing 30% of inquiries?',
-    originP2: 'The answer was: almost nobody. So we built Arxon — an AI consultancy combining enterprise quality with SMB speed and pricing.',
-    promiseLabel: 'Our promise',
-    promiseHeadline: '10 days.',
-    promiseText: 'From first conversation to live AI solution. Doesn\'t work? You pay nothing.',
-    pillars: [
-      { number: '10', unit: 'days', text: 'From kickoff to live AI' },
-      { number: '30', unit: 'day guarantee', text: 'Full refund, no questions' },
-      { number: '23+', unit: 'bookings/mo', text: 'Average increase' },
+    label: 'About Arxon',
+    heading: 'We\u2019re building the reception of the future',
+    story:
+      'Every day, Norwegian businesses lose customers because no one picks up the phone. Arxon is an AI receptionist that answers calls, books appointments and gives businesses full visibility — 24 hours a day, 365 days a year.',
+    founderName: 'Younes Amer',
+    founderRole: 'Founder & CEO',
+    founderStory:
+      'It started with a dent on my car. I called a workshop — no answer. Tried again the next day, same queue. Eventually I just went to a competitor. It made me think: how many customers does this business lose every week without even knowing?',
+    founderStory2:
+      'I started building in the evenings. First a simple AI receptionist for one car wash, just to see if it worked. It did — and what started as an experiment quickly showed how big the problem really was.',
+    founderMission:
+      'Over time it became clear this was about more than answering the phone. Businesses needed systems that captured information, structured it and made it useful in their operations. That\u2019s why Arxon became a complete system: AI receptionist, a dashboard that analyzes and organizes data, and tools that give businesses more control, better flow and fewer missed opportunities.',
+    valuesHeading: 'What we stand for',
+    values: [
+      {
+        title: 'Always available',
+        desc: 'Your customers call when it suits them. We make sure someone always answers.',
+        icon: Phone,
+      },
+      {
+        title: 'Built for Norway',
+        desc: 'We understand Norwegian, dialects, and how Norwegian businesses actually work.',
+        icon: Globe,
+      },
+      {
+        title: 'Results, not buzzwords',
+        desc: 'No AI hype. Just more bookings, fewer missed calls, and more time for what matters.',
+        icon: TrendingUp,
+      },
     ],
-    whoLabel: 'Who we help',
-    whoText: 'Health clinics missing calls. Real estate agents not following up leads. Service businesses drowning in admin. If you have 3–200 employees and spend more time on phone and email than on what you do best — Arxon is for you.',
-    buildLabel: 'What we deliver',
-    buildItems: [
-      { title: 'AI receptionist', desc: 'Answers calls, books appointments and responds to customers — 24/7, in Norwegian.' },
-      { title: 'Workflow automation', desc: 'Removes repetitive tasks. Invoices, follow-ups, reports.' },
-      { title: 'CRM + integrations', desc: 'Connects to Fiken, Tripletex, HubSpot and your existing systems.' },
-      { title: 'Custom AI agents', desc: 'Built for your business. Not a generic SaaS product.' },
-    ],
-    marketNumbers: [
-      { value: '1.79B', unit: 'USD', label: 'Norwegian consulting market' },
-      { value: '80%', unit: '', label: 'Government AI target' },
-      { value: '< 5', unit: '', label: 'AI consultancies for Norwegian SMBs' },
-    ],
-    cta: 'Book a call',
+    ctaHeading: 'Ready to see how Arxon works?',
+    ctaButton: 'Get started',
   },
-};
+} as const;
 
+/* ─── Animation ─── */
 const fade = {
-  hidden: { opacity: 0, y: 16 },
-  visible: (d: number) => ({
-    opacity: 1, y: 0,
-    transition: { duration: 0.6, delay: d, ease: [0.25, 0.1, 0.25, 1] as const },
+  hidden: { opacity: 0, y: 20 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.15, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] as const },
   }),
 };
 
-interface AboutProps { lang?: 'no' | 'en' }
-
-export default function About({ lang = 'no' }: AboutProps) {
+function Reveal({ children, i = 0 }: { children: React.ReactNode; i?: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-60px' });
+  return (
+    <motion.div
+      ref={ref}
+      custom={i}
+      variants={fade}
+      initial="hidden"
+      animate={inView ? 'visible' : 'hidden'}
+    >
+      {children}
+    </motion.div>
+  );
+}
+/* ─── Component ─── */
+export default function About({ lang = 'no' }: { lang?: 'no' | 'en' }) {
   const t = content[lang];
 
   return (
-    <div className="max-w-5xl mx-auto px-6">
+    <section className="relative px-6 md:px-12 lg:px-24 pb-32 overflow-hidden">
+      {/* ── Subtle radial glow behind hero ── */}
+      <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] rounded-full bg-blue-500/[0.03] blur-[120px]" />
 
-      {/* Hero */}
-      <motion.div initial="hidden" animate="visible" variants={fade} custom={0}
-        className="pt-20 pb-16 md:pt-28 md:pb-20"
-      >
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-semibold text-white tracking-tight leading-[1.05]">
-          {t.headline}
-        </h1>
-        <p className="mt-5 text-lg md:text-xl text-white/60 max-w-xl leading-relaxed">
-          {t.sub}
-        </p>
-      </motion.div>
+      {/* ── Hero / Origin Story ── */}
+      <div className="relative max-w-2xl mx-auto text-center pt-12 pb-24 md:pb-32">
+        <Reveal>
+          <p className="text-xs uppercase tracking-[0.25em] text-zinc-500 mb-6">
+            {t.label}
+          </p>
+        </Reveal>
 
-      {/* Origin — two columns */}
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }}
-        variants={fade} custom={0.1}
-        className="py-14 md:py-16 border-t border-white/[0.08]"
-      >
-        <span className="text-[11px] tracking-[0.25em] uppercase text-white/35 block mb-6">
-          {t.originLabel}
-        </span>
-        <div className="grid md:grid-cols-2 gap-6 md:gap-10">
-          <p className="text-base md:text-lg text-white/70 leading-relaxed">{t.originP1}</p>
-          <p className="text-base md:text-lg text-white/70 leading-relaxed">{t.originP2}</p>
-        </div>
-      </motion.div>
+        <Reveal i={1}>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] bg-gradient-to-b from-white via-white to-zinc-500 bg-clip-text text-transparent">
+            {t.heading}
+          </h1>
+        </Reveal>
 
-      {/* Promise + Pillars — combined section */}
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }}
-        variants={fade} custom={0.1}
-        className="py-14 md:py-16 border-t border-white/[0.08]"
-      >
-        <span className="text-[11px] tracking-[0.25em] uppercase text-white/35 block mb-6">
-          {t.promiseLabel}
-        </span>
-        <h2 className="text-4xl md:text-6xl lg:text-7xl font-semibold text-white tracking-tight mb-3">
-          {t.promiseHeadline}
-        </h2>
-        <p className="text-base md:text-lg text-white/60 max-w-lg mb-12">
-          {t.promiseText}
-        </p>
-        {/* Pillars inline */}
-        <div className="grid grid-cols-3 gap-6">
-          {t.pillars.map((p, i) => (
-            <motion.div key={p.number} initial="hidden" whileInView="visible"
-              viewport={{ once: true }} variants={fade} custom={i * 0.1}
-              className="p-5 rounded-xl border border-white/[0.08] bg-white/[0.02]"
-            >
-              <div className="text-3xl md:text-4xl font-semibold text-white">{p.number}</div>
-              <div className="text-xs text-white/40 mt-0.5 uppercase tracking-wide">{p.unit}</div>
-              <p className="text-sm text-white/50 mt-3">{p.text}</p>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
+        <Reveal i={2}>
+          <p className="mt-8 text-lg md:text-xl leading-relaxed text-zinc-400">
+            {t.story}
+          </p>
+        </Reveal>
+      </div>
+      {/* ── Founder Profile ── */}
+      <div className="max-w-2xl mx-auto mb-24 md:mb-32">
+        <div className="h-px bg-gradient-to-r from-transparent via-zinc-800 to-transparent mb-16" />
 
-      {/* Who we help */}
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }}
-        variants={fade} custom={0.1}
-        className="py-14 md:py-16 border-t border-white/[0.08]"
-      >
-        <span className="text-[11px] tracking-[0.25em] uppercase text-white/35 block mb-6">
-          {t.whoLabel}
-        </span>
-        <p className="text-base md:text-lg text-white/70 leading-relaxed max-w-3xl">
-          {t.whoText}
-        </p>
-      </motion.div>
+        <Reveal>
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+            <Image
+              src="/images/younes.jpg"
+              alt={t.founderName}
+              width={80}
+              height={80}
+              className="shrink-0 w-20 h-20 rounded-full object-cover border border-zinc-700"
+            />
 
-      {/* What we deliver */}
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }}
-        variants={fade} custom={0.1}
-        className="py-14 md:py-16 border-t border-white/[0.08]"
-      >
-        <span className="text-[11px] tracking-[0.25em] uppercase text-white/35 block mb-8">
-          {t.buildLabel}
-        </span>
-        <div className="grid sm:grid-cols-2 gap-4">
-          {t.buildItems.map((item, i) => (
-            <motion.div key={item.title} initial="hidden" whileInView="visible"
-              viewport={{ once: true }} variants={fade} custom={i * 0.08}
-              className="p-5 rounded-xl border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.04] transition-colors"
-            >
-              <h3 className="text-white font-medium text-sm mb-1.5">{item.title}</h3>
-              <p className="text-sm text-white/50 leading-relaxed">{item.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
-
-      {/* Market numbers */}
-      <div className="py-14 md:py-16 border-t border-white/[0.08] grid grid-cols-3 gap-6">
-        {t.marketNumbers.map((n, i) => (
-          <motion.div key={n.label} initial="hidden" whileInView="visible"
-            viewport={{ once: true }} variants={fade} custom={i * 0.1}
-          >
-            <div className="text-2xl md:text-3xl font-semibold text-white">
-              {n.value}<span className="text-sm text-white/40 ml-1 font-normal">{n.unit}</span>
+            <div className="text-center sm:text-left">
+              <p className="text-white font-medium text-lg">
+                {t.founderName}
+              </p>
+              <p className="text-zinc-500 text-sm mb-4">
+                {t.founderRole}
+              </p>
+              <p className="text-zinc-400 text-[15px] leading-relaxed">
+                {t.founderStory}
+              </p>
+              <p className="text-zinc-400 text-[15px] leading-relaxed mt-4">
+                {t.founderStory2}
+              </p>
+              <p className="text-zinc-400 text-[15px] leading-relaxed mt-4">
+                {t.founderMission}
+              </p>
             </div>
-            <p className="text-xs text-white/40 mt-1">{n.label}</p>
-          </motion.div>
-        ))}
+          </div>
+        </Reveal>
+      </div>
+      {/* ── Values ── */}
+      <div className="max-w-4xl mx-auto">
+        <Reveal>
+          <h2 className="text-2xl md:text-3xl font-semibold text-white text-center mb-16">
+            {t.valuesHeading}
+          </h2>
+        </Reveal>
+
+        <div className="grid md:grid-cols-3 gap-12 md:gap-16">
+          {t.values.map((v, i) => {
+            const Icon = v.icon;
+            return (
+              <Reveal key={v.title} i={i + 1}>
+                <div className="text-center md:text-left">
+                  <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-zinc-900 border border-zinc-800 mb-4">
+                    <Icon className="w-4 h-4 text-zinc-400" />
+                  </div>
+                  <h3 className="text-lg font-medium text-white mb-3">
+                    {v.title}
+                  </h3>
+                  <p className="text-zinc-500 leading-relaxed text-[15px]">
+                    {v.desc}
+                  </p>
+                </div>
+              </Reveal>
+            );
+          })}
+        </div>
       </div>
 
-      {/* CTA */}
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }}
-        variants={fade} custom={0.1}
-        className="py-16 md:py-20 border-t border-white/[0.08] flex justify-center"
-      >
-        <a href="https://cal.com/arxon/30min" target="_blank" rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 bg-white text-black px-8 py-3.5 rounded-full font-medium text-sm hover:bg-white/90 transition-colors"
-        >
-          {t.cta}
-          <ArrowRight size={16} />
-        </a>
-      </motion.div>
-
-    </div>
+      {/* ── CTA ── */}
+      <div className="max-w-2xl mx-auto mt-24 md:mt-32 text-center">
+        <div className="h-px bg-gradient-to-r from-transparent via-zinc-800 to-transparent mb-16" />
+        <Reveal>
+          <h2 className="text-2xl md:text-3xl font-semibold text-white mb-6">
+            {t.ctaHeading}
+          </h2>
+          <Link
+            href="/#kontakt"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white text-black font-medium text-sm hover:bg-zinc-200 transition-colors"
+          >
+            {t.ctaButton}
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </Reveal>
+      </div>
+    </section>
   );
 }

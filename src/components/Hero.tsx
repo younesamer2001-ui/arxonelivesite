@@ -1,158 +1,155 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { HubSpotLogo, AirtableLogo, GmailLogo, SlackLogo, MicrosoftTeamsLogo, SalesforceLogo } from './Logos'
-import dynamic from 'next/dynamic'
-
-const VideoPlayer = dynamic(() => import('./VideoPlayer'), { ssr: false })
-const LiquidMetalButton = dynamic(() => import('./ui/liquid-metal-button').then(mod => ({ default: mod.LiquidMetalButton })), {
-  ssr: false,
-})
-
-const content = {
-  no: {
-    headline: ['Automatiser.', 'Voks.', 'Vinn.'],
-    subtext: 'Arxon er din AI-resepsjonist og AI-telefonsvarer. Vi hjelper norske bedrifter med å automatisere kundeservice, booking og salg — med AI som gir målbart resultat.',
-    badgesLabel: 'Integrert med',
-    cta1: 'Book gratis konsultasjon',
-    cta2: 'Se våre tjenester'
-  },
-  en: {
-    headline: ['Automate.', 'Grow.', 'Win.'],
-    subtext: 'We help Norwegian businesses automate customer service, booking, and sales with AI that delivers measurable results.',
-    badgesLabel: 'Integrated with',
-    cta1: 'Book free consultation',
-    cta2: 'See our services'
-  }
-}
+import { useEffect, useRef } from 'react'
+import { ArrowRight, Phone } from 'lucide-react'
+import AnimatedDashboard from './AnimatedDashboard'
 
 interface HeroProps {
   lang?: 'no' | 'en'
 }
 
+const content = {
+  no: {
+    badge: 'AI-resepsjonist for norske bedrifter',
+    headline: 'Aldri miss',
+    headlineAccent: 'et anrop igjen.',
+    sub: 'Hver gang telefonen ringer og ingen svarer, mister du en kunde. Arxon sin AI svarer hvert eneste anrop — booker timer, følger opp leads og gir deg full oversikt.',
+    cta: 'Book en gratis demo',
+    ctaSecondary: 'Ring og test selv',
+    stat1: '24/7',
+    stat1Label: 'Tilgjengelig',
+    stat2: '<3s',
+    stat2Label: 'Svartid',
+    stat3: '100%',
+    stat3Label: 'Anrop besvart',
+    dashboardAlt: 'Arxon AI Dashboard',
+    dashboardFallback: 'Arxon Command Center',
+  },
+  en: {
+    badge: 'AI receptionist for Norwegian businesses',
+    headline: 'Never miss',
+    headlineAccent: 'a call again.',
+    sub: "Every time the phone rings and nobody answers, you lose a customer. Arxon's AI answers every single call — books appointments, follows up leads and gives you full visibility.",
+    cta: 'Book a free demo',
+    ctaSecondary: 'Call and test it',
+    stat1: '24/7',
+    stat1Label: 'Available',
+    stat2: '<3s',
+    stat2Label: 'Response',
+    stat3: '100%',
+    stat3Label: 'Calls answered',
+    dashboardAlt: 'Arxon AI Dashboard',
+    dashboardFallback: 'Arxon Command Center',
+  },
+}
+
 export default function Hero({ lang = 'no' }: HeroProps) {
-  const t = content[lang]
-  const [showHeavy, setShowHeavy] = useState(true)
+  const c = content[lang]
+  const orbRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (window.innerWidth < 768) {
-      setShowHeavy(false)
+    const handleMouse = (e: MouseEvent) => {
+      if (!orbRef.current) return
+      const x = (e.clientX / window.innerWidth - 0.5) * 20
+      const y = (e.clientY / window.innerHeight - 0.5) * 20
+      orbRef.current.style.transform = `translate(${x}px, ${y}px)`
     }
+    window.addEventListener('mousemove', handleMouse)
+    return () => window.removeEventListener('mousemove', handleMouse)
   }, [])
 
   return (
-    <>
-      <style jsx>{`
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(30px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes marqueeScroll {
-          from { transform: translateX(0); }
-          to { transform: translateX(-144px); }
-        }
-        .hero-animate {
-          animation: fadeInUp 0.8s ease-out forwards;
-          opacity: 0;
-        }
-        .hero-word { animation: fadeInUp 0.5s ease-out forwards; opacity: 0; }
-        .hero-word-0 { animation-delay: 0.3s; }
-        .hero-word-1 { animation-delay: 0.5s; }
-        .hero-word-2 { animation-delay: 0.7s; }
-        .hero-subtext { animation-delay: 0.6s; }
-        .hero-badges { animation-delay: 0.8s; }
-        .hero-cta { animation-delay: 1.0s; }
-        .marquee-track {
-          animation: marqueeScroll 18s linear infinite;
-        }
-      `}</style>
-      <section className="relative min-h-screen bg-black overflow-hidden pt-20">
-        {showHeavy && (
-          <div className="absolute bottom-[25vh] left-0 right-0 h-[80vh] z-0">
-            <VideoPlayer
-              src="https://stream.mux.com/9JXDljEVWYwWu01PUkAemafDugK89o01BR6zqJ3aS9u00A.m3u8"
-              className="w-full h-full"
-            />
-          </div>
-        )}
+    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+      {/* Dot grid background */}
+      <div className="absolute inset-0 dot-grid opacity-40" />
 
-        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 pt-20">
-          <h1 className="text-white text-center mb-6 flex flex-wrap justify-center gap-x-4 md:gap-x-8">
-            {t.headline.map((word, i) => (
-              <span
-                key={i}
-                className={`hero-word hero-word-${i} inline-block whitespace-nowrap text-2xl md:text-4xl lg:text-6xl font-black`}
-                style={{
-                  fontFamily: '"SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-                }}
-              >
-                {word}
-              </span>
-            ))}
-          </h1>
+      {/* Gradient orbs */}
+      <div ref={orbRef} className="transition-transform duration-700 ease-out pointer-events-none">
+        <div className="gradient-orb gradient-orb-dark w-[600px] h-[600px] -top-48 -right-48 animate-pulse-soft absolute" />
+        <div className="gradient-orb gradient-orb-purple w-[400px] h-[400px] bottom-0 -left-32 animate-pulse-soft absolute" style={{ animationDelay: '2s' }} />
+        <div className="gradient-orb gradient-orb-cyan w-[300px] h-[300px] top-1/3 left-1/2 -translate-x-1/2 animate-pulse-soft absolute" style={{ animationDelay: '4s', opacity: 0.15 }} />
+      </div>
 
-          <p
-            className="hero-animate hero-subtext text-gray-400 text-center max-w-2xl text-lg md:text-xl leading-relaxed mb-12"
-            style={{
-              fontFamily: '"Inter", system-ui, sans-serif',
-              fontWeight: 400,
-            }}
-          >
-            {t.subtext}
-          </p>
-
-          <div className="hero-animate hero-badges flex flex-col items-center gap-4 mb-12 w-full overflow-hidden">
-            <span className="text-gray-500 text-sm">{t.badgesLabel}</span>
-            <div className="relative w-full md:w-64 mx-auto overflow-hidden">
-              <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none"></div>
-              <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none"></div>
-
-              <div className="marquee-track flex items-center">
-                {[0, 1].map(set => (
-                  <div key={set} className="flex items-center shrink-0">
-                    {[HubSpotLogo, AirtableLogo, GmailLogo, SlackLogo, MicrosoftTeamsLogo, SalesforceLogo].map((Logo, i) => (
-                      <div key={i} className="text-gray-400 hover:text-white transition-colors cursor-pointer shrink-0 opacity-70 hover:opacity-100 px-6">
-                        <div className="h-10 w-auto"><Logo /></div>
-                      </div>
-                    ))}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="hero-animate hero-cta flex flex-col sm:flex-row gap-4 md:gap-6 items-center">
-            {showHeavy ? (
-              <>
-                <LiquidMetalButton
-                  label={t.cta1}
-                  onClick={() => window.location.href = '#kontakt'}
-                />
-                <LiquidMetalButton
-                  label={t.cta2}
-                  viewMode="icon"
-                  onClick={() => window.location.href = '#tjenester'}
-                />
-              </>
-            ) : (
-              <>
-                <a
-                  href="#kontakt"
-                  className="bg-white text-black font-semibold px-8 py-3 rounded-full text-sm hover:bg-gray-200 transition-colors"
-                >
-                  {t.cta1}
-                </a>
-                <a
-                  href="#tjenester"
-                  className="border border-white/30 text-white font-semibold px-8 py-3 rounded-full text-sm hover:bg-white/10 transition-colors"
-                >
-                  {t.cta2}
-                </a>
-              </>
-            )}
-          </div>
+      {/* Content */}
+      <div className="relative z-20 max-w-5xl mx-auto px-6 pt-32 pb-8 text-center">
+        {/* Badge */}
+        <div className="animate-fade-up inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-zinc-100/80 border border-zinc-200 text-zinc-700 text-sm font-medium mb-10 backdrop-blur-sm">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-zinc-600 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-zinc-800" />
+          </span>
+          {c.badge}
         </div>
-      </section>
-    </>
+
+        {/* Headline */}
+        <h1
+          className="animate-fade-up text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.05] mb-8"
+          style={{ animationDelay: '0.1s' }}
+        >
+          {c.headline}
+          <br />
+          <span className="gradient-text-dark">{c.headlineAccent}</span>
+        </h1>
+
+        {/* Subtext */}
+        <p
+          className="animate-fade-up max-w-2xl mx-auto text-lg md:text-xl text-zinc-500 leading-relaxed mb-12"
+          style={{ animationDelay: '0.2s' }}
+        >
+          {c.sub}
+        </p>
+
+        {/* CTAs */}
+        <div
+          className="animate-fade-up flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
+          style={{ animationDelay: '0.3s' }}
+        >
+          <a
+            href="#kontakt"
+            className="group inline-flex items-center gap-2.5 px-8 py-4 bg-zinc-900 text-white rounded-full text-base font-medium hover:bg-zinc-800 transition-all duration-300 hover:shadow-xl hover:shadow-zinc-900/20 hover:-translate-y-0.5 active:translate-y-0"
+          >
+            {c.cta}
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </a>
+          <a
+            href="#prov-ai"
+            className="group inline-flex items-center gap-2.5 px-8 py-4 rounded-full text-base font-medium border border-zinc-200 text-zinc-600 hover:border-zinc-300 hover:text-zinc-700 hover:bg-zinc-50 transition-all duration-300"
+          >
+            <Phone className="w-4 h-4" />
+            {c.ctaSecondary}
+          </a>
+        </div>
+
+        {/* Stats row */}
+        <div
+          className="animate-fade-up flex items-center justify-center gap-10 sm:gap-16"
+          style={{ animationDelay: '0.4s' }}
+        >
+          {[
+            { value: c.stat1, label: c.stat1Label },
+            { value: c.stat2, label: c.stat2Label },
+            { value: c.stat3, label: c.stat3Label },
+          ].map((stat, i) => (
+            <div key={i} className="text-center">
+              <div className="text-3xl sm:text-4xl font-bold text-zinc-900 tabular-nums">{stat.value}</div>
+              <div className="text-sm text-zinc-400 mt-1 font-medium">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Animated Dashboard */}
+      <div
+        className="animate-fade-up relative z-20 w-full max-w-5xl mx-auto px-6 mt-8 mb-12"
+        style={{ animationDelay: '0.55s' }}
+      >
+        <div className="relative rounded-2xl border border-zinc-200/80 bg-white/80 backdrop-blur-sm p-2 shadow-2xl shadow-zinc-200/50 glow-dark">
+          <AnimatedDashboard />
+        </div>
+      </div>
+
+      {/* Bottom fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent z-10 pointer-events-none" />
+    </section>
   )
 }

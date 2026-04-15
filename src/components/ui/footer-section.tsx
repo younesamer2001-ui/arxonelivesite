@@ -3,6 +3,7 @@ import React from 'react';
 import type { ComponentProps, ReactNode } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Globe, Mail, Phone, MapPin } from 'lucide-react';
+// ArxonLogo import removed
 
 interface FooterLink {
   title: string;
@@ -52,7 +53,7 @@ export function Footer() {
       <div className="grid w-full gap-8 xl:grid-cols-3 xl:gap-8">
         <AnimatedContainer className="space-y-4">
           <span className="text-2xl font-bold text-white">ARXON</span>
-          <p className="text-gray-400 mt-8 text-sm md:mt-0">
+          <p className="text-zinc-400 mt-8 text-sm md:mt-0">
             © {new Date().getFullYear()} Arxon AS. Alle rettigheter reservert.
           </p>
         </AnimatedContainer>
@@ -62,7 +63,7 @@ export function Footer() {
             <AnimatedContainer key={section.label} delay={0.1 + index * 0.1}>
               <div className="mb-10 md:mb-0">
                 <h3 className="text-xs text-white uppercase tracking-wider">{section.label}</h3>
-                <ul className="text-gray-400 mt-4 space-y-2 text-sm">
+                <ul className="text-zinc-400 mt-4 space-y-2 text-sm">
                   {section.links.map((link) => (
                     <li key={link.title}>
                       <a

@@ -1,10 +1,26 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
+import localFont from "next/font/local"
 import "./globals.css"
+import SmoothScroll from "@/components/SmoothScroll"
+import { LangProvider } from "@/lib/lang-context"
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
+})
+
+const grift = localFont({
+  src: [
+    { path: "../../public/fonts/Grift-Regular.otf", weight: "400", style: "normal" },
+    { path: "../../public/fonts/Grift-Medium.otf", weight: "500", style: "normal" },
+    { path: "../../public/fonts/Grift-SemiBold.otf", weight: "600", style: "normal" },
+    { path: "../../public/fonts/Grift-Bold.otf", weight: "700", style: "normal" },
+    { path: "../../public/fonts/Grift-ExtraBold.otf", weight: "800", style: "normal" },
+    { path: "../../public/fonts/Grift-Black.otf", weight: "900", style: "normal" },
+  ],
+  variable: "--font-grift",
   display: "swap",
 })
 
@@ -207,8 +223,20 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="nb" className={`${inter.variable} antialiased`} suppressHydrationWarning>
+    <html lang="nb" className={`${inter.variable} ${grift.variable} antialiased`} suppressHydrationWarning>
       <head>
+        {/* Google Analytics */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-XXXXXXXXXX');
+            `,
+          }}
+        />
         <link rel="preconnect" href="https://stream.mux.com" />
         <link rel="dns-prefetch" href="https://stream.mux.com" />
         <script
@@ -219,8 +247,13 @@ export default function RootLayout({
       <body
         className="min-h-screen bg-black text-white overflow-x-hidden"
         style={{ isolation: "isolate" }}
+        suppressHydrationWarning
       >
-        {children}
+        <LangProvider>
+          <SmoothScroll>
+            {children}
+          </SmoothScroll>
+        </LangProvider>
       </body>
     </html>
   )

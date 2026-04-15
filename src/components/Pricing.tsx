@@ -1,217 +1,315 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Check } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import NumberFlow from "@number-flow/react";
+import { CheckCheck } from "lucide-react";
+import { useState } from "react";
+import ScrollPang from "./ScrollPang";
+
+interface PricingProps {
+  lang?: "no" | "en";
+}
 
 const content = {
   no: {
-    title: 'Priser som vokser med deg',
-    subtitle: '30 dager gratis prøveperiode på alle pakker. Setup faktureres ved oppstart.',
-    trialBadge: '30 dager gratis',
-    bindingNote: 'Spar med binding:',
+    label: "PRISER",
+    heading: "Invester i vekst,",
+    headingAccent: "ikke kostnader.",
+    subtext: "Forutsigbar pris. Ingen bindingstid. De fleste tjener inn investeringen i løpet av første måned.",
+    monthly: "Månedlig",
+    yearly: "Årlig",
+    save: "Spar 20%",
+    perMonth: "/mnd",
+    perYear: "/år",
+    cta: "Start i dag",
+    ctaEnterprise: "Kontakt oss",
+    vat: "Alle priser eks. mva.",
+    setupLabel: "Oppsett",
+    setupFree: "Gratis oppsett",
     plans: [
       {
-        name: 'P1: AI Resepsjonist',
-        price: '4 990',
-        period: 'kr/mnd',
-        description: 'Per bedrift',
-        priceYearly: '3 990',
-        priceHalf: '4 490',
-        features: [
-          'AI telefon & chat',
-          '24/7 tilgjengelig',
-          'Kalender-integrasjon',
-          'CRM-tilkobling',
-          'Norsk stemme',
-          'Månedlig rapport',
-          '30 dagers prøveperiode'
+        name: "Starter",
+        description: "For bedrifter som vil automatisere kundebehandling",
+        price: 2990, yearlyPrice: 28700,
+        setupFee: 5000,
+        popular: false,
+        includes: [
+          "Starter inkluderer:",
+          "AI-resepsjonist 24/7",
+          "Chatbot",
+          "Automatiske workflows",
+          "SMS-bekreftelser",
+          "Norsk språkstøtte",
+          "E-post support",
         ],
-        cta: 'Start gratis prøveperiode',
-        popular: false
       },
       {
-        name: 'P2: Custom AI',
-        price: 'Fra 8 000',
-        period: 'kr/mnd',
-        description: 'Per prosjekt',
-        priceYearly: 'Fra 6 400',
-        priceHalf: 'Fra 7 200',
-        features: [
-          'Alt fra P1',
-          'Custom workflows',
-          'Flere integrasjoner',
-          'Prioritet support',
-          'Utvikler-tilgang',
-          'Workshops',
-          '30 dagers prøveperiode'
+        name: "Pro",
+        description: "Mest populær — full innsikt og kontroll",
+        price: 4990, yearlyPrice: 47900,
+        setupFee: 15000,
+        popular: true,
+        includes: [
+          "Alt i Starter, pluss:",
+          "Ubegrenset samtaler",
+          "Sanntids-dashboard",
+          "Samtaleanalyse",
+          "Automatisk Google Reviews-melding",
+          "Prioritert support",
+          "Dedikert kontaktperson",          "Integrasjoner (CRM, kalender)",
         ],
-        cta: 'Book konsultasjon',
-        popular: true
       },
       {
-        name: 'P3: Enterprise',
-        price: 'Custom',
-        period: '',
-        description: 'For store organisasjoner',
-        priceYearly: '',
-        priceHalf: '',
-        features: [
-          'Alt fra P2',
-          'Dedikert utvikler',
-          'SLA-garanti',
-          'Strategisk rådgivning',
-          'På-site support',
-          'Custom avtale'
+        name: "Enterprise",
+        description: "For kjeder med flere lokasjoner",
+        price: 0, yearlyPrice: 0,
+        setupFee: 0,
+        popular: false,
+        includes: [
+          "Alt i Pro, pluss:",
+          "Multi-lokasjon styring",
+          "Tilpassede rapporter",
+          "API-tilgang",
+          "SLA-garanti",
+          "Dedikert onboarding",
+          "Skreddersydd oppsett",
         ],
-        cta: 'Book møte',
-        popular: false
-      }
-    ]
+      },
+    ],
   },
   en: {
-    title: 'Pricing that scales with you',
-    subtitle: '30-day free trial on all plans. Setup fee billed at start.',
-    trialBadge: '30 days free',
-    bindingNote: 'Save with commitment:',
+    label: "PRICING",
+    heading: "Invest in growth,",
+    headingAccent: "not costs.",
+    subtext: "Predictable pricing. No lock-in. Most clients earn back the investment within their first month.",
+    monthly: "Monthly",
+    yearly: "Yearly",
+    save: "Save 20%",
+    perMonth: "/mo",
+    perYear: "/yr",    cta: "Start today",
+    ctaEnterprise: "Contact us",
+    vat: "All prices excl. VAT.",
+    setupLabel: "Setup",
+    setupFree: "Free setup",
     plans: [
       {
-        name: 'P1: AI Receptionist',
-        price: '4 990',
-        period: 'NOK/mo',
-        description: 'Per company',
-        priceYearly: '3 990',
-        priceHalf: '4 490',
-        features: [
-          'AI phone & chat',
-          '24/7 available',
-          'Calendar integration',
-          'CRM connection',
-          'Norwegian voice',
-          'Monthly report',
-          '30-day free trial'
+        name: "Starter",
+        description: "For businesses looking to automate customer service",
+        price: 2990, yearlyPrice: 28700,
+        setupFee: 5000,
+        popular: false,
+        includes: [
+          "Starter includes:",
+          "AI receptionist 24/7",
+          "Chatbot",
+          "Automated workflows",
+          "SMS confirmations",
+          "Norwegian language support",
+          "Email support",
         ],
-        cta: 'Start free trial',
-        popular: false
       },
       {
-        name: 'P2: Custom AI',
-        price: 'From 8 000',
-        period: 'NOK/mo',
-        description: 'Per project',
-        priceYearly: 'From 6 400',
-        priceHalf: 'From 7 200',
-        features: [
-          'Everything in P1',
-          'Custom workflows',
-          'More integrations',
-          'Priority support',
-          'Developer access',
-          'Workshops',
-          '30-day free trial'
+        name: "Pro",
+        description: "Most popular — full insight and control",
+        price: 4990, yearlyPrice: 47900,
+        setupFee: 15000,
+        popular: true,
+        includes: [
+          "Everything in Starter, plus:",
+          "Unlimited calls",
+          "Real-time dashboard",
+          "Call analytics",
+          "Automatic Google Reviews message",          "Priority support",
+          "Dedicated contact person",
+          "Integrations (CRM, calendar)",
         ],
-        cta: 'Book consultation',
-        popular: true
       },
       {
-        name: 'P3: Enterprise',
-        price: 'Custom',
-        period: '',
-        description: 'For large organizations',
-        priceYearly: '',
-        priceHalf: '',
-        features: [
-          'Everything in P2',
-          'Dedicated developer',
-          'SLA guarantee',
-          'Strategic consulting',
-          'On-site support',
-          'Custom agreement'
+        name: "Enterprise",
+        description: "For chains with multiple locations",
+        price: 0, yearlyPrice: 0,
+        setupFee: 0,
+        popular: false,
+        includes: [
+          "Everything in Pro, plus:",
+          "Multi-location management",
+          "Custom reports",
+          "API access",
+          "SLA guarantee",
+          "Dedicated onboarding",
+          "Custom setup",
         ],
-        cta: 'Book meeting',
-        popular: false
-      }
-    ]
-  }
+      },
+    ],
+  },
 };
-
-interface PricingProps {
-  lang?: 'no' | 'en';
+function PricingSwitch({
+  isYearly,
+  onToggle,
+  labels,
+  save,
+}: {
+  isYearly: boolean;
+  onToggle: () => void;
+  labels: { monthly: string; yearly: string };
+  save: string;
+}) {
+  return (
+    <div className="flex items-center justify-center gap-3 mb-8">
+      <span className={cn("text-sm font-medium transition-colors", !isYearly ? "text-white" : "text-zinc-500")}>
+        {labels.monthly}
+      </span>
+      <button
+        onClick={onToggle}
+        className={cn(
+          "relative h-7 w-12 rounded-full transition-colors duration-300",
+          isYearly ? "bg-white" : "bg-zinc-600"
+        )}
+      >
+        <span
+          className={cn(
+            "absolute top-0.5 left-0.5 h-6 w-6 rounded-full bg-black transition-transform duration-300 shadow-sm",
+            isYearly && "translate-x-5"
+          )}
+        />
+      </button>      <span className={cn("text-sm font-medium transition-colors", isYearly ? "text-white" : "text-zinc-500")}>
+        {labels.yearly}
+      </span>
+      {isYearly && (
+        <span className="text-xs font-semibold text-green-400 bg-green-900/40 px-2 py-0.5 rounded-full">
+          {save}
+        </span>
+      )}
+    </div>
+  );
 }
 
-export default function Pricing({ lang = 'no' }: PricingProps) {
+export default function Pricing({ lang = "no" }: PricingProps) {
+  const [isYearly, setIsYearly] = useState(false);
   const t = content[lang];
 
   return (
-    <section className="py-16 md:py-32 bg-black" id="priser">
-      <div className="mx-auto max-w-6xl px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mx-auto max-w-2xl space-y-6 text-center mb-16"
-        >
-          <h2 className="text-center text-2xl md:text-4xl font-semibold lg:text-5xl text-white">{t.title}</h2>
-          <p className="text-gray-400">{t.subtitle}</p>
-        </motion.div>
+    <section
+      id="priser"
+      className="pt-10 md:pt-14 pb-16 md:pb-24 bg-black"
+    >
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+        {/* Header */}
+        <ScrollPang className="text-center mb-8">
+          <span className="inline-block text-xs font-semibold tracking-widest text-zinc-500 uppercase mb-3">
+            {t.label}
+          </span>
+          <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">            {t.heading}{" "}
+            <span className="text-zinc-400">{t.headingAccent}</span>
+          </h2>
+          <p className="mt-2 text-sm text-zinc-400 max-w-md mx-auto">
+            {t.subtext}
+          </p>
+        </ScrollPang>
 
-        <div className="mt-8 grid gap-6 md:mt-20 md:grid-cols-3">
-          {t.plans.map((plan, index) => (
-            <motion.div
-              key={plan.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-            >
-              <Card className={`flex flex-col bg-white/5 border-white/10 rounded-2xl md:rounded-3xl transition-all duration-300 hover:bg-white/10 hover:scale-[1.02] hover:shadow-2xl hover:shadow-white/10 ${plan.popular ? 'relative' : ''}`}>
-                {plan.popular && (
-                  <span className="absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full bg-blue-500 px-3 py-1 text-xs font-medium text-white">
-                    Mest populær
-                  </span>
+        {/* Toggle */}
+        <ScrollPang offset={1}>
+          <PricingSwitch
+            isYearly={isYearly}
+            onToggle={() => setIsYearly(!isYearly)}
+            labels={{ monthly: t.monthly, yearly: t.yearly }}
+            save={t.save}
+          />
+        </ScrollPang>
+
+        {/* Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-4xl mx-auto">
+          {t.plans.map((plan, i) => (
+            <ScrollPang key={plan.name} offset={i}>
+              <Card
+                className={cn(
+                  "relative rounded-2xl border bg-zinc-900 transition-shadow duration-300 h-full",
+                  plan.popular
+                    ? "border-white/30 shadow-[0_0_30px_-5px_rgba(255,255,255,0.1)]"
+                    : "border-zinc-800 hover:shadow-md hover:border-zinc-700"
                 )}
+              >                {plan.popular && (
+                  <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent" />
+                )}
+                <CardHeader className="pb-3 pt-5 px-5">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-semibold text-white">{plan.name}</h3>
+                    {plan.popular && (
+                      <span className="text-[10px] font-semibold uppercase tracking-wider bg-white text-black px-2 py-0.5 rounded-full">
+                        Populær
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-zinc-400 mt-1">{plan.description}</p>
+                </CardHeader>
+                <CardContent className="px-5 pb-5">
+                  <div className="flex items-baseline gap-1 mb-4">
+                    {plan.price > 0 ? (
+                      <>
+                        <span className="text-3xl font-bold text-white">
+                          <NumberFlow
+                            value={isYearly ? plan.yearlyPrice : plan.price}
+                            format={{ style: "currency", currency: "NOK", maximumFractionDigits: 0 }}
+                          />
+                        </span>
+                        <span className="text-xs text-zinc-500">
+                          {isYearly ? t.perYear : t.perMonth}
+                        </span>
+                      </>
+                    ) : (                      <span className="text-2xl font-bold text-white">
+                        {t.ctaEnterprise}
+                      </span>
+                    )}
+                  </div>
 
-                <CardHeader>
-                  <CardTitle className="font-medium text-white">{plan.name}</CardTitle>
-                  <span className="my-3 block text-2xl font-semibold text-white">{plan.price} <span className="text-lg text-gray-400">{plan.period}</span></span>
-                  <CardDescription className="text-sm text-gray-500">{plan.description}</CardDescription>
-                  {plan.priceHalf && (
-                    <div className="mt-3 space-y-1 text-xs text-gray-500">
-                      <p>6 mnd: <span className="text-gray-300">{plan.priceHalf} {plan.period}</span></p>
-                      <p>12 mnd: <span className="text-gray-300">{plan.priceYearly} {plan.period}</span></p>
+                  {plan.setupFee > 0 && (
+                    <div className="mb-4 text-xs">
+                      {isYearly ? (
+                        <span className="text-green-400 font-semibold">{t.setupFree} ✓</span>
+                      ) : (
+                        <span className="text-zinc-500">{t.setupLabel}: <span className="text-zinc-300 font-medium">{plan.setupFee.toLocaleString("nb-NO")} kr</span></span>
+                      )}
                     </div>
                   )}
-                </CardHeader>
 
-                <CardContent className="space-y-4">
-                  <hr className="border-dashed border-white/10" />
-
-                  <ul className="list-outside space-y-3 text-sm">
-                    {plan.features.map((item, i) => (
-                      <li key={i} className="flex items-center gap-2 text-gray-300">
-                        <Check className="size-4 text-emerald-400" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-
-                <CardFooter className="mt-auto">
-                  <Button
-                    asChild
-                    variant={plan.popular ? 'default' : 'outline'}
-                    className={`w-full ${plan.popular ? 'bg-white text-black hover:bg-gray-200' : 'border-white/20 text-white hover:bg-white/10'}`}
+                  <a
+                    href={plan.name === "Enterprise" ? "#kontakt" : "https://cal.com/arxon/30min"}
+                    target={plan.name === "Enterprise" ? undefined : "_blank"}
+                    rel={plan.name === "Enterprise" ? undefined : "noopener noreferrer"}
+                    className={cn(
+                      "block w-full py-2.5 rounded-xl text-sm font-semibold text-center transition-all duration-200",
+                      plan.popular
+                        ? "bg-white text-black hover:bg-zinc-200"
+                        : "bg-zinc-800 text-white hover:bg-zinc-700"
+                    )}
                   >
-                    <a href="https://cal.com/arxon/30min" target="_blank" rel="noopener noreferrer">{plan.cta}</a>
-                  </Button>
-                </CardFooter>
+                    {plan.name === "Enterprise" ? t.ctaEnterprise : t.cta}
+                  </a>
+
+                  <div className="mt-5 space-y-2.5">
+                    {plan.includes.map((item, j) => (
+                      <div key={j} className="flex items-start gap-2">
+                        {j === 0 ? (
+                          <span className="text-xs font-semibold text-zinc-300">{item}</span>
+                        ) : (
+                          <>
+                            <CheckCheck className="w-3.5 h-3.5 mt-0.5 text-green-500 shrink-0" />
+                            <span className="text-xs text-zinc-400">{item}</span>
+                          </>
+                        )}
+                      </div>                    ))}
+                  </div>
+                </CardContent>
               </Card>
-            </motion.div>
+            </ScrollPang>
           ))}
         </div>
+
+        {/* VAT note */}
+        <ScrollPang offset={2} className="text-center mt-6">
+          <p className="text-xs text-neutral-400">{t.vat}</p>
+        </ScrollPang>
       </div>
     </section>
   );

@@ -46,7 +46,7 @@ export default function Process() {
               customVariants={revealVariants}
               className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl !leading-[130%] font-semibold text-white mb-6 md:mb-8"
             >
-              Mens du vurderer AI, bruker{" "}
+              Hvert tapte anrop er en tapt kunde — og{" "}
               <TimelineContent
                 as="span"
                 animationNum={1}
@@ -54,9 +54,9 @@ export default function Process() {
                 customVariants={textVariants}
                 className="text-red-400 border-2 border-red-400/50 inline-block border-dotted px-2 rounded-md"
               >
-                konkurrentene dine
+                tapt inntekt
               </TimelineContent>{" "}
-              det allerede. De sparer tid. De skalerer. Du henger etter. Vi gir deg en{" "}
+              du aldri får tilbake. Med Arxon får du en{" "}
               <TimelineContent
                 as="span"
                 animationNum={2}
@@ -64,15 +64,15 @@ export default function Process() {
                 customVariants={textVariants}
                 className="text-emerald-400 border-2 border-emerald-400/50 inline-block border-dotted px-2 rounded-md"
               >
-                risikofri måte
+                risikofri pilot
               </TimelineContent>{" "}
-              å teste det på — ferdig på 10 dager, 30 dager gratis prøveperiode. Ikke fornøyd? <TimelineContent
+              med ekte samtaler, ekte resultater — og full innsikt i hva kundene dine faktisk trenger. <TimelineContent
                 as="span"
                 animationNum={3}
                 timelineRef={heroRef}
                 customVariants={textVariants}
                 className="text-orange-400 border-2 border-orange-400/50 inline-block border-dotted px-2 rounded-md"
-              >Du betaler ingenting</TimelineContent>.
+              >Se verdien før du bestemmer deg</TimelineContent>.
             </TimelineContent>
 
             <TimelineContent
@@ -83,11 +83,11 @@ export default function Process() {
               className="mt-12"
             >
               <a
-                href="/garanti"
-                className="bg-blue-600 gap-2 font-medium shadow-lg shadow-blue-600/50 text-white h-12 px-6 rounded-full text-sm inline-flex items-center cursor-pointer hover:bg-blue-700 transition-colors"
+                href="#prov-ai"
+                className="bg-zinc-900 gap-2 font-medium shadow-lg shadow-zinc-900/30 text-white h-12 px-6 rounded-full text-sm inline-flex items-center cursor-pointer hover:bg-zinc-800 transition-colors"
               >
                 <Zap fill="white" size={16} />
-                Se hvordan det fungerer
+                Prøv AI-en gratis
               </a>
             </TimelineContent>
           </div>

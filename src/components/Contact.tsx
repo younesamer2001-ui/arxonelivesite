@@ -4,13 +4,14 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Phone, MapPin, ArrowRight, Loader2, CheckCircle } from 'lucide-react'
 
+
 const content = {
   no: {
     title: 'Kontakt',
     subtitle: 'Klar til å automatisere? Book en gratis konsultasjon.',
     infoTitle: 'Kontaktinformasjon',
-    guaranteeTitle: '30-dagers garanti',
-    guaranteeText: 'Vi bygger løsningen din på 10 dager. Du betaler ingenting de første 30 dagene. Hvis du ikke ser verdi — betaler du ingenting.',
+    guaranteeTitle: 'Strukturert leveranse',
+    guaranteeText: 'Vi starter med kartlegging og pilot på 2 lokasjoner. Du ser resultater på ekte samtaler før full utrulling.',
     formTitle: 'Book gratis konsultasjon',
     nameLabel: 'Navn',
     namePlaceholder: 'Ditt navn',
@@ -33,8 +34,8 @@ const content = {
     title: 'Contact',
     subtitle: 'Ready to automate? Book a free consultation.',
     infoTitle: 'Contact Information',
-    guaranteeTitle: '30-day guarantee',
-    guaranteeText: 'We build your solution in 10 days. You pay nothing for the first 30 days. If you don\'t see value — you pay nothing.',
+    guaranteeTitle: 'Structured delivery',
+    guaranteeText: 'We start with mapping and a pilot at 2 locations. You see results on real calls before full rollout.',
     formTitle: 'Book free consultation',
     nameLabel: 'Name',
     namePlaceholder: 'Your name',

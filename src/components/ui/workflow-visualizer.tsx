@@ -48,18 +48,18 @@ const initialConnections: WorkflowConnection[] = [
 ];
 
 const colorClasses: Record<string, string> = {
-  emerald: "border-emerald-400/40 bg-emerald-400/10 text-emerald-400",
-  blue: "border-blue-400/40 bg-blue-400/10 text-blue-400",
-  amber: "border-amber-400/40 bg-amber-400/10 text-amber-400",
-  purple: "border-purple-400/40 bg-purple-400/10 text-purple-400",
+  emerald: "border-zinc-500/40 bg-zinc-500/10 text-zinc-500",
+  blue: "border-zinc-400/40 bg-zinc-600/10 text-zinc-500",
+  amber: "border-zinc-500/40 bg-zinc-500/10 text-zinc-500",
+  purple: "border-zinc-400/40 bg-zinc-400/10 text-zinc-500",
   indigo: "border-indigo-400/40 bg-indigo-400/10 text-indigo-400",
 };
 
 const colorDots: Record<string, string> = {
-  emerald: "bg-emerald-400",
-  blue: "bg-blue-400",
-  amber: "bg-amber-400",
-  purple: "bg-purple-400",
+  emerald: "bg-zinc-500",
+  blue: "bg-zinc-600",
+  amber: "bg-zinc-500",
+  purple: "bg-zinc-500",
   indigo: "bg-indigo-400",
 };
 
