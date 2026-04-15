@@ -31,8 +31,11 @@ const INJECTED_STYLES = `
       font-size: clamp(8rem, 20vw, 22rem);
       line-height: 1;
       letter-spacing: -0.04em;
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(255,255,255,0.06);
+      color: #ffffff;
+      text-shadow:
+          0 4px 12px rgba(0,0,0,0.6),
+          0 20px 40px rgba(0,0,0,0.4),
+          0 1px 0 rgba(255,255,255,0.15);
       user-select: none;
       pointer-events: none;
       white-space: nowrap;
@@ -48,12 +51,12 @@ const INJECTED_STYLES = `
           0 40px 80px -15px rgba(0,0,0,0.9),
           0 15px 25px -5px rgba(0,0,0,0.7);
       transform-style: preserve-3d;
-  }
-  .hardware-btn {
+  }  .hardware-btn {
       background: linear-gradient(90deg, #404040 0%, #171717 100%);
       box-shadow:
           -2px 0 5px rgba(0,0,0,0.8),
-          inset -1px 0 1px rgba(255,255,255,0.15),          inset 1px 0 2px rgba(0,0,0,0.8);
+          inset -1px 0 1px rgba(255,255,255,0.15),
+          inset 1px 0 2px rgba(0,0,0,0.8);
       border-left: 1px solid rgba(255,255,255,0.05);
   }
   .screen-glare {
@@ -82,9 +85,9 @@ const INJECTED_STYLES = `
       transform-origin: center;
       stroke-dasharray: 402;
       stroke-dashoffset: 402;
-      stroke-linecap: round;  }
-`;
-export interface CinematicHeroProps extends React.HTMLAttributes<HTMLDivElement> {
+      stroke-linecap: round;
+  }
+`;export interface CinematicHeroProps extends React.HTMLAttributes<HTMLDivElement> {
   lang?: "no" | "en";
 }
 export function CinematicHero({
@@ -111,10 +114,10 @@ export function CinematicHero({
     en: {
       tagline1: "Your AI receptionist",
       tagline2: "for smarter operations.",
-      introHeading: "Customer service,\non autopilot.",      introDescription: "Arxon captures what your customers actually say — and turns it into bookings, insights and growth. Automatically, around the clock.",
+      introHeading: "Customer service,\non autopilot.",
+      introDescription: "Arxon captures what your customers actually say — and turns it into bookings, insights and growth. Automatically, around the clock.",
       metricLabel: "Calls",
-      ctaHeading: "Ready to start?",
-      ctaDescription: "Book a consultation and see how Arxon can handle your customer calls from day one.",
+      ctaHeading: "Ready to start?",      ctaDescription: "Book a consultation and see how Arxon can handle your customer calls from day one.",
       ctaPrimary: "Book consultation",
       ctaSecondary: "See pricing",
       badge1: "New booking",
@@ -140,13 +143,13 @@ export function CinematicHero({
           const yVal = (e.clientY / window.innerHeight - 0.5) * 2;
           gsap.to(mockupRef.current, {
             rotationY: xVal * 12,
-            rotationX: -yVal * 12,            ease: "power3.out",
+            rotationX: -yVal * 12,
+            ease: "power3.out",
             duration: 1.2,
           });
         }
       });
-    };
-    window.addEventListener("mousemove", handleMouseMove);
+    };    window.addEventListener("mousemove", handleMouseMove);
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       cancelAnimationFrame(requestRef.current);
@@ -165,12 +168,12 @@ export function CinematicHero({
       gsap.set(".brand-watermark", { autoAlpha: 0, scale: 0.8, filter: "blur(40px)" });
       gsap.set(".intro-block", { autoAlpha: 0, x: -80, filter: "blur(20px)" });
       gsap.set(".cta-wrapper", { autoAlpha: 0, y: 60, filter: "blur(20px)" });
+
       /* ── intro text animation ── */
       const introTl = gsap.timeline({ delay: 0.3 });
       introTl
         .to(".text-track", { duration: 1.8, autoAlpha: 1, y: 0, scale: 1, filter: "blur(0px)", rotationX: 0, ease: "expo.out" })
         .to(".text-days", { duration: 1.4, clipPath: "inset(0 0% 0 0)", ease: "power4.inOut" }, "-=1.0");
-
       /* ── scroll timeline ── */
       const scrollTl = gsap.timeline({
         scrollTrigger: {
@@ -193,15 +196,15 @@ export function CinematicHero({
           ease: "power2.inOut",
           duration: 2,
         }, 0)
-        .to(".phone-scene", {          autoAlpha: 1,
+        .to(".phone-scene", {
+          autoAlpha: 1,
           y: 0,
           scale: 1,
           rotationX: 0,
           rotationY: 0,
           ease: "expo.out",
           duration: 3,
-        }, 0.3)
-        .to(".brand-watermark", {
+        }, 0.3)        .to(".brand-watermark", {
           autoAlpha: 1,
           scale: 1,
           filter: "blur(0px)",
@@ -221,14 +224,14 @@ export function CinematicHero({
           { y: 30, autoAlpha: 0, scale: 0.95 },
           { y: 0, autoAlpha: 1, scale: 1, stagger: 0.12, ease: "back.out(1.2)", duration: 1.2 },
           "-=1.2"
-        )        .to(".progress-ring", { strokeDashoffset: 60, duration: 1.8, ease: "power3.inOut" }, "-=1.0")
+        )
+        .to(".progress-ring", { strokeDashoffset: 60, duration: 1.8, ease: "power3.inOut" }, "-=1.0")
         .to(".counter-val", { innerHTML: metricValue, snap: { innerHTML: 1 }, duration: 1.8, ease: "expo.out" }, "-=1.8")
         .fromTo(".floating-badge",
           { y: 80, autoAlpha: 0, scale: 0.7, rotationZ: -8 },
           { y: 0, autoAlpha: 1, scale: 1, rotationZ: 0, ease: "back.out(1.5)", duration: 1.2, stagger: 0.15 },
           "-=1.5"
         )
-
         /* Phase 3: hold — let the user admire */
         .to({}, { duration: 2.5 })
 
@@ -251,10 +254,10 @@ export function CinematicHero({
 
         /* Phase 5: hold CTA, then scroll away */
         .to({}, { duration: 2 });
+
     }, containerRef);
     return () => ctx.revert();
   }, [metricValue]);
-
   return (
     <div
       ref={containerRef}
