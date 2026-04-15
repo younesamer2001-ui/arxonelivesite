@@ -28,14 +28,18 @@ const INJECTED_STYLES = `
   }  .brand-watermark {
       font-family: var(--font-grift), sans-serif;
       font-weight: 900;
-      font-size: clamp(8rem, 20vw, 22rem);
+      font-size: clamp(4rem, 10vw, 8rem);
       line-height: 1;
       letter-spacing: -0.04em;
-      color: #ffffff;
-      text-shadow:
-          0 4px 12px rgba(0,0,0,0.6),
-          0 20px 40px rgba(0,0,0,0.4),
-          0 1px 0 rgba(255,255,255,0.15);
+      text-transform: uppercase;
+      background: linear-gradient(180deg, #FFFFFF 0%, #A1A1AA 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      transform: translateZ(0);
+      filter:
+          drop-shadow(0px 12px 24px rgba(0,0,0,0.8))
+          drop-shadow(0px 4px 8px rgba(0,0,0,0.6));
       user-select: none;
       pointer-events: none;
       white-space: nowrap;
@@ -149,13 +153,13 @@ export function CinematicHero({
           });
         }
       });
-    };    window.addEventListener("mousemove", handleMouseMove);
+    };
+    window.addEventListener("mousemove", handleMouseMove);
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       cancelAnimationFrame(requestRef.current);
     };
   }, []);
-
   /* ── GSAP scroll animation ── */
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
@@ -174,6 +178,7 @@ export function CinematicHero({
       introTl
         .to(".text-track", { duration: 1.8, autoAlpha: 1, y: 0, scale: 1, filter: "blur(0px)", rotationX: 0, ease: "expo.out" })
         .to(".text-days", { duration: 1.4, clipPath: "inset(0 0% 0 0)", ease: "power4.inOut" }, "-=1.0");
+
       /* ── scroll timeline ── */
       const scrollTl = gsap.timeline({
         scrollTrigger: {
@@ -185,7 +190,6 @@ export function CinematicHero({
           anticipatePin: 1,
         },
       });
-
       scrollTl
         /* Phase 1: hero text fades up & out, phone rises from below */
         .to(".hero-text-wrapper", {
@@ -204,7 +208,8 @@ export function CinematicHero({
           rotationY: 0,
           ease: "expo.out",
           duration: 3,
-        }, 0.3)        .to(".brand-watermark", {
+        }, 0.3)
+        .to(".brand-watermark", {
           autoAlpha: 1,
           scale: 1,
           filter: "blur(0px)",
@@ -218,7 +223,6 @@ export function CinematicHero({
           ease: "expo.out",
           duration: 2,
         }, 1.2)
-
         /* Phase 2: widgets & badges fly in, counter animates */
         .fromTo(".phone-widget",
           { y: 30, autoAlpha: 0, scale: 0.95 },
@@ -232,6 +236,7 @@ export function CinematicHero({
           { y: 0, autoAlpha: 1, scale: 1, rotationZ: 0, ease: "back.out(1.5)", duration: 1.2, stagger: 0.15 },
           "-=1.5"
         )
+
         /* Phase 3: hold — let the user admire */
         .to({}, { duration: 2.5 })
 
@@ -251,13 +256,13 @@ export function CinematicHero({
           ease: "expo.out",
           duration: 1.5,
         }, "-=1.0")
-
         /* Phase 5: hold CTA, then scroll away */
         .to({}, { duration: 2 });
 
     }, containerRef);
     return () => ctx.revert();
   }, [metricValue]);
+
   return (
     <div
       ref={containerRef}
@@ -293,8 +298,8 @@ export function CinematicHero({
         </div>
       </div>
 
-      {/* ═══ Brand Watermark — large ARXON behind the phone ═══ */}
-      <div className="brand-watermark absolute z-[15] flex items-center justify-end pr-[5vw] w-screen will-change-transform" aria-hidden="true">
+      {/* ═══ Brand Name — right side of phone, like Sobers reference ═══ */}
+      <div className="brand-watermark absolute z-[15] right-[3vw] lg:right-[8vw] top-1/2 -translate-y-1/2 hidden lg:flex items-center will-change-transform" aria-hidden="true">
         ARXON
       </div>
 
@@ -309,7 +314,7 @@ export function CinematicHero({
       </div>
       {/* ═══ Phone Scene — rises directly, no card wrapper ═══ */}
       <div
-        className="phone-scene absolute z-20 flex items-center justify-center will-change-transform lg:translate-x-[10vw]"
+        className="phone-scene absolute z-20 flex items-center justify-center will-change-transform"
         style={{ perspective: "1000px" }}
       >
         <div className="relative flex items-center justify-center transform scale-[0.65] md:scale-85 lg:scale-100">
@@ -382,7 +387,8 @@ export function CinematicHero({
               <p className="text-white text-xs lg:text-sm font-bold tracking-tight">{t.badge1}</p>
               <p className="text-emerald-200/50 text-[10px] lg:text-xs font-medium">{t.badge1Sub}</p>
             </div>
-          </div>          <div className="floating-badge absolute flex bottom-12 lg:bottom-20 right-[-15px] lg:right-[-80px] floating-ui-badge rounded-xl lg:rounded-2xl p-3 lg:p-4 items-center gap-3 lg:gap-4 z-30">
+          </div>
+          <div className="floating-badge absolute flex bottom-12 lg:bottom-20 right-[-15px] lg:right-[-80px] floating-ui-badge rounded-xl lg:rounded-2xl p-3 lg:p-4 items-center gap-3 lg:gap-4 z-30">
             <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gradient-to-b from-blue-500/20 to-blue-900/10 flex items-center justify-center border border-blue-400/30 shadow-inner">
               <span className="text-base lg:text-lg drop-shadow-lg">💬</span>
             </div>
