@@ -25,7 +25,22 @@ const INJECTED_STYLES = `
       filter:
           drop-shadow(0px 10px 20px rgba(255,255,255,0.1))
           drop-shadow(0px 2px 4px rgba(255,255,255,0.06));
-  }  .iphone-bezel {
+  }  .brand-watermark {
+      font-family: var(--font-grift), sans-serif;
+      font-weight: 900;
+      font-size: clamp(8rem, 20vw, 22rem);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,0.06);
+      user-select: none;
+      pointer-events: none;
+      white-space: nowrap;
+  }
+  .intro-heading {
+      font-family: var(--font-grift), sans-serif;
+  }
+  .iphone-bezel {
       background-color: #111;
       box-shadow:
           inset 0 0 0 2px #52525B,
@@ -38,8 +53,7 @@ const INJECTED_STYLES = `
       background: linear-gradient(90deg, #404040 0%, #171717 100%);
       box-shadow:
           -2px 0 5px rgba(0,0,0,0.8),
-          inset -1px 0 1px rgba(255,255,255,0.15),
-          inset 1px 0 2px rgba(0,0,0,0.8);
+          inset -1px 0 1px rgba(255,255,255,0.15),          inset 1px 0 2px rgba(0,0,0,0.8);
       border-left: 1px solid rgba(255,255,255,0.05);
   }
   .screen-glare {
@@ -52,7 +66,8 @@ const INJECTED_STYLES = `
           inset 0 1px 1px rgba(255,255,255,0.05),
           inset 0 -1px 1px rgba(0,0,0,0.5);
       border: 1px solid rgba(255,255,255,0.03);
-  }  .floating-ui-badge {
+  }
+  .floating-ui-badge {
       background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.01) 100%);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
@@ -67,8 +82,7 @@ const INJECTED_STYLES = `
       transform-origin: center;
       stroke-dasharray: 402;
       stroke-dashoffset: 402;
-      stroke-linecap: round;
-  }
+      stroke-linecap: round;  }
 `;
 export interface CinematicHeroProps extends React.HTMLAttributes<HTMLDivElement> {
   lang?: "no" | "en";
@@ -79,8 +93,11 @@ export function CinematicHero({
   ...props
 }: CinematicHeroProps) {
   const content = {
-    no: {      tagline1: "Din AI-resepsjonist",
+    no: {
+      tagline1: "Din AI-resepsjonist",
       tagline2: "for smartere drift.",
+      introHeading: "Kundeservice,\npå autopilot.",
+      introDescription: "Arxon fanger opp det kundene dine faktisk sier — og gjør det om til bookinger, innsikt og vekst. Automatisk, døgnet rundt.",
       metricLabel: "Samtaler",
       ctaHeading: "Klar til å starte?",
       ctaDescription: "Book en konsultasjon og se hvordan Arxon kan håndtere dine kundesamtaler fra dag én.",
@@ -94,6 +111,7 @@ export function CinematicHero({
     en: {
       tagline1: "Your AI receptionist",
       tagline2: "for smarter operations.",
+      introHeading: "Customer service,\non autopilot.",      introDescription: "Arxon captures what your customers actually say — and turns it into bookings, insights and growth. Automatically, around the clock.",
       metricLabel: "Calls",
       ctaHeading: "Ready to start?",
       ctaDescription: "Book a consultation and see how Arxon can handle your customer calls from day one.",
@@ -108,7 +126,8 @@ export function CinematicHero({
   const t = content[lang];
   const metricValue = 47;
   const containerRef = useRef<HTMLDivElement>(null);
-  const mockupRef = useRef<HTMLDivElement>(null);  const requestRef = useRef<number>(0);
+  const mockupRef = useRef<HTMLDivElement>(null);
+  const requestRef = useRef<number>(0);
 
   /* ── subtle mouse-follow tilt on the phone ── */
   useEffect(() => {
@@ -121,8 +140,7 @@ export function CinematicHero({
           const yVal = (e.clientY / window.innerHeight - 0.5) * 2;
           gsap.to(mockupRef.current, {
             rotationY: xVal * 12,
-            rotationX: -yVal * 12,
-            ease: "power3.out",
+            rotationX: -yVal * 12,            ease: "power3.out",
             duration: 1.2,
           });
         }
@@ -134,6 +152,7 @@ export function CinematicHero({
       cancelAnimationFrame(requestRef.current);
     };
   }, []);
+
   /* ── GSAP scroll animation ── */
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
@@ -143,13 +162,15 @@ export function CinematicHero({
       gsap.set(".text-days", { autoAlpha: 1, clipPath: "inset(0 100% 0 0)" });
       gsap.set(".phone-scene", { autoAlpha: 0, y: "110vh", scale: 0.6, rotationX: 45, rotationY: -15 });
       gsap.set([".floating-badge", ".phone-widget"], { autoAlpha: 0 });
+      gsap.set(".brand-watermark", { autoAlpha: 0, scale: 0.8, filter: "blur(40px)" });
+      gsap.set(".intro-block", { autoAlpha: 0, x: -80, filter: "blur(20px)" });
       gsap.set(".cta-wrapper", { autoAlpha: 0, y: 60, filter: "blur(20px)" });
-
       /* ── intro text animation ── */
       const introTl = gsap.timeline({ delay: 0.3 });
       introTl
         .to(".text-track", { duration: 1.8, autoAlpha: 1, y: 0, scale: 1, filter: "blur(0px)", rotationX: 0, ease: "expo.out" })
         .to(".text-days", { duration: 1.4, clipPath: "inset(0 0% 0 0)", ease: "power4.inOut" }, "-=1.0");
+
       /* ── scroll timeline ── */
       const scrollTl = gsap.timeline({
         scrollTrigger: {
@@ -172,8 +193,7 @@ export function CinematicHero({
           ease: "power2.inOut",
           duration: 2,
         }, 0)
-        .to(".phone-scene", {
-          autoAlpha: 1,
+        .to(".phone-scene", {          autoAlpha: 1,
           y: 0,
           scale: 1,
           rotationX: 0,
@@ -181,13 +201,27 @@ export function CinematicHero({
           ease: "expo.out",
           duration: 3,
         }, 0.3)
+        .to(".brand-watermark", {
+          autoAlpha: 1,
+          scale: 1,
+          filter: "blur(0px)",
+          ease: "expo.out",
+          duration: 2.5,
+        }, 0.8)
+        .to(".intro-block", {
+          autoAlpha: 1,
+          x: 0,
+          filter: "blur(0px)",
+          ease: "expo.out",
+          duration: 2,
+        }, 1.2)
+
         /* Phase 2: widgets & badges fly in, counter animates */
         .fromTo(".phone-widget",
           { y: 30, autoAlpha: 0, scale: 0.95 },
           { y: 0, autoAlpha: 1, scale: 1, stagger: 0.12, ease: "back.out(1.2)", duration: 1.2 },
           "-=1.2"
-        )
-        .to(".progress-ring", { strokeDashoffset: 60, duration: 1.8, ease: "power3.inOut" }, "-=1.0")
+        )        .to(".progress-ring", { strokeDashoffset: 60, duration: 1.8, ease: "power3.inOut" }, "-=1.0")
         .to(".counter-val", { innerHTML: metricValue, snap: { innerHTML: 1 }, duration: 1.8, ease: "expo.out" }, "-=1.8")
         .fromTo(".floating-badge",
           { y: 80, autoAlpha: 0, scale: 0.7, rotationZ: -8 },
@@ -198,8 +232,8 @@ export function CinematicHero({
         /* Phase 3: hold — let the user admire */
         .to({}, { duration: 2.5 })
 
-        /* Phase 4: phone drifts up & shrinks, CTA fades in */
-        .to([".phone-scene", ".floating-badge"], {
+        /* Phase 4: everything drifts up & out, CTA fades in */
+        .to([".phone-scene", ".floating-badge", ".brand-watermark", ".intro-block"], {
           y: -200,
           scale: 0.7,
           autoAlpha: 0,
@@ -209,14 +243,14 @@ export function CinematicHero({
         })
         .to(".cta-wrapper", {
           autoAlpha: 1,
-          y: 0,          filter: "blur(0px)",
+          y: 0,
+          filter: "blur(0px)",
           ease: "expo.out",
           duration: 1.5,
         }, "-=1.0")
 
         /* Phase 5: hold CTA, then scroll away */
         .to({}, { duration: 2 });
-
     }, containerRef);
     return () => ctx.revert();
   }, [metricValue]);
@@ -237,11 +271,11 @@ export function CinematicHero({
       <div className="hero-text-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-screen px-4 will-change-transform">
         <h1 className="text-track gsap-reveal text-3d-matte text-5xl md:text-7xl lg:text-[6rem] font-bold tracking-tight mb-2">
           {t.tagline1}
-        </h1>        <h1 className="text-days gsap-reveal text-silver-matte text-5xl md:text-7xl lg:text-[6rem] font-extrabold tracking-tighter">
+        </h1>
+        <h1 className="text-days gsap-reveal text-silver-matte text-5xl md:text-7xl lg:text-[6rem] font-extrabold tracking-tighter">
           {t.tagline2}
         </h1>
       </div>
-
       {/* ═══ CTA (appears after phone exits) ═══ */}
       <div className="cta-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-screen px-4 gsap-reveal pointer-events-auto will-change-transform">
         <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight text-silver-matte">
@@ -255,9 +289,24 @@ export function CinematicHero({
           <LiquidMetalButton label={t.ctaSecondary} href="#priser" width={200} height={56} />
         </div>
       </div>
+
+      {/* ═══ Brand Watermark — large ARXON behind the phone ═══ */}
+      <div className="brand-watermark absolute z-[15] flex items-center justify-end pr-[5vw] w-screen will-change-transform" aria-hidden="true">
+        ARXON
+      </div>
+
+      {/* ═══ Intro Text Block — left side ═══ */}
+      <div className="intro-block absolute z-[25] left-[5vw] md:left-[8vw] top-1/2 -translate-y-1/2 max-w-[340px] lg:max-w-[420px] hidden lg:block will-change-transform">
+        <h2 className="intro-heading text-3xl lg:text-5xl font-bold tracking-tight text-white mb-6 leading-[1.1] whitespace-pre-line">
+          {t.introHeading}
+        </h2>
+        <p className="text-zinc-400 text-base lg:text-lg leading-relaxed font-light">
+          <span className="text-white font-semibold">Arxon</span> {t.introDescription.replace('Arxon ', '')}
+        </p>
+      </div>
       {/* ═══ Phone Scene — rises directly, no card wrapper ═══ */}
       <div
-        className="phone-scene absolute z-20 flex items-center justify-center will-change-transform"
+        className="phone-scene absolute z-20 flex items-center justify-center will-change-transform lg:translate-x-[10vw]"
         style={{ perspective: "1000px" }}
       >
         <div className="relative flex items-center justify-center transform scale-[0.65] md:scale-85 lg:scale-100">
@@ -296,7 +345,8 @@ export function CinematicHero({
                     <span className="counter-val text-4xl font-extrabold tracking-tighter text-white">0</span>
                     <span className="text-[8px] text-emerald-200/50 uppercase tracking-[0.1em] font-bold mt-0.5">{t.metricLabel}</span>
                   </div>
-                </div>                <div className="space-y-3">
+                </div>
+                <div className="space-y-3">
                   <div className="phone-widget widget-depth rounded-2xl p-3 flex items-center">
                     <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/5 flex items-center justify-center mr-3 border border-emerald-400/20 shadow-inner">
                       <svg className="w-4 h-4 text-emerald-400 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
@@ -305,8 +355,7 @@ export function CinematicHero({
                       <div className="text-xs font-semibold text-white">Ny booking</div>
                       <div className="text-[10px] text-neutral-500">Ola Nordmann — 14:30</div>
                     </div>
-                  </div>
-                  <div className="phone-widget widget-depth rounded-2xl p-3 flex items-center">
+                  </div>                  <div className="phone-widget widget-depth rounded-2xl p-3 flex items-center">
                     <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/5 flex items-center justify-center mr-3 border border-blue-400/20 shadow-inner">
                       <svg className="w-4 h-4 text-blue-400 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
                     </div>
@@ -320,6 +369,7 @@ export function CinematicHero({
               </div>
             </div>
           </div>
+
           {/* Floating Badges */}
           <div className="floating-badge absolute flex top-6 lg:top-12 left-[-15px] lg:left-[-80px] floating-ui-badge rounded-xl lg:rounded-2xl p-3 lg:p-4 items-center gap-3 lg:gap-4 z-30">
             <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gradient-to-b from-emerald-500/20 to-emerald-900/10 flex items-center justify-center border border-emerald-400/30 shadow-inner">
@@ -329,8 +379,7 @@ export function CinematicHero({
               <p className="text-white text-xs lg:text-sm font-bold tracking-tight">{t.badge1}</p>
               <p className="text-emerald-200/50 text-[10px] lg:text-xs font-medium">{t.badge1Sub}</p>
             </div>
-          </div>
-          <div className="floating-badge absolute flex bottom-12 lg:bottom-20 right-[-15px] lg:right-[-80px] floating-ui-badge rounded-xl lg:rounded-2xl p-3 lg:p-4 items-center gap-3 lg:gap-4 z-30">
+          </div>          <div className="floating-badge absolute flex bottom-12 lg:bottom-20 right-[-15px] lg:right-[-80px] floating-ui-badge rounded-xl lg:rounded-2xl p-3 lg:p-4 items-center gap-3 lg:gap-4 z-30">
             <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gradient-to-b from-blue-500/20 to-blue-900/10 flex items-center justify-center border border-blue-400/30 shadow-inner">
               <span className="text-base lg:text-lg drop-shadow-lg">💬</span>
             </div>
