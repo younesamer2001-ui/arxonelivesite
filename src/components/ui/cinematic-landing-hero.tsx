@@ -28,9 +28,9 @@ const INJECTED_STYLES = `
   }  .brand-watermark {
       font-family: var(--font-grift), sans-serif;
       font-weight: 900;
-      font-size: clamp(4rem, 10vw, 8rem);
-      line-height: 1;
-      letter-spacing: -0.04em;
+      font-size: clamp(5rem, 15vw, 12rem);
+      line-height: 0.9;
+      letter-spacing: -0.05em;
       text-transform: uppercase;
       background: linear-gradient(180deg, #FFFFFF 0%, #A1A1AA 100%);
       -webkit-background-clip: text;
@@ -169,7 +169,7 @@ export function CinematicHero({
       gsap.set(".text-days", { autoAlpha: 1, clipPath: "inset(0 100% 0 0)" });
       gsap.set(".phone-scene", { autoAlpha: 0, y: "110vh", scale: 0.6, rotationX: 45, rotationY: -15 });
       gsap.set([".floating-badge", ".phone-widget"], { autoAlpha: 0 });
-      gsap.set(".brand-watermark", { autoAlpha: 0, scale: 0.8, filter: "blur(40px)" });
+      gsap.set(".brand-watermark", { autoAlpha: 0, x: 80, scale: 0.85, filter: "blur(30px)" });
       gsap.set(".intro-block", { autoAlpha: 0, y: isMobile ? -40 : 0, x: isMobile ? 0 : -80, filter: "blur(20px)" });
       gsap.set(".cta-wrapper", { autoAlpha: 0, y: 60, filter: "blur(20px)" });
 
@@ -211,6 +211,7 @@ export function CinematicHero({
         }, 0.3)
         .to(".brand-watermark", {
           autoAlpha: 1,
+          x: 0,
           scale: 1,
           filter: "blur(0px)",
           ease: "expo.out",
@@ -299,10 +300,10 @@ export function CinematicHero({
         </div>
       </div>
 
-      {/* ═══ Brand Name — below phone on mobile, right side on desktop ═══ */}
+      {/* ═══ Brand Name — overlaps behind phone from right, like SOBERS ═══ */}
       <div className="brand-watermark absolute z-[15] will-change-transform
-        bottom-[8vh] left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-auto
-        lg:bottom-auto lg:right-[8vw] lg:top-1/2 lg:-translate-y-1/2
+        bottom-[6vh] left-1/2 -translate-x-1/2
+        lg:bottom-auto lg:left-[50%] lg:-translate-x-[15%] lg:top-1/2 lg:-translate-y-1/2
         flex items-center" aria-hidden="true">
         ARXON
       </div>
