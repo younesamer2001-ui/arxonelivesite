@@ -170,7 +170,7 @@ export function CinematicHero({
       gsap.set(".phone-scene", { autoAlpha: 0, y: "110vh", scale: 0.6, rotationX: 45, rotationY: -15 });
       gsap.set([".floating-badge", ".phone-widget"], { autoAlpha: 0 });
       gsap.set(".brand-watermark", { autoAlpha: 0, scale: 0.8, filter: "blur(40px)" });
-      gsap.set(".intro-block", { autoAlpha: 0, x: -80, filter: "blur(20px)" });
+      gsap.set(".intro-block", { autoAlpha: 0, y: isMobile ? -40 : 0, x: isMobile ? 0 : -80, filter: "blur(20px)" });
       gsap.set(".cta-wrapper", { autoAlpha: 0, y: 60, filter: "blur(20px)" });
 
       /* ── intro text animation ── */
@@ -219,6 +219,7 @@ export function CinematicHero({
         .to(".intro-block", {
           autoAlpha: 1,
           x: 0,
+          y: 0,
           filter: "blur(0px)",
           ease: "expo.out",
           duration: 2,
@@ -298,17 +299,22 @@ export function CinematicHero({
         </div>
       </div>
 
-      {/* ═══ Brand Name — right side of phone, like Sobers reference ═══ */}
-      <div className="brand-watermark absolute z-[15] right-[3vw] lg:right-[8vw] top-1/2 -translate-y-1/2 hidden lg:flex items-center will-change-transform" aria-hidden="true">
+      {/* ═══ Brand Name — below phone on mobile, right side on desktop ═══ */}
+      <div className="brand-watermark absolute z-[15] will-change-transform
+        bottom-[8vh] left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-auto
+        lg:bottom-auto lg:right-[8vw] lg:top-1/2 lg:-translate-y-1/2
+        flex items-center" aria-hidden="true">
         ARXON
       </div>
 
-      {/* ═══ Intro Text Block — left side ═══ */}
-      <div className="intro-block absolute z-[25] left-[5vw] md:left-[8vw] top-1/2 -translate-y-1/2 max-w-[340px] lg:max-w-[420px] hidden lg:block will-change-transform">
-        <h2 className="intro-heading text-3xl lg:text-5xl font-bold tracking-tight text-white mb-6 leading-[1.1] whitespace-pre-line">
+      {/* ═══ Intro Text Block — above phone on mobile, left side on desktop ═══ */}
+      <div className="intro-block absolute z-[25] will-change-transform
+        top-[6vh] left-1/2 -translate-x-1/2 text-center max-w-[300px]
+        lg:translate-x-0 lg:left-[8vw] lg:top-1/2 lg:-translate-y-1/2 lg:text-left lg:max-w-[420px]">
+        <h2 className="intro-heading text-2xl md:text-3xl lg:text-5xl font-bold tracking-tight text-white mb-3 lg:mb-6 leading-[1.1] whitespace-pre-line">
           {t.introHeading}
         </h2>
-        <p className="text-zinc-400 text-base lg:text-lg leading-relaxed font-light">
+        <p className="text-zinc-400 text-sm lg:text-lg leading-relaxed font-light">
           <span className="text-white font-semibold">Arxon</span> {t.introDescription.replace('Arxon ', '')}
         </p>
       </div>
