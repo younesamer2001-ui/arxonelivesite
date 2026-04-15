@@ -59,16 +59,16 @@ export default function HomePage() {
     }
 
     try {
-      const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          service_id: 'service_3azd1ic',
-          template_id: 'template_qbt6k52',
-          user_id: 'Vy-evp6-EBwcwwLf1',
-          template_params: data,
+          name: data.from_name,
+          email: data.from_email,
+          phone: data.phone,
+          message: data.message,
         }),
       })
 
@@ -76,12 +76,12 @@ export default function HomePage() {
         setSubmitStatus('success')
         formRef.current?.reset()
       } else {
-        const errorText = await response.text()
-        console.error('EmailJS response error:', errorText)
+        const errorData = await response.json().catch(() => ({}))
+        console.error('Contact form error:', errorData)
         throw new Error('Failed to send')
       }
     } catch (error) {
-      console.error('EmailJS error:', error)
+      console.error('Contact form error:', error)
       setSubmitStatus('error')
     } finally {
       setIsSubmitting(false)
