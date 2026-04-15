@@ -5,9 +5,11 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
 import { LiquidMetalButton } from "@/components/ui/liquid-metal-button";
+
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
+
 const INJECTED_STYLES = `
   .gsap-reveal { visibility: hidden; }
   .text-3d-matte {
@@ -25,7 +27,8 @@ const INJECTED_STYLES = `
       filter:
           drop-shadow(0px 10px 20px rgba(255,255,255,0.1))
           drop-shadow(0px 2px 4px rgba(255,255,255,0.06));
-  }  .text-card-silver-matte {
+  }
+  .text-card-silver-matte {
       background: linear-gradient(180deg, #FFFFFF 0%, #A1A1AA 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -38,6 +41,11 @@ const INJECTED_STYLES = `
   .main-card {
       background: transparent;
       position: relative;
+  }
+  .card-sheen {
+      position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 50;
+      background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.04) 0%, transparent 40%);
+      mix-blend-mode: screen; transition: opacity 0.3s ease;
   }
   .iphone-bezel {
       background-color: #111;
@@ -55,7 +63,8 @@ const INJECTED_STYLES = `
           inset -1px 0 1px rgba(255,255,255,0.15),
           inset 1px 0 2px rgba(0,0,0,0.8);
       border-left: 1px solid rgba(255,255,255,0.05);
-  }  .screen-glare {
+  }
+  .screen-glare {
       background: linear-gradient(110deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 45%);
   }
   .widget-depth {
@@ -67,12 +76,12 @@ const INJECTED_STYLES = `
       border: 1px solid rgba(255,255,255,0.03);
   }
   .floating-ui-badge {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.01) 100%);
+      background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.01) 100%);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
       box-shadow:
-          0 0 0 1px rgba(255, 255, 255, 0.1),
-          0 25px 50px -12px rgba(0, 0, 0, 0.8),
+          0 0 0 1px rgba(255,255,255,0.1),
+          0 25px 50px -12px rgba(0,0,0,0.8),
           inset 0 1px 1px rgba(255,255,255,0.2),
           inset 0 -1px 1px rgba(0,0,0,0.5);
   }
@@ -83,76 +92,75 @@ const INJECTED_STYLES = `
       stroke-dashoffset: 402;
       stroke-linecap: round;
   }
-`;export interface CinematicHeroProps extends React.HTMLAttributes<HTMLDivElement> {
+`;
+
+export interface CinematicHeroProps extends React.HTMLAttributes<HTMLDivElement> {
   lang?: "no" | "en";
 }
+
+const content = {
+  no: {
+    tagline1: "Din AI-resepsjonist",
+    tagline2: "for smartere drift.",
+    cardHeading: "Kundeservice,\npå autopilot.",
+    cardDescription: "fanger opp det kundene dine faktisk sier — og gjør det om til bookinger, innsikt og vekst. Automatisk, døgnet rundt.",
+    metricLabel: "Samtaler",
+    ctaHeading: "Klar til å starte?",
+    ctaDescription: "Book en konsultasjon og se hvordan Arxon kan håndtere dine kundesamtaler fra dag én.",
+    ctaPrimary: "Book konsultasjon",
+    ctaSecondary: "Se priser",
+    badge1: "Ny booking", badge1Sub: "Klipp & Vask — 14:00",
+    badge2: "SMS sendt", badge2Sub: "Bekreftelse levert ✅",
+  },
+  en: {
+    tagline1: "Your AI receptionist",
+    tagline2: "for smarter operations.",
+    cardHeading: "Customer service,\non autopilot.",
+    cardDescription: "captures what your customers actually say — and turns it into bookings, insights and growth. Automatically, around the clock.",
+    metricLabel: "Conversations",
+    ctaHeading: "Ready to start?",
+    ctaDescription: "Book a consultation and see how Arxon can handle your customer conversations from day one.",
+    ctaPrimary: "Book consultation",
+    ctaSecondary: "See pricing",
+    badge1: "New booking", badge1Sub: "Cut & Wash — 2:00 PM",
+    badge2: "SMS sent", badge2Sub: "Confirmation delivered ✅",
+  },
+};
+
 export function CinematicHero({
   lang = "no",
   className,
   ...props
 }: CinematicHeroProps) {
-  const content = {
-    no: {
-      tagline1: "Din AI-resepsjonist",
-      tagline2: "for smartere drift.",
-      cardHeading: "Kundeservice,\npå autopilot.",
-      cardDescription: "fanger opp det kundene dine faktisk sier — og gjør det om til bookinger, innsikt og vekst. Automatisk, døgnet rundt.",
-      metricLabel: "Samtaler",
-      ctaHeading: "Klar til å starte?",
-      ctaDescription: "Book en konsultasjon og se hvordan Arxon kan håndtere dine kundesamtaler fra dag én.",
-      ctaPrimary: "Book konsultasjon",
-      ctaSecondary: "Se priser",
-      badge1: "Ny booking",
-      badge1Sub: "Klipp & Vask — 14:00",
-      badge2: "SMS sendt",
-      badge2Sub: "Bekreftelse levert ✅",
-    },    en: {
-      tagline1: "Your AI receptionist",
-      tagline2: "for smarter operations.",
-      cardHeading: "Customer service,\non autopilot.",
-      cardDescription: "captures what your customers actually say — and turns it into bookings, insights and growth. Automatically, around the clock.",
-      metricLabel: "Calls",
-      ctaHeading: "Ready to start?",
-      ctaDescription: "Book a consultation and see how Arxon can handle your customer calls from day one.",
-      ctaPrimary: "Book consultation",
-      ctaSecondary: "See pricing",
-      badge1: "New booking",
-      badge1Sub: "Cut & Wash — 14:00",
-      badge2: "SMS sent",
-      badge2Sub: "Confirmation delivered ✅",
-    },
-  };
   const t = content[lang];
   const metricValue = 47;
+
   const containerRef = useRef<HTMLDivElement>(null);
   const mainCardRef = useRef<HTMLDivElement>(null);
   const mockupRef = useRef<HTMLDivElement>(null);
   const requestRef = useRef<number>(0);
+
   // Mouse interaction
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (window.scrollY > window.innerHeight * 2) return;
       cancelAnimationFrame(requestRef.current);
       requestRef.current = requestAnimationFrame(() => {
-        if (mockupRef.current) {
+        if (mainCardRef.current && mockupRef.current) {
+          const rect = mainCardRef.current.getBoundingClientRect();
+          mainCardRef.current.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
+          mainCardRef.current.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
           const xVal = (e.clientX / window.innerWidth - 0.5) * 2;
           const yVal = (e.clientY / window.innerHeight - 0.5) * 2;
-          gsap.to(mockupRef.current, {
-            rotationY: xVal * 12,
-            rotationX: -yVal * 12,
-            ease: "power3.out",
-            duration: 1.2,
-          });
+          gsap.to(mockupRef.current, { rotationY: xVal * 12, rotationX: -yVal * 12, ease: "power3.out", duration: 1.2 });
         }
       });
     };
     window.addEventListener("mousemove", handleMouseMove);
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      cancelAnimationFrame(requestRef.current);
-    };
+    return () => { window.removeEventListener("mousemove", handleMouseMove); cancelAnimationFrame(requestRef.current); };
   }, []);
-  // Cinematic scroll timeline — matches reference structure
+
+  // Cinematic scroll timeline
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
     const ctx = gsap.context(() => {
@@ -177,31 +185,25 @@ export function CinematicHero({
           anticipatePin: 1,
         },
       });
+
       scrollTl
-        // Phase 1: text fades, card rises
         .to([".hero-text-wrapper"], { scale: 1.15, filter: "blur(20px)", opacity: 0.2, ease: "power2.inOut", duration: 2 }, 0)
         .to(".main-card", { y: 0, ease: "power3.inOut", duration: 2 }, 0)
-        // Phase 2: card expands to fullscreen
         .to(".main-card", { width: "100%", height: "100%", borderRadius: "0px", ease: "power3.inOut", duration: 1.5 })
-        // Phase 3: phone rises with 3D entrance
         .fromTo(".mockup-scroll-wrapper",
           { y: 300, z: -500, rotationX: 50, rotationY: -30, autoAlpha: 0, scale: 0.6 },
           { y: 0, z: 0, rotationX: 0, rotationY: 0, autoAlpha: 1, scale: 1, ease: "expo.out", duration: 2.5 }, "-=0.8"
         )
-        // Phase 4: widgets + counter + badges animate in
         .fromTo(".phone-widget", { y: 40, autoAlpha: 0, scale: 0.95 }, { y: 0, autoAlpha: 1, scale: 1, stagger: 0.15, ease: "back.out(1.2)", duration: 1.5 }, "-=1.5")
         .to(".progress-ring", { strokeDashoffset: 60, duration: 2, ease: "power3.inOut" }, "-=1.2")
         .to(".counter-val", { innerHTML: metricValue, snap: { innerHTML: 1 }, duration: 2, ease: "expo.out" }, "-=2.0")
         .fromTo(".floating-badge", { y: 100, autoAlpha: 0, scale: 0.7, rotationZ: -10 }, { y: 0, autoAlpha: 1, scale: 1, rotationZ: 0, ease: "back.out(1.5)", duration: 1.5, stagger: 0.2 }, "-=2.0")
-        // Phase 5: left text + right brand slide in
         .fromTo(".card-left-text", { x: -50, autoAlpha: 0 }, { x: 0, autoAlpha: 1, ease: "power4.out", duration: 1.5 }, "-=1.5")
-        .fromTo(".card-right-text", { x: 50, autoAlpha: 0, scale: 0.8 }, { x: 0, autoAlpha: 1, scale: 1, ease: "expo.out", duration: 1.5 }, "<")        // Phase 6: hold
+        .fromTo(".card-right-text", { x: 50, autoAlpha: 0, scale: 0.8 }, { x: 0, autoAlpha: 1, scale: 1, ease: "expo.out", duration: 1.5 }, "<")
         .to({}, { duration: 2.5 })
-        // Phase 7: prepare CTA
         .set(".hero-text-wrapper", { autoAlpha: 0 })
         .set(".cta-wrapper", { autoAlpha: 1 })
         .to({}, { duration: 1.5 })
-        // Phase 8: everything exits, card shrinks back
         .to([".mockup-scroll-wrapper", ".floating-badge", ".card-left-text", ".card-right-text"], {
           scale: 0.9, y: -40, z: -200, autoAlpha: 0, ease: "power3.in", duration: 1.2, stagger: 0.05,
         })
@@ -213,12 +215,12 @@ export function CinematicHero({
           duration: 1.8
         }, "pullback")
         .to(".cta-wrapper", { scale: 1, filter: "blur(0px)", ease: "expo.inOut", duration: 1.8 }, "pullback")
-        // Phase 9: card exits up
         .to(".main-card", { y: -window.innerHeight - 300, ease: "power3.in", duration: 1.5 });
 
     }, containerRef);
     return () => ctx.revert();
   }, [metricValue]);
+
   return (
     <div
       ref={containerRef}
@@ -237,170 +239,149 @@ export function CinematicHero({
           {t.tagline2}
         </h1>
       </div>
+
       {/* CTA — hidden initially, revealed in Phase 7 */}
-      <div className="cta-wrapper absolute z-20 flex flex-col items-center justify-center text-center w-screen px-4 will-change-transform" style={{ visibility: "hidden" }}>
-        <h2 className="text-3d-matte text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-4">
-          {t.ctaHeading}
-        </h2>
-        <p className="text-zinc-400 text-base md:text-lg max-w-md mb-8">
-          {t.ctaDescription}
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 items-center">
+      <div className="cta-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-screen px-4 gsap-reveal pointer-events-auto will-change-transform">
+        <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight text-silver-matte">{t.ctaHeading}</h2>
+        <p className="text-zinc-400 text-lg md:text-xl mb-12 max-w-xl mx-auto font-light leading-relaxed">{t.ctaDescription}</p>
+        <div className="flex flex-col sm:flex-row gap-6">
           <LiquidMetalButton label={t.ctaPrimary} href="#kontakt" width={220} height={56} />
           <LiquidMetalButton label={t.ctaSecondary} href="#priser" width={180} height={48} />
         </div>
       </div>
 
-      {/* Main card — rises from below, expands, then exits */}
-      <div
-        className="main-card absolute z-30 flex items-center justify-center overflow-hidden"
-        style={{
-          width: "85vw",
-          height: "85vh",
-          borderRadius: "40px",
-          transform: "translateY(120vh)",
-          background: "transparent",
-        }}
-      >
-        {/* 3-column grid: left text | phone | right brand */}
-        <div className="relative w-full h-full flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-8 px-4 lg:px-12">
+      {/* FOREGROUND: The Card */}
+      <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none" style={{ perspective: "1500px" }}>
+        <div
+          ref={mainCardRef}
+          className="main-card relative overflow-hidden gsap-reveal flex items-center justify-center pointer-events-auto w-[92vw] md:w-[85vw] h-[92vh] md:h-[85vh] rounded-[32px] md:rounded-[40px]"
+        >
+          <div className="card-sheen" aria-hidden="true" />
 
-          {/* Left column: heading + description */}
-          <div className="card-left-text flex flex-col items-center lg:items-start text-center lg:text-left order-3 lg:order-1 lg:flex-1 max-w-sm" style={{ visibility: "hidden" }}>
-            <h2 className="text-3d-matte text-2xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight whitespace-pre-line mb-3">
-              {t.cardHeading}
-            </h2>
-            <p className="text-zinc-400 text-sm md:text-base lg:text-lg leading-relaxed">
-              <span className="text-white font-semibold">Arxon</span> {t.cardDescription}
-            </p>
-          </div>
+          {/* GRID: flex-col mobile, grid-cols-3 desktop */}
+          <div className="relative w-full h-full max-w-7xl mx-auto px-4 lg:px-12 flex flex-col justify-evenly lg:grid lg:grid-cols-3 items-center lg:gap-8 z-10 py-6 lg:py-0">
 
-          {/* Center column: iPhone mockup */}
-          <div className="mockup-scroll-wrapper order-2 lg:order-2 flex-shrink-0" style={{ perspective: "1200px", transformStyle: "preserve-3d", visibility: "hidden" }}>
-            <div
-              className="iphone-bezel relative"
-              style={{
-                width: "clamp(220px, 28vw, 320px)",
-                height: "clamp(440px, 56vw, 640px)",
-                borderRadius: "44px",
-                border: "4px solid #2a2a2e",
-                background: "linear-gradient(145deg, #1c1c1e 0%, #0d0d0d 100%)",
-                boxShadow: "0 0 0 2px #3a3a3c, inset 0 0 30px rgba(0,0,0,0.6), 0 40px 80px rgba(0,0,0,0.8)",
-                overflow: "hidden",
-                transformStyle: "preserve-3d",
-              }}
-            >
+            {/* 1. TOP (Mobile) / RIGHT (Desktop): ARXON BRAND */}
+            <div className="card-right-text gsap-reveal order-1 lg:order-3 flex justify-center lg:justify-end z-20 w-full">
+              <h2 className="text-6xl md:text-[6rem] lg:text-[8rem] font-black uppercase tracking-tighter text-card-silver-matte">
+                ARXON
+              </h2>
+            </div>
 
-              {/* Hardware buttons */}
-              <div className="hardware-btn" style={{ position: "absolute", right: "-6px", top: "120px", width: "3px", height: "60px", background: "#3a3a3c", borderRadius: "2px" }} />
-              <div className="hardware-btn" style={{ position: "absolute", left: "-6px", top: "100px", width: "3px", height: "30px", background: "#3a3a3c", borderRadius: "2px" }} />
-              <div className="hardware-btn" style={{ position: "absolute", left: "-6px", top: "150px", width: "3px", height: "50px", background: "#3a3a3c", borderRadius: "2px" }} />
-              <div className="hardware-btn" style={{ position: "absolute", left: "-6px", top: "210px", width: "3px", height: "50px", background: "#3a3a3c", borderRadius: "2px" }} />
+            {/* 2. MIDDLE (Mobile) / CENTER (Desktop): IPHONE MOCKUP */}
+            <div className="mockup-scroll-wrapper order-2 lg:order-2 relative w-full h-[380px] lg:h-[600px] flex items-center justify-center z-10" style={{ perspective: "1000px" }}>
 
-              {/* Dynamic Island */}
-              <div style={{ position: "absolute", top: "12px", left: "50%", transform: "translateX(-50%)", width: "90px", height: "28px", background: "#000", borderRadius: "20px", zIndex: 20 }} />
+              {/* Inner wrapper for CSS scaling that doesn't conflict with GSAP */}
+              <div className="relative w-full h-full flex items-center justify-center transform scale-[0.65] md:scale-[0.85] lg:scale-100">
 
-              {/* Screen glare */}
-              <div className="screen-glare" style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 50%)", zIndex: 15, pointerEvents: "none", borderRadius: "40px" }} />
+                {/* iPhone Bezel */}
+                <div
+                  ref={mockupRef}
+                  className="relative w-[280px] h-[580px] rounded-[3rem] iphone-bezel flex flex-col will-change-transform"
+                  style={{ transformStyle: "preserve-3d" }}
+                >
+                  {/* Hardware Buttons */}
+                  <div className="absolute top-[120px] -left-[3px] w-[3px] h-[25px] hardware-btn rounded-l-md z-0" />
+                  <div className="absolute top-[160px] -left-[3px] w-[3px] h-[45px] hardware-btn rounded-l-md z-0" />
+                  <div className="absolute top-[220px] -left-[3px] w-[3px] h-[45px] hardware-btn rounded-l-md z-0" />
+                  <div className="absolute top-[170px] -right-[3px] w-[3px] h-[70px] hardware-btn rounded-r-md z-0" style={{ transform: "scaleX(-1)" }} />
 
-              {/* Phone screen content */}
-              <div style={{ position: "absolute", inset: "8px", borderRadius: "36px", overflow: "hidden", background: "linear-gradient(180deg, #111113 0%, #0a0a0b 100%)" }}>
-                {/* Status bar */}
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 20px 8px", fontSize: "12px", fontWeight: 600, color: "#fff" }}>
-                  <span>9:41</span>
-                  <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
-                    <div style={{ width: "16px", height: "10px", border: "1px solid #fff", borderRadius: "2px", position: "relative" }}>
-                      <div style={{ position: "absolute", inset: "1px", right: "3px", background: "#34c759", borderRadius: "1px" }} />
+                  {/* Inner Screen */}
+                  <div className="absolute inset-[7px] bg-[#050914] rounded-[2.5rem] overflow-hidden shadow-[inset_0_0_15px_rgba(0,0,0,1)] text-white z-10">
+                    <div className="absolute inset-0 screen-glare z-40 pointer-events-none" />
+                    {/* Dynamic Island */}
+                    <div className="absolute top-[5px] left-1/2 -translate-x-1/2 w-[100px] h-[28px] bg-black rounded-full z-50 flex items-center justify-end px-3 shadow-[inset_0_-1px_2px_rgba(255,255,255,0.1)]">
+                      <div className="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)] animate-pulse" />
                     </div>
-                  </div>
-                </div>
 
-                {/* App header */}
-                <div style={{ padding: "4px 20px 12px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-                  <div style={{ fontSize: "18px", fontWeight: 700, color: "#fff", letterSpacing: "-0.02em" }}>Arxon</div>
-                  <div style={{ fontSize: "11px", color: "#71717a", marginTop: "2px" }}>Dashboard</div>
-                </div>
-
-                {/* Metric widget with progress ring */}
-                <div className="phone-widget widget-depth" style={{ margin: "16px 16px 12px", padding: "16px", background: "rgba(255,255,255,0.04)", borderRadius: "20px", border: "1px solid rgba(255,255,255,0.06)", visibility: "hidden" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-                    <svg width="56" height="56" viewBox="0 0 56 56" style={{ flexShrink: 0 }}>
-                      <circle cx="28" cy="28" r="24" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="4" />
-                      <circle className="progress-ring" cx="28" cy="28" r="24" fill="none" stroke="#a78bfa" strokeWidth="4" strokeLinecap="round"
-                        strokeDasharray="150.8" strokeDashoffset="150.8"
-                        style={{ transform: "rotate(-90deg)", transformOrigin: "center" }} />
-                    </svg>
-                    <div>
-                      <div style={{ fontSize: "28px", fontWeight: 800, color: "#fff", lineHeight: 1 }}>
-                        <span className="counter-val">0</span>
+                    {/* App Interface */}
+                    <div className="relative w-full h-full pt-12 px-5 pb-8 flex flex-col">
+                      {/* Header */}
+                      <div className="phone-widget flex justify-between items-center mb-8">
+                        <div className="flex flex-col">
+                          <span className="text-[10px] text-neutral-400 uppercase tracking-widest font-bold mb-1">Dashboard</span>
+                          <span className="text-xl font-bold tracking-tight text-white drop-shadow-md">Arxon</span>
+                        </div>
+                        <div className="w-9 h-9 rounded-full bg-white/5 text-neutral-200 flex items-center justify-center font-bold text-sm border border-white/10 shadow-lg shadow-black/50">AI</div>
                       </div>
-                      <div style={{ fontSize: "11px", color: "#a1a1aa", marginTop: "4px" }}>{t.metricLabel}</div>
+
+                      {/* Progress ring + counter */}
+                      <div className="phone-widget relative w-44 h-44 mx-auto flex items-center justify-center mb-8 drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)]">
+                        <svg className="absolute inset-0 w-full h-full">
+                          <circle cx="88" cy="88" r="64" fill="none" stroke="rgba(255,255,255,0.03)" strokeWidth="12" />
+                          <circle className="progress-ring" cx="88" cy="88" r="64" fill="none" stroke="#7c3aed" strokeWidth="12" />
+                        </svg>
+                        <div className="text-center z-10 flex flex-col items-center">
+                          <span className="counter-val text-4xl font-extrabold tracking-tighter text-white">0</span>
+                          <span className="text-[8px] text-purple-200/50 uppercase tracking-[0.1em] font-bold mt-0.5">{t.metricLabel}</span>
+                        </div>
+                      </div>
+
+                      {/* Booking widget */}
+                      <div className="space-y-3">
+                        <div className="phone-widget widget-depth rounded-2xl p-3 flex items-center">
+                          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-600/5 flex items-center justify-center mr-3 border border-purple-400/20 shadow-inner">
+                            <span className="text-base">📅</span>
+                          </div>
+                          <div className="flex-1">
+                            <div className="text-xs font-semibold text-white">{t.badge1}</div>
+                            <div className="text-[10px] text-neutral-500">{t.badge1Sub}</div>
+                          </div>
+                        </div>
+                        {/* SMS widget */}
+                        <div className="phone-widget widget-depth rounded-2xl p-3 flex items-center">
+                          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/5 flex items-center justify-center mr-3 border border-emerald-400/20 shadow-inner">
+                            <span className="text-base">💬</span>
+                          </div>
+                          <div className="flex-1">
+                            <div className="text-xs font-semibold text-white">{t.badge2}</div>
+                            <div className="text-[10px] text-neutral-500">{t.badge2Sub}</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Home indicator */}
+                      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-[120px] h-[4px] bg-white/20 rounded-full shadow-[0_1px_2px_rgba(0,0,0,0.5)]" />
                     </div>
-                  </div>
-                </div>
+                  </div>{/* end inner screen */}
+                </div>{/* end iphone bezel */}
 
-                {/* Booking widget */}
-                <div className="phone-widget widget-depth" style={{ margin: "0 16px 10px", padding: "14px 16px", background: "rgba(255,255,255,0.03)", borderRadius: "16px", border: "1px solid rgba(255,255,255,0.05)", display: "flex", alignItems: "center", gap: "12px", visibility: "hidden" }}>
-                  <div style={{ width: "36px", height: "36px", borderRadius: "10px", background: "linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "16px" }}>📅</div>
+                {/* Floating Glass Badges */}
+                <div className="floating-badge absolute flex top-6 lg:top-12 left-[-15px] lg:left-[-80px] floating-ui-badge rounded-xl lg:rounded-2xl p-3 lg:p-4 items-center gap-3 lg:gap-4 z-30">
+                  <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gradient-to-b from-purple-500/20 to-purple-900/10 flex items-center justify-center border border-purple-400/30 shadow-inner">
+                    <span className="text-base lg:text-xl drop-shadow-lg">📅</span>
+                  </div>
                   <div>
-                    <div style={{ fontSize: "13px", fontWeight: 600, color: "#fff" }}>{t.badge1}</div>
-                    <div style={{ fontSize: "11px", color: "#71717a" }}>{t.badge1Sub}</div>
+                    <p className="text-white text-xs lg:text-sm font-bold tracking-tight">{t.badge1}</p>
+                    <p className="text-purple-200/50 text-[10px] lg:text-xs font-medium">{t.badge1Sub}</p>
                   </div>
                 </div>
-
-                {/* SMS widget */}
-                <div className="phone-widget widget-depth" style={{ margin: "0 16px 10px", padding: "14px 16px", background: "rgba(255,255,255,0.03)", borderRadius: "16px", border: "1px solid rgba(255,255,255,0.05)", display: "flex", alignItems: "center", gap: "12px", visibility: "hidden" }}>
-                  <div style={{ width: "36px", height: "36px", borderRadius: "10px", background: "linear-gradient(135deg, #059669 0%, #34d399 100%)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "16px" }}>💬</div>
+                <div className="floating-badge absolute flex bottom-12 lg:bottom-20 right-[-15px] lg:right-[-80px] floating-ui-badge rounded-xl lg:rounded-2xl p-3 lg:p-4 items-center gap-3 lg:gap-4 z-30">
+                  <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gradient-to-b from-emerald-500/20 to-emerald-900/10 flex items-center justify-center border border-emerald-400/30 shadow-inner">
+                    <span className="text-base lg:text-lg drop-shadow-lg">💬</span>
+                  </div>
                   <div>
-                    <div style={{ fontSize: "13px", fontWeight: 600, color: "#fff" }}>{t.badge2}</div>
-                    <div style={{ fontSize: "11px", color: "#71717a" }}>{t.badge2Sub}</div>
+                    <p className="text-white text-xs lg:text-sm font-bold tracking-tight">{t.badge2}</p>
+                    <p className="text-emerald-200/50 text-[10px] lg:text-xs font-medium">{t.badge2Sub}</p>
                   </div>
                 </div>
 
-              </div>{/* end phone screen */}
-            </div>{/* end iphone-bezel */}
-          </div>{/* end mockup-scroll-wrapper */}
+              </div>{/* end inner scaling wrapper */}
+            </div>{/* end mockup-scroll-wrapper */}
 
-          {/* Right column: ARXON brand name */}
-          <div className="card-right-text flex items-center justify-center order-1 lg:order-3 lg:flex-1" style={{ visibility: "hidden" }}>
-            <span
-              className="text-card-silver-matte font-bold tracking-tighter select-none"
-              style={{
-                fontSize: "clamp(3rem, 8vw, 7rem)",
-                lineHeight: 0.9,
-                writingMode: "vertical-rl",
-                textOrientation: "mixed",
-                letterSpacing: "-0.04em",
-              }}
-            >
-              ARXON
-            </span>
-          </div>
-
-        </div>{/* end 3-column grid */}
-
-        {/* Floating badges — animate in from sides */}
-        <div className="floating-badge floating-ui-badge" style={{ position: "absolute", top: "18%", left: "4%", visibility: "hidden" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", padding: "10px 16px", background: "rgba(255,255,255,0.05)", backdropFilter: "blur(20px)", borderRadius: "14px", border: "1px solid rgba(255,255,255,0.08)" }}>
-            <span style={{ fontSize: "14px" }}>📅</span>
-            <div>
-              <div style={{ fontSize: "12px", fontWeight: 600, color: "#fff" }}>{t.badge1}</div>
-              <div style={{ fontSize: "10px", color: "#71717a" }}>{t.badge1Sub}</div>
+            {/* 3. BOTTOM (Mobile) / LEFT (Desktop): TEXT */}
+            <div className="card-left-text gsap-reveal order-3 lg:order-1 flex flex-col justify-center text-center lg:text-left z-20 w-full lg:max-w-none px-4 lg:px-0">
+              <h3 className="text-white text-2xl md:text-3xl lg:text-4xl font-bold mb-0 lg:mb-5 tracking-tight whitespace-pre-line">
+                {t.cardHeading}
+              </h3>
+              <p className="hidden md:block text-zinc-400 text-sm md:text-base lg:text-lg font-normal leading-relaxed mx-auto lg:mx-0 max-w-sm lg:max-w-none">
+                <span className="text-white font-semibold">Arxon</span> {t.cardDescription}
+              </p>
             </div>
-          </div>
-        </div>
 
-        <div className="floating-badge floating-ui-badge" style={{ position: "absolute", bottom: "22%", right: "4%", visibility: "hidden" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", padding: "10px 16px", background: "rgba(255,255,255,0.05)", backdropFilter: "blur(20px)", borderRadius: "14px", border: "1px solid rgba(255,255,255,0.08)" }}>
-            <span style={{ fontSize: "14px" }}>💬</span>
-            <div>
-              <div style={{ fontSize: "12px", fontWeight: 600, color: "#fff" }}>{t.badge2}</div>
-              <div style={{ fontSize: "10px", color: "#71717a" }}>{t.badge2Sub}</div>
-            </div>
-          </div>
-        </div>
-
-      </div>{/* end main-card */}
+          </div>{/* end grid */}
+        </div>{/* end main-card */}
+      </div>{/* end card perspective wrapper */}
     </div>
   );
 }
