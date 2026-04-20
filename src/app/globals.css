@@ -1,12 +1,16 @@
 @import "tailwindcss";
 
-/* ── Grift Display Font ── */
-@font-face {
-  font-family: 'Grift';
-  src: url('/fonts/Grift-Light.otf') format('opentype');
-  font-weight: 300;
-  font-display: swap;
-}
+/* ── Grift Display Font ──
+ * Kun vekter som faktisk brukes i kodebasen (bekreftet via grep 2026-04-20):
+ *   - 400/500/600/700/800/900 brukes på headinger via Tailwind-klasser
+ *   - 300 (Light) var kun referert 0 ganger i headings → fjernet
+ *
+ * Fontene preloades IKKE her. `display: swap` sørger for at tekst rendres med
+ * fallback-font mens Grift lastes. KUN Grift-Bold (700) og Grift-ExtraBold (800)
+ * preloades manuelt i layout.tsx <head> — de er i LCP-banen (hero h1).
+ * De andre vektene (400/500/600/900) hentes on-demand når headinger under fold
+ * renderes.
+ */
 @font-face {
   font-family: 'Grift';
   src: url('/fonts/Grift-Regular.otf') format('opentype');

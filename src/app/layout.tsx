@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
-import localFont from "next/font/local"
 import "./globals.css"
 import SmoothScroll from "@/components/SmoothScroll"
 import ChatbotWidgetClient from "@/components/ChatbotWidgetClient"
@@ -21,18 +20,24 @@ const inter = Inter({
   display: "swap",
 })
 
-const grift = localFont({
-  src: [
-    { path: "../../public/fonts/Grift-Regular.otf", weight: "400", style: "normal" },
-    { path: "../../public/fonts/Grift-Medium.otf", weight: "500", style: "normal" },
-    { path: "../../public/fonts/Grift-SemiBold.otf", weight: "600", style: "normal" },
-    { path: "../../public/fonts/Grift-Bold.otf", weight: "700", style: "normal" },
-    { path: "../../public/fonts/Grift-ExtraBold.otf", weight: "800", style: "normal" },
-    { path: "../../public/fonts/Grift-Black.otf", weight: "900", style: "normal" },
-  ],
-  variable: "--font-grift",
-  display: "swap",
-})
+/**
+ * Grift-fontene lastes IKKE via `next/font/local` her.
+ *
+ * Hvorfor:
+ *   - Grift er definert via `@font-face` i globals.css og brukes av Tailwind
+ *     gjennom `--font-display: 'Grift', sans-serif`.
+ *   - Tidligere lastet vi ALLE 6 vekter via `next/font/local` i tillegg →
+ *     Next.js preloadet dem på kritisk bane (~174KB). `--font-grift`-variabelen
+ *     ble aldri brukt noe sted i CSS-en, så all nettverkstrafikken var bortkastet.
+ *   - Lighthouse (2026-04-20): LCP 5,7s på mobil, med alle 7 Grift-vekter på
+ *     kritisk bane (450ms hver).
+ *
+ * Hva skjer nå:
+ *   - LCP-fontene (Bold 700 + ExtraBold 800 — brukt av hero h1) preloades
+ *     eksplisitt i <head> under. Dette er de eneste vi trenger før first paint.
+ *   - De andre vektene (400/500/600/900) lastes on-demand når headinger under fold
+ *     renderes, uten å blokkere kritisk bane (`display: swap` gir fallback).
+ */
 
 /**
  * GA4 measurement ID. Set NEXT_PUBLIC_GA4_ID in Vercel envs.
@@ -138,7 +143,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="nb" className={`${inter.variable} ${grift.variable} antialiased`} suppressHydrationWarning>
+    <html lang="nb" className={`${inter.variable} antialiased`} suppressHydrationWarning>
       <head>
         {/* Google Analytics — only emit when a real GA4 ID is configured */}
         {gaEnabled && (
@@ -156,6 +161,28 @@ export default function RootLayout({
             />
           </>
         )}
+        {/*
+          Preload KUN de to Grift-vektene som brukes av hero-h1 (LCP-elementet).
+          - font-bold (700)     → "Din AI-resepsjonist for smartere"
+          - font-extrabold (800) → "drift."
+          De andre 4 vektene i @font-face (globals.css) lazy-lastes on-demand
+          når bruker scroller til headings under fold. Dette fjerner 4 × ~29KB
+          = ~116KB fra kritisk bane uten å påvirke utseende.
+        */}
+        <link
+          rel="preload"
+          href="/fonts/Grift-Bold.otf"
+          as="font"
+          type="font/otf"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/Grift-ExtraBold.otf"
+          as="font"
+          type="font/otf"
+          crossOrigin="anonymous"
+        />
         <link rel="preconnect" href="https://stream.mux.com" />
         <link rel="dns-prefetch" href="https://stream.mux.com" />
         {/* Vapi voice agent — pre-warm DNS + TLS so click-to-call is faster */}
