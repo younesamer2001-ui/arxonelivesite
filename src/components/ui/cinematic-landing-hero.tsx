@@ -347,8 +347,17 @@ export function CinematicHero({
           {t.tagline2}
         </h1>
       </div>
-      {/* CTA Buttons */}
-      <div className="cta-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-screen px-4 gsap-reveal pointer-events-auto will-change-transform">
+      {/* CTA Buttons
+       *
+       * z-30 er bevisst valgt: over `.main-card` (z-20). Tidligere var cta-wrapper
+       * z-10, noe som betydde at `.main-card` (som har `pointer-events-auto` og
+       * dekker 85vw × 85vh sentrert) fanget alle klikk som var ment for
+       * "Book konsultasjon"-knappen. Visuelt så knappen helt riktig ut (main-card
+       * er transparent etter at innholdet fader ut), men klikk gikk aldri gjennom.
+       * Hever vi cta-wrapper til z-30 prioriterer nettleseren hit-testing mot
+       * LiquidMetalButton. film-grain ligger på z-50 men har pointer-events-none.
+       */}
+      <div className="cta-wrapper absolute z-30 flex flex-col items-center justify-center text-center w-screen px-4 gsap-reveal pointer-events-auto will-change-transform">
         <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight text-silver-matte">
           {t.ctaHeading}
         </h2>
