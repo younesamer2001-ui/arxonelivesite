@@ -3,7 +3,7 @@ import { Inter } from "next/font/google"
 import localFont from "next/font/local"
 import "./globals.css"
 import SmoothScroll from "@/components/SmoothScroll"
-import ChatbotWidget from "@/components/ChatbotWidget"
+import ChatbotWidgetClient from "@/components/ChatbotWidgetClient"
 import { LangProvider } from "@/lib/lang-context"
 import {
   graph,
@@ -178,7 +178,7 @@ export default function RootLayout({
           <SmoothScroll>
             {children}
           </SmoothScroll>
-          <ChatbotWidget />
+          <ChatbotWidgetClient />
         </LangProvider>
       </body>
     </html>
