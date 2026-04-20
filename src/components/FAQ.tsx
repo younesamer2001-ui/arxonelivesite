@@ -1,12 +1,21 @@
 'use client'
 
 import { useState } from 'react'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Plus } from 'lucide-react'
 import { faqContent } from '@/lib/faq-data'
 
 interface FAQProps {
   lang?: 'no' | 'en'
 }
+
+/**
+ * Antall FAQ-spørsmål som vises før "Vis flere"-knappen.
+ * Resten holdes i DOM-en, bare visuelt skjult via `hidden`-attributtet —
+ * slik beholder Google FAQPage-schema sin dekning (JSON-LD i layout.tsx
+ * inkluderer alle) og accordion-ekspansjon telles som brukerinitiert
+ * synlighet per Googles FAQ-retningslinjer.
+ */
+const VISIBLE_COUNT = 6
 
 /**
  * FAQ section. Source of truth lives in `src/lib/faq-data.ts` so that the
@@ -19,6 +28,16 @@ interface FAQProps {
 export default function FAQ({ lang = 'no' }: FAQProps) {
   const t = faqContent[lang]
   const [openIndex, setOpenIndex] = useState<number | null>(null)
+  const [showAll, setShowAll] = useState(false)
+
+  const hiddenCount = Math.max(0, t.items.length - VISIBLE_COUNT)
+  const hasHidden = hiddenCount > 0
+
+  const showMoreLabel =
+    lang === 'en'
+      ? `Show all ${t.items.length} questions`
+      : `Vis alle ${t.items.length} spørsmål`
+  const showLessLabel = lang === 'en' ? 'Show fewer' : 'Vis færre'
 
   return (
     <section id="faq" className="relative py-20 md:py-32 bg-black">
@@ -29,9 +48,11 @@ export default function FAQ({ lang = 'no' }: FAQProps) {
           <p className="text-sm text-zinc-400 mt-3 pb-6 max-w-lg">{t.subtext}</p>
           {t.items.map((item, index) => {
             const isOpen = openIndex === index
+            const isBeyondFold = index >= VISIBLE_COUNT
             return (
               <div
                 key={index}
+                hidden={isBeyondFold && !showAll}
                 className="border-b border-zinc-800 py-5 cursor-pointer"
                 onClick={() => setOpenIndex(isOpen ? null : index)}
               >
@@ -51,6 +72,23 @@ export default function FAQ({ lang = 'no' }: FAQProps) {
               </div>
             )
           })}
+
+          {/* Vis flere / Vis færre — skjul-toggle for AEO-tunge spørsmål */}
+          {hasHidden && (
+            <button
+              type="button"
+              onClick={() => setShowAll((v) => !v)}
+              aria-expanded={showAll}
+              className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-white hover:text-emerald-400 transition-colors group"
+            >
+              <Plus
+                className={`w-4 h-4 transition-transform duration-300 ${
+                  showAll ? 'rotate-45' : ''
+                }`}
+              />
+              {showAll ? showLessLabel : showMoreLabel}
+            </button>
+          )}
 
           {/* Footer CTA */}
           <div className="mt-10 flex items-center gap-2">
