@@ -3,7 +3,11 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Phone, MapPin, ArrowRight, Loader2, CheckCircle } from 'lucide-react'
+import emailjs from 'emailjs-com'
 
+const EMAILJS_SERVICE_ID = 'service_3azd1ic'
+const EMAILJS_TEMPLATE_ID = 'template_qbt6k52'
+const EMAILJS_PUBLIC_KEY = 'Vy-evp6-EBwcwwLf1'
 
 const content = {
   no: {
@@ -76,19 +80,19 @@ export default function Contact({ lang = 'no' }: ContactProps) {
     setStatus('sending')
 
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: formData.name,
           name: formData.name,
           email: formData.email,
           company: formData.company,
           phone: formData.phone,
           message: formData.message,
-        }),
-      })
-
-      if (!response.ok) throw new Error('Failed to send')
+        },
+        EMAILJS_PUBLIC_KEY
+      )
 
       setStatus('success')
       setFormData({ name: '', email: '', company: '', phone: '', message: '' })

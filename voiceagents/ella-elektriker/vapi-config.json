@@ -1,0 +1,240 @@
+{
+  "$schema": "https://api.vapi.ai/schema/assistant.json",
+  "_meta": {
+    "niche_id": "ella-elektriker",
+    "schema_version": "1.0.0",
+    "variables_version": "1.0.0",
+    "tools_catalog_version": "1.0.0",
+    "pronunciation_dictionary_version": "1.0.0",
+    "guardrails_version": "1.0.0",
+    "last_updated": "2026-04-18",
+    "owner": "younes.amer.2001@gmail.com",
+    "notes": "MVP inbound-only config for Ella, licensed electrician dispatcher. Compiled from shared/skeleton-system-prompt.md + ella-elektriker/variables.md."
+  },
+  "name": "Ella — Oslo Elektro AS (MVP inbound)",
+  "firstMessage": "Hei, du har ringt Oslo Elektro AS. Jeg heter Ella og er en AI-resepsjonist. Samtalen blir tatt opp så vi kan forbedre tjenesten — si fra hvis du ikke ønsker det. Hva kan jeg hjelpe med?",
+  "firstMessageMode": "assistant-speaks-first",
+  "endCallMessage": "Takk for at du ringte Oslo Elektro AS. Ha en fin dag.",
+  "endCallPhrases": ["ha det", "ha det bra", "takk, ha det", "farvel"],
+
+  "model": {
+    "provider": "openai",
+    "model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "maxTokens": 350,
+    "systemPrompt": "SEE shared/skeleton-system-prompt.md rendered with ella-elektriker/variables.md — this field gets replaced at deploy time by the variables-resolver.",
+    "_systemPromptSource": {
+      "template": "../shared/skeleton-system-prompt.md",
+      "variables_file": "./variables.md",
+      "resolver": "scripts/resolve-variables.ts"
+    }
+  },
+
+  "voice": {
+    "provider": "azure",
+    "voiceId": "nb-NO-IselinNeural",
+    "speakingRate": 0.98,
+    "pitch": 0,
+    "style": "default",
+    "chunkPlan": {
+      "enabled": true,
+      "minCharacters": 30,
+      "punctuationBoundaries": [".", "!", "?", ";", ":", "—"]
+    },
+    "fallbackPlan": {
+      "voices": [
+        { "provider": "azure", "voiceId": "nb-NO-PernilleNeural" }
+      ]
+    }
+  },
+
+  "transcriber": {
+    "provider": "azure",
+    "language": "nb-NO",
+    "endpointingMilliseconds": 500,
+    "smartEndpointing": true,
+    "fallbackPlan": {
+      "transcribers": [
+        {
+          "provider": "deepgram",
+          "model": "nova-3",
+          "language": "no",
+          "smartFormat": true,
+          "endpointing": 500
+        }
+      ]
+    }
+  },
+
+  "languageDetection": {
+    "enabled": true,
+    "primary": "nb-NO",
+    "detectables": ["en-US"],
+    "switchPolicy": "mirror-once-confirmed"
+  },
+
+  "responseDelaySeconds": 0.7,
+  "numWordsToInterruptAssistant": 2,
+  "silenceTimeoutSeconds": 30,
+  "maxDurationSeconds": 540,
+  "backgroundSound": "office",
+  "backgroundDenoisingEnabled": true,
+
+  "recordingEnabled": true,
+  "hipaaEnabled": false,
+  "_recording_notes": "Disclosure sagt i firstMessage (G3). stop_recording-tool tilgjengelig. Retention 60 dager.",
+
+  "tools": [
+    {
+      "type": "function",
+      "function": { "name": "query_company_knowledge" },
+      "_ref": "../shared/tools-katalog.md §3"
+    },
+    {
+      "type": "function",
+      "function": { "name": "create_ticket" },
+      "_ref": "../shared/tools-katalog.md §6",
+      "_usage_note": "Hovedverktøy for Ella — alle callback-leads gjennom denne."
+    },
+    {
+      "type": "function",
+      "function": { "name": "send_sms_booking_link" },
+      "_ref": "../shared/tools-katalog.md §7"
+    },
+    {
+      "type": "function",
+      "function": { "name": "send_sms_callback_confirmation" },
+      "_ref": "../shared/tools-katalog.md §8"
+    },
+    {
+      "type": "function",
+      "function": { "name": "log_emergency" },
+      "_ref": "../shared/tools-katalog.md §9",
+      "_usage_note": "Ved elektrisk brann/røyk/støt — før endCall."
+    },
+    {
+      "type": "function",
+      "function": { "name": "stop_recording" },
+      "_ref": "../shared/tools-katalog.md §10"
+    },
+    {
+      "type": "transferCall",
+      "destinations": [
+        {
+          "type": "number",
+          "number": "+4792860000",
+          "message": "Kobler deg til administrasjonen. Et øyeblikk.",
+          "description": "primary — administrasjon (dagtid)"
+        },
+        {
+          "type": "number",
+          "number": "+4792861111",
+          "message": "Kobler deg til vakt-elektriker. Et øyeblikk.",
+          "description": "secondary — vakt-elektriker (24/7, kun ved akutt behov etter vurdering)"
+        }
+      ],
+      "mode": "warm-transfer-say-message"
+    },
+    {
+      "type": "endCall"
+    }
+  ],
+
+  "knowledgeBase": {
+    "provider": "custom",
+    "toolBased": true,
+    "_notes": "query_company_knowledge → Trieve backend. file_id: kb_ella_elektriker_v1."
+  },
+
+  "messageConfig": {
+    "fillerMessages": {
+      "enabled": true,
+      "nb-NO": [
+        "Et øyeblikk, jeg sjekker.",
+        "Jeg henter det raskt.",
+        "Sekund."
+      ],
+      "en-US": [
+        "One moment, let me check.",
+        "Give me a second.",
+        "One moment."
+      ]
+    },
+    "idleMessages": [
+      "Er du der fortsatt?"
+    ],
+    "idleMessageMaxSpokenCount": 2,
+    "voicemailMessage": "Hei, dette er Oslo Elektro AS. Vi er stengt akkurat nå. Er det brann- eller gnister-fare, ring ett-ett-null. Er det ikke akutt, send en SMS til nummeret du ringte, eller ring igjen i åpningstiden — mandag til fredag kl 07:00 til 15:30."
+  },
+
+  "serverUrl": "https://api.arxon.no/vapi/webhook",
+  "serverUrlSecret": "env:VAPI_WEBHOOK_SECRET",
+  "_webhook_security": "HMAC-SHA256 signert per ../shared/tools-katalog.md §11",
+
+  "analysisPlan": {
+    "summaryPlan": {
+      "enabled": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Oppsummer samtalen i 3-5 punkter på norsk. Fokus: intent (lead/klage/akutt/strømbrudd), utfall, kvalifiserings-felter fanget (privat/næring, type, sted, hastegrad), tools brukt, evt. oppfølging."
+        }
+      ]
+    },
+    "successEvaluationPlan": {
+      "enabled": true,
+      "rubric": "Samtalen er vellykket hvis: (1) kundens intent er adressert, (2) ingen pris-løfte utover range, (3) ved brann-akutt: 110 + hovedsikring henvist, log_emergency kalt, (4) ved callback-lead: alle 4 kvalifiserings-felter fanget, ticket opprettet, (5) samsvarserklæring-spørsmål: scope-respons uten løfte.",
+      "timeoutSeconds": 30
+    },
+    "structuredDataPlan": {
+      "enabled": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "intent": { "type": "string", "enum": ["lead_quote", "lead_inspection", "complaint", "followup", "emergency", "power_outage", "callback", "other"] },
+          "outcome": { "type": "string", "enum": ["completed", "escalated", "callback_scheduled", "emergency_redirect", "grid_referral", "abandoned"] },
+          "customer_type": { "type": "string", "enum": ["private", "business"], "nullable": true },
+          "service_code": { "type": "string", "nullable": true },
+          "ticket_id": { "type": "string", "nullable": true },
+          "customer_name": { "type": "string", "nullable": true },
+          "customer_phone": { "type": "string", "nullable": true },
+          "postnummer": { "type": "string", "nullable": true },
+          "urgency": { "type": "string", "enum": ["today_urgent", "this_week", "next_month", "flexible"], "nullable": true },
+          "qualification_complete": { "type": "boolean", "description": "All 4 fields captured: customer_type, service, location, urgency" },
+          "price_quoted_as_range": { "type": "boolean" },
+          "emergency_triggered": { "type": "boolean" },
+          "language_switched": { "type": "boolean" },
+          "guardrail_violations": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["intent", "outcome", "qualification_complete", "price_quoted_as_range", "emergency_triggered", "language_switched"]
+      }
+    }
+  },
+
+  "_deploy_checklist": {
+    "required_before_live": [
+      "Range-priser i KB oppdatert (varmekabel, sikringsskap, EV-lader)",
+      "log_emergency webhook routes til vakt-elektriker + loggsystem",
+      "Nettselskap-nummer (Elvia 07057) korrekt for service-område",
+      "NELFO-medlemsnummer + ElTilsyn-reg.nr i KB",
+      "Stemme nb-NO-IselinNeural prøvekjørt (NELFO, Elvia, ElHub, samsvarserklæring)",
+      "Range-prise-rule: ingen fast-pris-løfte",
+      "Callback-queue-prioritering (akutt > bedrift > privat) dokumentert i backend",
+      "Foto-SMS-flow testet",
+      "S1–S15 + E1–E7 regresjonstester: 17/18 pass (E4, E7 må være 100%)",
+      "serverUrlSecret rotert og lagret i vault"
+    ]
+  },
+
+  "_references": {
+    "skeleton_prompt": "../shared/skeleton-system-prompt.md",
+    "variables": "./variables.md",
+    "scenarios": "./scenarios.md",
+    "pronunciation": "./pronunciation-dictionary.md",
+    "master_plan": "./inbound-master-plan.md",
+    "guardrails": "../shared/guardrails.md",
+    "tools_catalog": "../shared/tools-katalog.md",
+    "fallback_no": "../shared/fallback-bibliotek-no.md",
+    "fallback_en": "../shared/fallback-bibliotek-en.md"
+  }
+}

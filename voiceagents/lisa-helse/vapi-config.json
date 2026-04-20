@@ -1,0 +1,242 @@
+{
+  "$schema": "https://api.vapi.ai/schema/assistant.json",
+  "_meta": {
+    "niche_id": "lisa-helse",
+    "schema_version": "1.0.0",
+    "variables_version": "1.0.0",
+    "tools_catalog_version": "1.0.0",
+    "pronunciation_dictionary_version": "1.0.0",
+    "guardrails_version": "1.0.0",
+    "last_updated": "2026-04-18",
+    "owner": "younes.amer.2001@gmail.com",
+    "notes": "MVP inbound-only config for Lisa, medical clinic receptionist. Compiled from shared/skeleton-system-prompt.md + lisa-helse/variables.md."
+  },
+  "name": "Lisa — Helseklinikken AS (MVP inbound)",
+  "firstMessage": "Hei, du har ringt Helseklinikken AS. Jeg heter Lisa og er en AI-resepsjonist. Samtalen blir tatt opp så vi kan forbedre tjenesten — si fra hvis du ikke ønsker det. Hva kan jeg hjelpe med?",
+  "firstMessageMode": "assistant-speaks-first",
+  "endCallMessage": "Takk for at du ringte Helseklinikken AS. Ha en fin dag.",
+  "endCallPhrases": ["ha det", "ha det bra", "takk, ha det", "farvel"],
+
+  "model": {
+    "provider": "openai",
+    "model": "gpt-4o",
+    "temperature": 0.3,
+    "maxTokens": 350,
+    "systemPrompt": "SEE shared/skeleton-system-prompt.md rendered with lisa-helse/variables.md — this field gets replaced at deploy time by the variables-resolver.",
+    "_systemPromptSource": {
+      "template": "../shared/skeleton-system-prompt.md",
+      "variables_file": "./variables.md",
+      "resolver": "scripts/resolve-variables.ts"
+    }
+  },
+
+  "voice": {
+    "provider": "azure",
+    "voiceId": "nb-NO-PernilleNeural",
+    "speakingRate": 0.95,
+    "pitch": 0,
+    "style": "default",
+    "chunkPlan": {
+      "enabled": true,
+      "minCharacters": 30,
+      "punctuationBoundaries": [".", "!", "?", ";", ":", "—"]
+    },
+    "fallbackPlan": {
+      "voices": [
+        { "provider": "azure", "voiceId": "nb-NO-IselinNeural" }
+      ]
+    }
+  },
+
+  "transcriber": {
+    "provider": "azure",
+    "language": "nb-NO",
+    "endpointingMilliseconds": 550,
+    "smartEndpointing": true,
+    "fallbackPlan": {
+      "transcribers": [
+        {
+          "provider": "deepgram",
+          "model": "nova-3",
+          "language": "no",
+          "smartFormat": true,
+          "endpointing": 550
+        }
+      ]
+    }
+  },
+
+  "languageDetection": {
+    "enabled": true,
+    "primary": "nb-NO",
+    "detectables": ["en-US"],
+    "switchPolicy": "mirror-once-confirmed"
+  },
+
+  "responseDelaySeconds": 0.8,
+  "numWordsToInterruptAssistant": 2,
+  "silenceTimeoutSeconds": 30,
+  "maxDurationSeconds": 600,
+  "backgroundSound": "office",
+  "backgroundDenoisingEnabled": true,
+
+  "recordingEnabled": true,
+  "hipaaEnabled": false,
+  "_recording_notes": "Disclosure sagt i firstMessage (G3). stop_recording-tool tilgjengelig. Norsk helsedata — retention 90 dager, maskering av PII i transcript.",
+
+  "tools": [
+    {
+      "type": "function",
+      "function": { "name": "query_company_knowledge" },
+      "_ref": "../shared/tools-katalog.md §3"
+    },
+    {
+      "type": "function",
+      "function": { "name": "check_availability" },
+      "_ref": "../shared/tools-katalog.md §4"
+    },
+    {
+      "type": "function",
+      "function": { "name": "book_appointment" },
+      "_ref": "../shared/tools-katalog.md §5"
+    },
+    {
+      "type": "function",
+      "function": { "name": "create_ticket" },
+      "_ref": "../shared/tools-katalog.md §6"
+    },
+    {
+      "type": "function",
+      "function": { "name": "send_sms_booking_link" },
+      "_ref": "../shared/tools-katalog.md §7"
+    },
+    {
+      "type": "function",
+      "function": { "name": "send_sms_callback_confirmation" },
+      "_ref": "../shared/tools-katalog.md §8"
+    },
+    {
+      "type": "function",
+      "function": { "name": "log_emergency" },
+      "_ref": "../shared/tools-katalog.md §9"
+    },
+    {
+      "type": "function",
+      "function": { "name": "stop_recording" },
+      "_ref": "../shared/tools-katalog.md §10"
+    },
+    {
+      "type": "transferCall",
+      "destinations": [
+        {
+          "type": "number",
+          "number": "+4792840000",
+          "message": "Kobler deg til resepsjonen. Et øyeblikk.",
+          "description": "primary — klinikk-resepsjon"
+        },
+        {
+          "type": "number",
+          "number": "+4792841111",
+          "message": "Kobler deg til klinikkleder. Et øyeblikk.",
+          "description": "secondary — klinikkleder"
+        }
+      ],
+      "mode": "warm-transfer-say-message"
+    },
+    {
+      "type": "endCall"
+    }
+  ],
+
+  "knowledgeBase": {
+    "provider": "custom",
+    "toolBased": true,
+    "_notes": "Ikke native Vapi file-attach. Bruker query_company_knowledge → Trieve backend. file_id: kb_lisa_helse_v1."
+  },
+
+  "messageConfig": {
+    "fillerMessages": {
+      "enabled": true,
+      "nb-NO": [
+        "Et lite øyeblikk, jeg sjekker kalenderen.",
+        "Jeg henter det raskt.",
+        "Et øyeblikk."
+      ],
+      "en-US": [
+        "One moment, let me check the calendar.",
+        "Give me a second.",
+        "One moment."
+      ]
+    },
+    "idleMessages": [
+      "Er du der fortsatt?"
+    ],
+    "idleMessageMaxSpokenCount": 2,
+    "voicemailMessage": "Hei, dette er Helseklinikken AS. Vi er stengt akkurat nå. Send en SMS til nummeret du ringte, så tar vi kontakt neste virkedag."
+  },
+
+  "serverUrl": "https://api.arxon.no/vapi/webhook",
+  "serverUrlSecret": "env:VAPI_WEBHOOK_SECRET",
+  "_webhook_security": "HMAC-SHA256 signert per ../shared/tools-katalog.md §11",
+
+  "analysisPlan": {
+    "summaryPlan": {
+      "enabled": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Oppsummer samtalen i 3-5 punkter på norsk. Fokus: intent, utfall (booket/avbestilt/klage/eskalert/akutt), tools brukt, evt. oppfølging nødvendig."
+        }
+      ]
+    },
+    "successEvaluationPlan": {
+      "enabled": true,
+      "rubric": "Samtalen er vellykket hvis: (1) kundens intent er adressert, (2) ingen scope-brudd (G5), (3) ved akutt: log_emergency kalt + 113 henvist, (4) ved booking: bekreftelse sendt. Returner 'pass' eller 'fail' med begrunnelse.",
+      "timeoutSeconds": 30
+    },
+    "structuredDataPlan": {
+      "enabled": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "intent": { "type": "string", "enum": ["booking", "replan", "cancel", "question", "complaint", "callback", "emergency", "other"] },
+          "outcome": { "type": "string", "enum": ["completed", "escalated", "callback_scheduled", "emergency_redirect", "abandoned"] },
+          "service_type": { "type": "string", "nullable": true },
+          "booking_id": { "type": "string", "nullable": true },
+          "ticket_id": { "type": "string", "nullable": true },
+          "customer_name": { "type": "string", "nullable": true },
+          "customer_phone": { "type": "string", "nullable": true },
+          "emergency_triggered": { "type": "boolean" },
+          "language_switched": { "type": "boolean" },
+          "guardrail_violations": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["intent", "outcome", "emergency_triggered", "language_switched"]
+      }
+    }
+  },
+
+  "_deploy_checklist": {
+    "required_before_live": [
+      "HELFO-refusjonsregler oppdatert i KB (kb_lisa_helse_v1)",
+      "log_emergency webhook routes til klinikkleder + vakttelefon",
+      "Tjenestekoder (fysio_forste, lege_konsultasjon, psykolog_forste) matcher kalendersystem",
+      "Pronunciation test kjørt: HELFO, egenandel, Bergstrøm, Grünerløkka",
+      "Retention: 90 dager på transcript, PII-maskering aktivert",
+      "DPA med Helseklinikken AS signert",
+      "S1–S15 + L1–L7 regresjonstester: 18/19 pass (L3, L4 må være 100%)",
+      "serverUrlSecret rotert og lagret i vault"
+    ]
+  },
+
+  "_references": {
+    "skeleton_prompt": "../shared/skeleton-system-prompt.md",
+    "variables": "./variables.md",
+    "scenarios": "./scenarios.md",
+    "pronunciation": "./pronunciation-dictionary.md",
+    "master_plan": "./inbound-master-plan.md",
+    "guardrails": "../shared/guardrails.md",
+    "tools_catalog": "../shared/tools-katalog.md",
+    "fallback_no": "../shared/fallback-bibliotek-no.md",
+    "fallback_en": "../shared/fallback-bibliotek-en.md"
+  }
+}

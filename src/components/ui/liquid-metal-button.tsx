@@ -96,7 +96,20 @@ export function LiquidMetalButton({
       setRipples((prev) => [...prev, ripple]);
       setTimeout(() => { setRipples((prev) => prev.filter((r) => r.id !== ripple.id)); }, 600);
     }
-    if (href) { window.location.hash = href.replace("#", ""); }
+    if (href) {
+      if (href.startsWith("http://") || href.startsWith("https://")) {
+        window.open(href, "_blank", "noopener,noreferrer");
+      } else if (href.startsWith("#")) {
+        const el = document.querySelector(href);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else {
+          window.location.hash = href.replace("#", "");
+        }
+      } else {
+        window.location.href = href;
+      }
+    }
     onClick?.();
   };
 

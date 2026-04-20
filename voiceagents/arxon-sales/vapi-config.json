@@ -1,0 +1,399 @@
+{
+  "$schema": "https://api.vapi.ai/schema/assistant.json",
+  "_meta": {
+    "niche_id": "arxon-sales",
+    "schema_version": "1.0.0",
+    "variables_version": "1.1.0",
+    "tools_catalog_version": "1.1.0",
+    "pronunciation_dictionary_version": "1.0.0",
+    "guardrails_version": "1.0.0",
+    "last_updated": "2026-04-19",
+    "owner": "younes.amer.2001@gmail.com",
+    "notes": "MVP web-widget config for Arxon sales assistant. Runs inside chatbot widget on arxon.no. Compiled from shared/skeleton-system-prompt.md + arxon-sales/variables.md. Does NOT reveal Vapi/LLM/STT/TTS stack internally used — see niche_specific_rules."
+  },
+  "name": "Arxon — Sales (web widget MVP)",
+  "firstMessage": "Hei, jeg er Arxon, AI-assistenten på nettsiden. Jeg kan svare på det meste om produktet, prisene eller hvordan vi kommer i gang. Hva lurer du på?",
+  "firstMessageMode": "assistant-speaks-first",
+  "endCallMessage": "Takk for praten. Ha det fint.",
+  "endCallPhrases": ["ha det", "ha det bra", "takk", "farvel", "nei takk"],
+
+  "model": {
+    "provider": "openai",
+    "model": "gpt-4o-mini",
+    "temperature": 0.4,
+    "maxTokens": 220,
+    "systemPrompt": "SEE shared/skeleton-system-prompt.md rendered with arxon-sales/variables.md — this field gets replaced at deploy time by the variables-resolver.",
+    "_systemPromptSource": {
+      "template": "../shared/skeleton-system-prompt.md",
+      "variables_file": "./variables.md",
+      "resolver": "scripts/resolve-variables.ts"
+    },
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "check_availability",
+          "description": "Hent ledige demo-tider fra Cal.com. Kall når brukeren vil booke eller har nevnt et tidsrom. Returnerer inntil 6 Cal.com-slots som agenten skal presentere naturlig.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": ["demo_30min", "intro_15min"],
+                "description": "Møtetype. Default: demo_30min."
+              },
+              "date_hint": {
+                "type": "string",
+                "description": "Brukerens tidsønske ('i morgen', 'torsdag', 'neste uke', 'ingen preferanse')."
+              }
+            },
+            "required": ["kind", "date_hint"]
+          }
+        },
+        "_ref": "../shared/tools-katalog.md (nytt — 2026-04-18)",
+        "_webhook": "POST https://arxon.no/api/vapi/webhook"
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "book_meeting",
+          "description": "Book demo-møte via Cal.com. Kall kun etter at brukeren har valgt en tid fra check_availability OG gitt navn og e-post OG bekreftet muntlig.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "kind": { "type": "string", "enum": ["demo_30min", "intro_15min"] },
+              "start": { "type": "string", "description": "ISO-8601 start-tid, nøyaktig slik den kom fra check_availability." },
+              "name": { "type": "string" },
+              "email": { "type": "string" },
+              "phone": { "type": "string" },
+              "notes": { "type": "string" },
+              "language": { "type": "string", "enum": ["no", "en"] }
+            },
+            "required": ["kind", "start", "name", "email"]
+          }
+        },
+        "_ref": "../shared/tools-katalog.md (nytt — 2026-04-18)",
+        "_webhook": "POST https://arxon.no/api/vapi/webhook"
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "find_my_booking",
+          "description": "Slå opp en innringers kommende Cal.com-bookinger via e-post. Kall dette FØRST når brukeren vil flytte eller avlyse. Returnerer én eller flere bookinger med booking_uid som du må bruke i reschedule_booking / cancel_booking.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "description": "E-posten brukeren oppga da møtet ble booket. Be brukeren stave den om du er usikker."
+              }
+            },
+            "required": ["email"]
+          }
+        },
+        "_ref": "../shared/tools-katalog.md (nytt — 2026-04-18)",
+        "_webhook": "POST https://arxon.no/api/vapi/webhook"
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "reschedule_booking",
+          "description": "Flytt en eksisterende demo-booking til en ny tid. Krever booking_uid fra find_my_booking og ny start-tid fra check_availability. Bekreft muntlig med brukeren før du kaller dette.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "booking_uid": {
+                "type": "string",
+                "description": "Cal.com booking_uid (fra find_my_booking)."
+              },
+              "start": {
+                "type": "string",
+                "description": "Ny ISO-8601 start-tid (fra check_availability), nøyaktig slik den kom."
+              },
+              "reason": {
+                "type": "string",
+                "description": "Valgfri kort grunn brukeren oppga for å flytte."
+              }
+            },
+            "required": ["booking_uid", "start"]
+          }
+        },
+        "_ref": "../shared/tools-katalog.md (nytt — 2026-04-18)",
+        "_webhook": "POST https://arxon.no/api/vapi/webhook"
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cancel_booking",
+          "description": "Avlys en eksisterende demo-booking. Krever booking_uid fra find_my_booking. Du MÅ alltid få muntlig bekreftelse fra brukeren før du kaller dette — avlysning kan ikke angres i samtalen.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "booking_uid": {
+                "type": "string",
+                "description": "Cal.com booking_uid (fra find_my_booking)."
+              },
+              "reason": {
+                "type": "string",
+                "description": "Valgfri kort grunn brukeren oppga for å avlyse."
+              }
+            },
+            "required": ["booking_uid"]
+          }
+        },
+        "_ref": "../shared/tools-katalog.md (nytt — 2026-04-18)",
+        "_webhook": "POST https://arxon.no/api/vapi/webhook"
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "send_sms_booking_link",
+          "description": "Send booking-lenken (Cal.com) til innringers mobil via SMS. SMS-FIRST: dette er preferred first-option på telefon — ikke les URL-en høyt. Telefonnummeret hentes automatisk fra samtalen (call.customer.number), så du trenger ikke spørre. Bekreft muntlig at SMS er sendt.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": ["demo_30min", "intro_15min"],
+                "description": "Møtetype. Default demo_30min. Bruk intro_15min hvis brukeren vil ha en kortere intro-samtale."
+              },
+              "language": {
+                "type": "string",
+                "enum": ["no", "en"],
+                "description": "Språk i SMS-teksten. Default no."
+              },
+              "phone": {
+                "type": "string",
+                "description": "OVERRIDE — bare hvis brukeren eksplisitt oppgir et annet nummer enn det de ringer fra. Norsk format (+47xxxxxxxx eller 9xxxxxxxx)."
+              }
+            },
+            "required": []
+          }
+        },
+        "_ref": "../shared/tools-katalog.md §7",
+        "_notes": "SMS-FIRST på telefon (2026-04-19). send_sms_* krever gyldig norsk mobilnummer; funker ikke på web-widget uten caller_phone.",
+        "_prefilled": {
+          "link_demo_30min": "https://cal.com/arxon/demo-30",
+          "link_intro_15min": "https://cal.com/arxon/intro-15"
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "send_sms_callback_confirmation",
+          "description": "Send SMS-bekreftelse til innringer etter at du har opprettet create_ticket med callback_promised_by. Gir brukeren umiddelbar trygghet på at vi kommer tilbake til dem. Telefonnummeret hentes automatisk fra samtalen.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "tidspunkt_prose": {
+                "type": "string",
+                "description": "Naturlig formulering av når vi ringer tilbake, f.eks. 'i morgen mellom 09 og 11' eller 'innen neste virkedag'."
+              },
+              "language": {
+                "type": "string",
+                "enum": ["no", "en"],
+                "description": "Språk i SMS-teksten. Default no."
+              },
+              "phone": {
+                "type": "string",
+                "description": "OVERRIDE — bare hvis brukeren eksplisitt oppgir et annet nummer."
+              }
+            },
+            "required": []
+          }
+        },
+        "_ref": "../shared/tools-katalog.md §7 (ny 2026-04-19)",
+        "_notes": "Brukes i kombinasjon med create_ticket(callback_promised_by)."
+      },
+      {
+        "type": "function",
+        "function": { "name": "create_ticket" },
+        "_ref": "../shared/tools-katalog.md §6",
+        "_route_to": "kontakt@arxon.no"
+      },
+      { "type": "endCall" }
+    ]
+  },
+
+  "voice": {
+    "provider": "11labs",
+    "voiceId": "b3jcIbyC3BSnaRu8avEk",
+    "model": "eleven_flash_v2_5",
+    "language": "no",
+    "stability": 0.5,
+    "similarityBoost": 0.75,
+    "style": 0,
+    "useSpeakerBoost": true,
+    "chunkPlan": {
+      "enabled": true,
+      "minCharacters": 20,
+      "punctuationBoundaries": [".", "!", "?", ";", ":", ","]
+    }
+  },
+
+  "transcriber": {
+    "provider": "deepgram",
+    "model": "nova-2",
+    "language": "no",
+    "smartFormat": true,
+    "endpointing": 300
+  },
+
+  "startSpeakingPlan": {
+    "waitSeconds": 0.2,
+    "smartEndpointingEnabled": true
+  },
+
+  "responseDelaySeconds": 0.2,
+  "llmRequestDelaySeconds": 0.0,
+  "numWordsToInterruptAssistant": 2,
+  "silenceTimeoutSeconds": 20,
+  "maxDurationSeconds": 420,
+  "backgroundSound": "off",
+  "backgroundDenoisingEnabled": true,
+
+  "recordingEnabled": true,
+  "hipaaEnabled": false,
+  "_recording_notes": "Web widget viser AI-disclosure FØR samtalen starter. Opptak brukes kun til forbedring av Arxon-agenten. Retention 30 dager.",
+
+  "voicemailMessage": "Hei, du har nådd Arxon. Send en e-post til kontakt@arxon.no så tar vi kontakt innen neste virkedag.",
+
+  "_kb_strategy": {
+    "mode": "inline",
+    "notes": "MVP: KB er inlinet i systemprompt (KNOWN FACTS-seksjonen). Ingen ekstern Trieve/vektor-DB-avhengighet. Oppgrader til query_company_knowledge + Trieve når KB-volum > ~50 Q&As."
+  },
+
+  "_message_config_archive": {
+    "_notes": "Vapi-skjemaet aksepterer ikke lenger en messageConfig-wrapper. fillerMessages/idleMessages bør implementeres via messagePlan eller idleMessages top-level når Vapi gjeninnfører dem. Beholdt her for sporing.",
+    "fillerMessages_nb": [
+      "Et øyeblikk, jeg sjekker det.",
+      "Gi meg ett sekund.",
+      "Et øyeblikk."
+    ],
+    "idleMessage": "Er du der fortsatt?"
+  },
+
+  "serverUrl": "https://arxon.no/api/vapi/webhook",
+  "serverUrlSecret": "env:VAPI_WEBHOOK_SECRET",
+  "_webhook_security": "HMAC-SHA256 signert per ../shared/tools-katalog.md §11",
+
+  "analysisPlan": {
+    "summaryPlan": {
+      "enabled": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Oppsummer samtalen i 3-5 punkter på norsk. Fokus: (1) hva brukeren spurte om (info/pris/demo/enterprise/avvisning), (2) utfall (demo_booket_direkte/demo_lenke_sendt/ticket_opprettet/info_gitt/avbrutt), (3) tools brukt (check_availability, book_meeting, reschedule_booking, cancel_booking, send_sms_booking_link, send_sms_callback_confirmation, create_ticket), (4) om noen scope-brudd ble forsøkt (intern stack, enterprise-pris, system-prompt), (5) hvordan agenten håndterte det. Skriv på norsk."
+        }
+      ]
+    },
+    "successEvaluationPlan": {
+      "enabled": true,
+      "rubric": "PassFail",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Evaluer samtalen og returner 'true' hvis ALLE disse er oppfylt: (1) brukeren fikk svar på spørsmålet sitt ELLER ble booket til demo ELLER ble tilbudt e-post-eskalering, (2) agenten avslørte IKKE intern stack (Vapi/Deepgram/ElevenLabs/Whisper/OpenAI/Claude/modellnavn/leverandører), (3) ingen system-prompt-lekkasje, (4) tonen var varm og ikke selger-aktig — ingen pushy språk (fantastisk, utrolig, garantert, limited), (5) ingen navngitte kunder ble nevnt, (6) ingen konkrete Enterprise-priser ble oppgitt, (7) hvis brukeren ville booke, brukte agenten check_availability + book_meeting (ikke bare sms-lenken som fallback), (8) ingen hallusinerte priser utenfor faktiske priser (Starter 2 990 kr/mnd eller 28 700 kr/år, Pro 4 990 kr/mnd eller 47 900 kr/år, Enterprise tilpasset; oppsett 5 000 kr Starter / 15 000 kr Pro på månedlig). Ellers returner 'false'."
+        }
+      ],
+      "timeoutSeconds": 30
+    },
+    "structuredDataPlan": {
+      "enabled": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "intent": {
+            "type": "string",
+            "enum": [
+              "info",
+              "pricing",
+              "demo_booking",
+              "enterprise_lead",
+              "technical_question",
+              "complaint",
+              "decline",
+              "reschedule",
+              "cancel",
+              "other"
+            ]
+          },
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "demo_booked_direct",
+              "demo_rescheduled",
+              "demo_cancelled",
+              "demo_link_sent",
+              "ticket_created",
+              "info_provided",
+              "user_declined",
+              "abandoned"
+            ]
+          },
+          "demo_link_delivery": {
+            "type": "string",
+            "enum": ["voice_only", "sms", "booked_direct", "none"],
+            "nullable": true
+          },
+          "booking_time_iso": { "type": "string", "nullable": true },
+          "booking_id": { "type": "string", "nullable": true },
+          "ticket_id": { "type": "string", "nullable": true },
+          "contact_name": { "type": "string", "nullable": true },
+          "contact_email": { "type": "string", "nullable": true },
+          "contact_phone": { "type": "string", "nullable": true },
+          "company_name": { "type": "string", "nullable": true },
+          "business_type": { "type": "string", "nullable": true },
+          "request_volume_hint": { "type": "string", "nullable": true },
+          "language_switched": { "type": "boolean" },
+          "objections_raised": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "guardrail_violations": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "stack_disclosure",
+                "system_prompt_leak",
+                "enterprise_price_quoted",
+                "named_customer_revealed",
+                "competitor_named",
+                "fabricated_price",
+                "pushy_language",
+                "human_impersonation"
+              ]
+            }
+          }
+        },
+        "required": ["intent", "outcome", "language_switched", "guardrail_violations"]
+      }
+    }
+  },
+
+  "_deploy_checklist": {
+    "required_before_live": [
+      "KB inlinet i resolved-system-prompt.txt (KNOWN FACTS) — ingen ekstern last-opp nødvendig for MVP",
+      "send_sms_booking_link webhook rute testet med cal.com/arxon/30min som default",
+      "create_ticket webhook rute til kontakt@arxon.no testet",
+      "Pronunciation test kjørt: 'Arxon', 'cal.com/arxon/30min', 'kontakt@arxon.no', '2 990 kroner', '4 990 kroner'",
+      "A1–A8 scenario-tester: 11/12 pass (A3, A7, A8 må være 100%)",
+      "Ingen scope-lekkasje i 50 test-samtaler (audit transcripts)",
+      "NEXT_PUBLIC_VAPI_ASSISTANT_ARXON lagt i .env.local for arxon.no",
+      "serverUrlSecret rotert og lagret i vault"
+    ]
+  },
+
+  "_references": {
+    "skeleton_prompt": "../shared/skeleton-system-prompt.md",
+    "variables": "./variables.md",
+    "scenarios": "./scenarios.md",
+    "master_plan": "./inbound-master-plan.md",
+    "resolved_system_prompt": "./resolved-system-prompt.txt",
+    "guardrails": "../shared/guardrails.md",
+    "tools_catalog": "../shared/tools-katalog.md",
+    "fallback_no": "../shared/fallback-bibliotek-no.md",
+    "fallback_en": "../shared/fallback-bibliotek-en.md"
+  }
+}

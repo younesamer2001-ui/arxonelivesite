@@ -1,0 +1,9 @@
+fix(hero): shorten mobile scroll-pin from 1800px to 700px
+
+Users on mobile had to swipe ~3 times to get past the pinned
+CinematicHero timeline. Reducing the ScrollTrigger end from +=1800
+to +=700 means one swipe (~1 viewport height) completes the
+animation and unpins the hero.
+
+Also includes improved STRIPE_FAIL error logging in
+/api/stripe/checkout (from the env-var corruption debugging).

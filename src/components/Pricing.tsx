@@ -7,6 +7,29 @@ import { CheckCheck } from "lucide-react";
 import { useState } from "react";
 import ScrollPang from "./ScrollPang";
 
+type Plan = "Starter" | "Pro" | "Enterprise";
+type Cycle = "monthly" | "yearly";
+
+async function startCheckout(plan: Plan, cycle: Cycle): Promise<void> {
+  const mapPlan = plan === "Starter" ? "starter" : plan === "Pro" ? "pro" : null;
+  if (!mapPlan) return;
+  try {
+    const res = await fetch("/api/stripe/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ plan: mapPlan, cycle }),
+    });
+    const data = (await res.json().catch(() => ({}))) as { url?: string; error?: string };
+    if (res.ok && data.url) {
+      window.location.href = data.url;
+      return;
+    }
+    window.alert(data.error || "Kunne ikke starte betaling. Prøv igjen eller kontakt oss.");
+  } catch {
+    window.alert("Nettverksfeil. Prøv igjen eller kontakt oss.");
+  }
+}
+
 interface PricingProps {
   lang?: "no" | "en";
 }
@@ -273,19 +296,30 @@ export default function Pricing({ lang = "no" }: PricingProps) {
                     </div>
                   )}
 
-                  <a
-                    href={plan.name === "Enterprise" ? "#kontakt" : "https://cal.com/arxon/30min"}
-                    target={plan.name === "Enterprise" ? undefined : "_blank"}
-                    rel={plan.name === "Enterprise" ? undefined : "noopener noreferrer"}
-                    className={cn(
-                      "block w-full py-2.5 rounded-xl text-sm font-semibold text-center transition-all duration-200",
-                      plan.popular
-                        ? "bg-white text-black hover:bg-zinc-200"
-                        : "bg-zinc-800 text-white hover:bg-zinc-700"
-                    )}
-                  >
-                    {plan.name === "Enterprise" ? t.ctaEnterprise : t.cta}
-                  </a>
+                  {plan.name === "Enterprise" ? (
+                    <a
+                      href="#kontakt"
+                      className={cn(
+                        "block w-full py-2.5 rounded-xl text-sm font-semibold text-center transition-all duration-200",
+                        "bg-zinc-800 text-white hover:bg-zinc-700"
+                      )}
+                    >
+                      {t.ctaEnterprise}
+                    </a>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => startCheckout(plan.name as Plan, isYearly ? "yearly" : "monthly")}
+                      className={cn(
+                        "block w-full py-2.5 rounded-xl text-sm font-semibold transition-all duration-200",
+                        plan.popular
+                          ? "bg-white text-black hover:bg-zinc-200"
+                          : "bg-zinc-800 text-white hover:bg-zinc-700"
+                      )}
+                    >
+                      {t.cta}
+                    </button>
+                  )}
 
                   <div className="mt-5 space-y-2.5">
                     {plan.includes.map((item, j) => (

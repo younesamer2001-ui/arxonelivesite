@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
     const resend = new Resend(process.env.RESEND_API_KEY)
 
     await resend.emails.send({
-      from: 'Arxon Kontaktskjema <kontakt@arxon.no>',
+      from: 'Arxon Kontaktskjema <onboarding@resend.dev>',
       to: ['kontakt@arxon.no'],
       replyTo: email,
       subject: `Ny henvendelse fra ${name}${company ? ` (${company})` : ''}`,
