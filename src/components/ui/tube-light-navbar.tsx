@@ -120,21 +120,27 @@ export function NavBar({ items, currentLang, onLangChange, className }: NavBarPr
           transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="flex items-center gap-3"
         >
-          <div className="flex items-center gap-1 px-2 py-1 rounded-full border border-white/[0.06] bg-white/[0.04]">
+          <div role="group" aria-label="Velg språk" className="flex items-center gap-1 px-2 py-1 rounded-full border border-white/[0.06] bg-white/[0.04]">
             <button
+              type="button"
               onClick={() => onLangChange('no')}
+              aria-pressed={currentLang === 'no'}
+              aria-label="Norsk"
               className={cn(
-                "px-2.5 py-1 rounded-full text-xs font-semibold transition-all",
-                currentLang === 'no' ? 'bg-white/15 text-white' : 'text-white/40 hover:text-white/70'
+                "px-2.5 py-1 rounded-full text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70",
+                currentLang === 'no' ? 'bg-white/15 text-white' : 'text-white/70 hover:text-white'
               )}
             >
               NO
             </button>
             <button
+              type="button"
               onClick={() => onLangChange('en')}
+              aria-pressed={currentLang === 'en'}
+              aria-label="English"
               className={cn(
-                "px-2.5 py-1 rounded-full text-xs font-semibold transition-all",
-                currentLang === 'en' ? 'bg-white/15 text-white' : 'text-white/40 hover:text-white/70'
+                "px-2.5 py-1 rounded-full text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70",
+                currentLang === 'en' ? 'bg-white/15 text-white' : 'text-white/70 hover:text-white'
               )}
             >
               EN
