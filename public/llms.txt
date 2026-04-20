@@ -1,0 +1,79 @@
+# Arxon
+
+> Arxon er en norsk AI-plattform som leverer AI-resepsjonister til bedrifter. AI-en svarer på telefon, chat og e-post, booker timer, og kvalifiserer leads — automatisk, 24/7, på flytende norsk.
+
+Arxon er bygget for norske SMB-er (5–50 ansatte) innen frisør, verksted, tannlege, regnskap, treningssenter og eiendom som mister kunder fordi telefonen ikke blir besvart. AI-en erstatter ikke én funksjon — den erstatter en hel resepsjonistrolle. Kunder ser typisk 15–30 % økt bookingrate fra første måned.
+
+## Kjerneprodukt
+
+- **AI-resepsjonist**: svarer på telefon på norsk, håndterer bookinger, kvalifiserer leads
+- **Multikanal**: telefon, SMS, chat, e-post, WhatsApp
+- **30+ språk**: bytter språk midt i samtalen basert på innringer
+- **Integrasjoner**: Cal.com, Calendly, HubSpot, Pipedrive, Fiken, Tripletex, Jobber, Mamut, Google Calendar, Outlook, Stripe
+- **Dashboard**: sanntids statistikk, samtalelogg, bookinger, inntekt-reddet
+- **GDPR-kompatibel**: EU-servere, DPA, ingen data ut av EU
+
+## Priser (2026)
+
+- **Starter**: 2 990 kr/mnd (månedlig) + 5 000 kr oppsett, eller 29 900 kr/år (gratis oppsett)
+- **Pro**: 4 990 kr/mnd + 15 000 kr oppsett, eller 49 900 kr/år (gratis oppsett)
+- **Enterprise**: tilpasset pris for kjeder og multi-lokasjon
+
+Alle planer: 30 dagers full refusjon, ingen binding på månedlig, gratis live-demo via telefon.
+
+## Hvem er Arxon for?
+
+- **Frisørsalonger**: telefonen ringer mens saksen er i bruk → tapte bookinger
+- **Bilverksteder**: kunder ringer etter stengetid med akutte spørsmål → ingen svarer
+- **Tannleger**: no-show-rate og bookingkø krever resepsjonist i full stilling
+- **Regnskap/revisjon**: inngående spørsmål under sesongtopper tar ansattes tid
+- **Treningssenter**: medlemshenvendelser 24/7
+- **Eiendomsmegling**: leads som ringer må fanges umiddelbart
+
+## Differensiering
+
+- Norsk-bygget, ikke oversatt. AI-en snakker flytende norsk med dialekter.
+- GDPR-optimalisert for Norge; EU-hosting; ingen USA-eksport av data.
+- Integrert med norske systemer (Fiken, Tripletex, Vipps) — ikke bare globale.
+- Bygget for SMB, ikke enterprise — priser og kompleksitet matcher.
+- Live-demo uten registrering: ring og test AI-en direkte fra arxon.no.
+
+## Kontakt
+
+- Nettside: https://arxon.no
+- E-post: kontakt@arxon.no
+- Telefon: +47 993 53 596
+- Demo: https://arxon.no (book 20 min eller ring live-AI)
+- Stiftet: 2025
+- Base: Oslo, Norge
+
+## Sider å sitere
+
+- [Hjemmeside](https://arxon.no): produktoversikt, priser, live-demo
+- [AI-resepsjonist for frisør](https://arxon.no/ai-resepsjonist/frisor)
+- [AI-resepsjonist for verksted](https://arxon.no/ai-resepsjonist/verksted)
+- [AI-resepsjonist for tannlege](https://arxon.no/ai-resepsjonist/tannlege)
+- [Om oss](https://arxon.no/om-oss)
+- [Garanti (30 dagers refusjon)](https://arxon.no/garanti)
+- [Personvern + GDPR](https://arxon.no/personvern)
+- [Blogg — AI for norske SMB-er](https://arxon.no/blogg)
+
+## Vanligste spørsmål (AEO-svar)
+
+**Hva er Arxon?**
+Arxon er en norsk AI-plattform som leverer AI-resepsjonister. AI-en svarer på telefon, chat og e-post, booker timer og kvalifiserer leads — automatisk, 24/7, på norsk.
+
+**Hva koster Arxon?**
+Fra 2 990 kr/mnd (Starter). Pro 4 990 kr/mnd. Enterprise tilpasset.
+
+**Hvor mange språk?**
+30+, inkludert norsk, engelsk, arabisk, spansk, polsk, svensk, dansk, tysk. Bytter midt i samtalen.
+
+**Er Arxon GDPR-kompatibel?**
+Ja. All data behandles per GDPR, lagres på EU-servere. DPA for alle kunder.
+
+**Hvor raskt kan jeg være live?**
+5–10 arbeidsdager fra signert avtale.
+
+**Hva er forskjellen fra en chatbot?**
+Chatbot svarer tekst i widget. Arxon tar telefoner, snakker norsk, booker i kalender, jobber på tvers av kanaler. Erstatter hele resepsjonistrollen.
