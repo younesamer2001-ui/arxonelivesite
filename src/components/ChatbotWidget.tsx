@@ -110,6 +110,15 @@ export default function ChatbotWidget() {
     }
   }, [open, inCall])
 
+  // When the widget opens, preload the Vapi SDK + instantiate the client
+  // in the background. Shaves ~1-2s off the click→connect path for users
+  // who actually do hit the Ring button.
+  useEffect(() => {
+    if (open && !inCall) {
+      void vapi.preload?.()
+    }
+  }, [open, inCall, vapi])
+
   const startCall = useCallback(() => {
     if (!ARXON_ASSISTANT_ID) {
       setMessages((prev) => [

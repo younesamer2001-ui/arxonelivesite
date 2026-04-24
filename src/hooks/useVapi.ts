@@ -68,12 +68,15 @@ export function useVapi() {
   const [isMuted, setIsMuted] = useState(false);
   const [error, setError] = useState<VapiError | null>(null);
   const vapiRef = useRef<any>(null);
+  const preloadingRef = useRef<Promise<void> | null>(null);
 
-  const start = useCallback(
-    async (assistantId: string) => {
-      if (status === "active" || status === "connecting") return;
-      setError(null);
-      setStatus("connecting");
+  // Preload the Vapi SDK + instantiate the client. Safe to call multiple
+  // times; caches the first attempt. Shaving this off the click→connect
+  // path saves ~1-2s since the SDK is ~100KB and needs WebRTC init.
+  const preload = useCallback(() => {
+    if (vapiRef.current) return Promise.resolve();
+    if (preloadingRef.current) return preloadingRef.current;
+    preloadingRef.current = (async () => {
       try {
         const { default: Vapi } = await import("@vapi-ai/web");
         if (!vapiRef.current) {
@@ -90,6 +93,24 @@ export function useVapi() {
             setTimeout(() => setStatus("idle"), 2000);
           });
         }
+      } catch (err) {
+        console.error("[Vapi] preload failed:", err);
+        preloadingRef.current = null; // allow retry
+      }
+    })();
+    return preloadingRef.current;
+  }, []);
+
+  const start = useCallback(
+    async (assistantId: string) => {
+      if (status === "active" || status === "connecting") return;
+      setError(null);
+      setStatus("connecting");
+      try {
+        // Preloaded in the background when the widget opened; this is a
+        // no-op fast-path if `preload()` has already finished.
+        await preload();
+        if (!vapiRef.current) throw new Error("Vapi SDK not initialised");
         await vapiRef.current.start(assistantId);
       } catch (err) {
         console.error("[Vapi] start failed:", err);
@@ -97,7 +118,7 @@ export function useVapi() {
         setStatus("idle");
       }
     },
-    [status],
+    [status, preload],
   );
 
   const stop = useCallback(() => {
@@ -148,5 +169,6 @@ export function useVapi() {
     stop,
     toggleMute,
     clearError,
+    preload,
   };
 }
