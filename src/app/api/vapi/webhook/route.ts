@@ -1419,14 +1419,17 @@ export async function POST(request: NextRequest): Promise<Response> {
       if (message.endedReason) {
         console.log(`[vapi-webhook] ended: ${message.endedReason}`);
       }
-      // Fire-and-forget: persist transcript/analysis for the dashboard.
-      // Must never block the 200 response back to Vapi.
-      persistEndOfCallReport(message, ctx.niche).catch((e) =>
+      // MUST await — on Vercel serverless, a fire-and-forget promise is
+      // killed when the response is sent. Vapi doesn't care about a few
+      // extra seconds before the 200, but our dashboard needs the row.
+      try {
+        await persistEndOfCallReport(message, ctx.niche);
+      } catch (e) {
         console.error(
           '[vapi-webhook] end-of-call-report persistence failed:',
           (e as Error).message,
-        ),
-      );
+        );
+      }
     }
   }
 
