@@ -5,6 +5,31 @@ import { supabaseAdmin, hasServiceRole } from '@/lib/supabase-admin';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+// Diagnostic GET — trigger a test insert and return full error. Remove after debug.
+export async function GET() {
+  const testRow = {
+    name: 'SANDBOX_DIAG',
+    email: 'diag@sandbox.test',
+    company: null,
+    phone: null,
+    message: 'diagnostic ping from GET handler',
+    status: 'new',
+  };
+  const { error, data } = await supabaseAdmin
+    .from('contact_submissions')
+    .insert(testRow)
+    .select('id')
+    .single();
+  return NextResponse.json({
+    ok: !error,
+    serviceRole: hasServiceRole,
+    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL || '(unset, using hardcoded)',
+    hasAnonEnv: Boolean(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
+    error: error ? { code: error.code, message: error.message, details: error.details, hint: error.hint } : null,
+    inserted: data ?? null,
+  }, { status: error ? 500 : 200 });
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -38,14 +63,9 @@ export async function POST(req: NextRequest) {
           return NextResponse.json({ error: 'Kunne ikke lagre meldingen.' }, { status: 500 });
         }
       } else {
-        console.error('[contact] FULL ERROR', JSON.stringify({
-          code: dbError.code,
-          message: dbError.message,
-          details: dbError.details,
-          hint: dbError.hint,
-          serviceRole: hasServiceRole,
-          supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL?.slice(0, 40),
-        }));
+        console.error(`CONTACT_ERR code=${dbError.code} sr=${hasServiceRole} msg=${(dbError.message || '').slice(0, 80)}`);
+        console.error(`CONTACT_ERR details=${(dbError.details || '').slice(0, 120)}`);
+        console.error(`CONTACT_ERR hint=${(dbError.hint || '').slice(0, 120)}`);
         return NextResponse.json({ error: 'Kunne ikke lagre meldingen.', debug: { code: dbError.code, message: dbError.message, serviceRole: hasServiceRole } }, { status: 500 });
       }
     }
