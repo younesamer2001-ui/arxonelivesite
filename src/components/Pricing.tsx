@@ -2,33 +2,8 @@
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import NumberFlow from "@number-flow/react";
 import { CheckCheck } from "lucide-react";
-import { useState } from "react";
 import ScrollPang from "./ScrollPang";
-
-type Plan = "Starter" | "Pro" | "Enterprise";
-type Cycle = "monthly" | "yearly";
-
-async function startCheckout(plan: Plan, cycle: Cycle): Promise<void> {
-  const mapPlan = plan === "Starter" ? "starter" : plan === "Pro" ? "pro" : null;
-  if (!mapPlan) return;
-  try {
-    const res = await fetch("/api/stripe/checkout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ plan: mapPlan, cycle }),
-    });
-    const data = (await res.json().catch(() => ({}))) as { url?: string; error?: string };
-    if (res.ok && data.url) {
-      window.location.href = data.url;
-      return;
-    }
-    window.alert(data.error || "Kunne ikke starte betaling. Prøv igjen eller kontakt oss.");
-  } catch {
-    window.alert("Nettverksfeil. Prøv igjen eller kontakt oss.");
-  }
-}
 
 interface PricingProps {
   lang?: "no" | "en";
@@ -36,26 +11,18 @@ interface PricingProps {
 
 const content = {
   no: {
-    label: "PRISER",
-    heading: "Invester i vekst,",
-    headingAccent: "ikke kostnader.",
-    subtext: "Forutsigbar pris. Ingen bindingstid. De fleste tjener inn investeringen i løpet av første måned.",
-    monthly: "Månedlig",
-    yearly: "Årlig",
-    save: "Spar 20%",
-    perMonth: "/mnd",
-    perYear: "/år",
-    cta: "Start i dag",
-    ctaEnterprise: "Kontakt oss",
-    vat: "Alle priser eks. mva.",
-    setupLabel: "Oppsett",
-    setupFree: "Gratis oppsett",
+    label: "PAKKER",
+    heading: "Tilpasset din bedrift,",
+    headingAccent: "ikke omvendt.",
+    subtext:
+      "Vi skreddersyr løsningen etter bedriftens størrelse, volum og hvilke integrasjoner du trenger. Ingen bindingstid.",
+    priceText: "Kontakt for pris",
+    cta: "Kontakt oss",
+    note: "Alle pakker inkluderer oppsett, trening og norsk språkstøtte.",
     plans: [
       {
         name: "Starter",
         description: "For bedrifter som vil automatisere kundebehandling",
-        price: 2990, yearlyPrice: 28700,
-        setupFee: 5000,
         popular: false,
         includes: [
           "Starter inkluderer:",
@@ -70,8 +37,6 @@ const content = {
       {
         name: "Pro",
         description: "Mest populær — full innsikt og kontroll",
-        price: 4990, yearlyPrice: 47900,
-        setupFee: 15000,
         popular: true,
         includes: [
           "Alt i Starter, pluss:",
@@ -80,14 +45,13 @@ const content = {
           "Samtaleanalyse",
           "Automatisk Google Reviews-melding",
           "Prioritert support",
-          "Dedikert kontaktperson",          "Integrasjoner (CRM, kalender)",
+          "Dedikert kontaktperson",
+          "Integrasjoner (CRM, kalender)",
         ],
       },
       {
         name: "Enterprise",
         description: "For kjeder med flere lokasjoner",
-        price: 0, yearlyPrice: 0,
-        setupFee: 0,
         popular: false,
         includes: [
           "Alt i Pro, pluss:",
@@ -102,25 +66,18 @@ const content = {
     ],
   },
   en: {
-    label: "PRICING",
-    heading: "Invest in growth,",
-    headingAccent: "not costs.",
-    subtext: "Predictable pricing. No lock-in. Most clients earn back the investment within their first month.",
-    monthly: "Monthly",
-    yearly: "Yearly",
-    save: "Save 20%",
-    perMonth: "/mo",
-    perYear: "/yr",    cta: "Start today",
-    ctaEnterprise: "Contact us",
-    vat: "All prices excl. VAT.",
-    setupLabel: "Setup",
-    setupFree: "Free setup",
+    label: "PACKAGES",
+    heading: "Tailored to your business,",
+    headingAccent: "not the other way around.",
+    subtext:
+      "We shape the solution around your size, call volume, and required integrations. No lock-in.",
+    priceText: "Contact for pricing",
+    cta: "Contact us",
+    note: "All packages include setup, training, and Norwegian language support.",
     plans: [
       {
         name: "Starter",
         description: "For businesses looking to automate customer service",
-        price: 2990, yearlyPrice: 28700,
-        setupFee: 5000,
         popular: false,
         includes: [
           "Starter includes:",
@@ -135,15 +92,14 @@ const content = {
       {
         name: "Pro",
         description: "Most popular — full insight and control",
-        price: 4990, yearlyPrice: 47900,
-        setupFee: 15000,
         popular: true,
         includes: [
           "Everything in Starter, plus:",
           "Unlimited calls",
           "Real-time dashboard",
           "Call analytics",
-          "Automatic Google Reviews message",          "Priority support",
+          "Automatic Google Reviews message",
+          "Priority support",
           "Dedicated contact person",
           "Integrations (CRM, calendar)",
         ],
@@ -151,8 +107,6 @@ const content = {
       {
         name: "Enterprise",
         description: "For chains with multiple locations",
-        price: 0, yearlyPrice: 0,
-        setupFee: 0,
         popular: false,
         includes: [
           "Everything in Pro, plus:",
@@ -167,78 +121,25 @@ const content = {
     ],
   },
 };
-function PricingSwitch({
-  isYearly,
-  onToggle,
-  labels,
-  save,
-}: {
-  isYearly: boolean;
-  onToggle: () => void;
-  labels: { monthly: string; yearly: string };
-  save: string;
-}) {
-  return (
-    <div className="flex items-center justify-center gap-3 mb-8">
-      <span className={cn("text-sm font-medium transition-colors", !isYearly ? "text-white" : "text-zinc-500")}>
-        {labels.monthly}
-      </span>
-      <button
-        onClick={onToggle}
-        className={cn(
-          "relative h-7 w-12 rounded-full transition-colors duration-300",
-          isYearly ? "bg-white" : "bg-zinc-600"
-        )}
-      >
-        <span
-          className={cn(
-            "absolute top-0.5 left-0.5 h-6 w-6 rounded-full bg-black transition-transform duration-300 shadow-sm",
-            isYearly && "translate-x-5"
-          )}
-        />
-      </button>      <span className={cn("text-sm font-medium transition-colors", isYearly ? "text-white" : "text-zinc-500")}>
-        {labels.yearly}
-      </span>
-      {isYearly && (
-        <span className="text-xs font-semibold text-green-400 bg-green-900/40 px-2 py-0.5 rounded-full">
-          {save}
-        </span>
-      )}
-    </div>
-  );
-}
 
 export default function Pricing({ lang = "no" }: PricingProps) {
-  const [isYearly, setIsYearly] = useState(false);
   const t = content[lang];
 
   return (
-    <section
-      id="priser"
-      className="pt-10 md:pt-14 pb-16 md:pb-24 bg-black"
-    >
+    <section id="priser" className="pt-10 md:pt-14 pb-16 md:pb-24 bg-black">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         {/* Header */}
-        <ScrollPang className="text-center mb-8">
+        <ScrollPang className="text-center mb-10">
           <span className="inline-block text-xs font-semibold tracking-widest text-zinc-500 uppercase mb-3">
             {t.label}
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">            {t.heading}{" "}
+          <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
+            {t.heading}{" "}
             <span className="text-zinc-400">{t.headingAccent}</span>
           </h2>
-          <p className="mt-2 text-sm text-zinc-400 max-w-md mx-auto">
+          <p className="mt-3 text-sm text-zinc-400 max-w-md mx-auto">
             {t.subtext}
           </p>
-        </ScrollPang>
-
-        {/* Toggle */}
-        <ScrollPang offset={1}>
-          <PricingSwitch
-            isYearly={isYearly}
-            onToggle={() => setIsYearly(!isYearly)}
-            labels={{ monthly: t.monthly, yearly: t.yearly }}
-            save={t.save}
-          />
         </ScrollPang>
 
         {/* Cards */}
@@ -252,7 +153,8 @@ export default function Pricing({ lang = "no" }: PricingProps) {
                     ? "border-white/30 shadow-[0_0_30px_-5px_rgba(255,255,255,0.1)]"
                     : "border-zinc-800 hover:shadow-md hover:border-zinc-700"
                 )}
-              >                {plan.popular && (
+              >
+                {plan.popular && (
                   <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent" />
                 )}
                 <CardHeader className="pb-3 pt-5 px-5">
@@ -267,59 +169,23 @@ export default function Pricing({ lang = "no" }: PricingProps) {
                   <p className="text-xs text-zinc-400 mt-1">{plan.description}</p>
                 </CardHeader>
                 <CardContent className="px-5 pb-5">
-                  <div className="flex items-baseline gap-1 mb-4">
-                    {plan.price > 0 ? (
-                      <>
-                        <span className="text-3xl font-bold text-white">
-                          <NumberFlow
-                            value={isYearly ? plan.yearlyPrice : plan.price}
-                            format={{ style: "currency", currency: "NOK", maximumFractionDigits: 0 }}
-                          />
-                        </span>
-                        <span className="text-xs text-zinc-500">
-                          {isYearly ? t.perYear : t.perMonth}
-                        </span>
-                      </>
-                    ) : (                      <span className="text-2xl font-bold text-white">
-                        {t.ctaEnterprise}
-                      </span>
-                    )}
+                  <div className="flex items-baseline gap-1 mb-5">
+                    <span className="text-2xl font-bold text-white">
+                      {t.priceText}
+                    </span>
                   </div>
 
-                  {plan.setupFee > 0 && (
-                    <div className="mb-4 text-xs">
-                      {isYearly ? (
-                        <span className="text-green-400 font-semibold">{t.setupFree} ✓</span>
-                      ) : (
-                        <span className="text-zinc-500">{t.setupLabel}: <span className="text-zinc-300 font-medium">{plan.setupFee.toLocaleString("nb-NO")} kr</span></span>
-                      )}
-                    </div>
-                  )}
-
-                  {plan.name === "Enterprise" ? (
-                    <a
-                      href="#kontakt"
-                      className={cn(
-                        "block w-full py-2.5 rounded-xl text-sm font-semibold text-center transition-all duration-200",
-                        "bg-zinc-800 text-white hover:bg-zinc-700"
-                      )}
-                    >
-                      {t.ctaEnterprise}
-                    </a>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={() => startCheckout(plan.name as Plan, isYearly ? "yearly" : "monthly")}
-                      className={cn(
-                        "block w-full py-2.5 rounded-xl text-sm font-semibold transition-all duration-200",
-                        plan.popular
-                          ? "bg-white text-black hover:bg-zinc-200"
-                          : "bg-zinc-800 text-white hover:bg-zinc-700"
-                      )}
-                    >
-                      {t.cta}
-                    </button>
-                  )}
+                  <a
+                    href="#kontakt"
+                    className={cn(
+                      "block w-full py-2.5 rounded-xl text-sm font-semibold text-center transition-all duration-200",
+                      plan.popular
+                        ? "bg-white text-black hover:bg-zinc-200"
+                        : "bg-zinc-800 text-white hover:bg-zinc-700"
+                    )}
+                  >
+                    {t.cta}
+                  </a>
 
                   <div className="mt-5 space-y-2.5">
                     {plan.includes.map((item, j) => (
@@ -332,7 +198,8 @@ export default function Pricing({ lang = "no" }: PricingProps) {
                             <span className="text-xs text-zinc-400">{item}</span>
                           </>
                         )}
-                      </div>                    ))}
+                      </div>
+                    ))}
                   </div>
                 </CardContent>
               </Card>
@@ -340,9 +207,9 @@ export default function Pricing({ lang = "no" }: PricingProps) {
           ))}
         </div>
 
-        {/* VAT note */}
+        {/* Footer note */}
         <ScrollPang offset={2} className="text-center mt-6">
-          <p className="text-xs text-neutral-400">{t.vat}</p>
+          <p className="text-xs text-neutral-400">{t.note}</p>
         </ScrollPang>
       </div>
     </section>

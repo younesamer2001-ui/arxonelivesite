@@ -19,7 +19,7 @@ const content = {
       { label: 'Skalerbar til 50+ lokasjoner', arxon: true, trad: false, voice: false },
     ],
     cols: ['Arxon AI', 'Resepsjonist', 'Telefonsvarer'],
-    cost: ['Fra 2 490 kr/mnd', '~28 000 kr/mnd', 'Gratis — men taper kunder'],
+    cost: ['Kontakt for pris', '~28 000 kr/mnd', 'Gratis — men taper kunder'],
     costLabel: 'Kostnad',
   },  en: {
     badge: 'WHY SWITCH',
@@ -35,7 +35,7 @@ const content = {
       { label: 'Scales to 50+ locations', arxon: true, trad: false, voice: false },
     ],
     cols: ['Arxon AI', 'Receptionist', 'Voicemail'],
-    cost: ['From 2,490 kr/mo', '~28,000 kr/mo', 'Free — but loses customers'],
+    cost: ['Contact for pricing', '~28,000 kr/mo', 'Free — but loses customers'],
     costLabel: 'Cost',
   },
 }

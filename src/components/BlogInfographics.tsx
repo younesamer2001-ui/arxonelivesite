@@ -143,9 +143,9 @@ export function InfographicSMBvsEnterprise() {
   const inView = useInView(ref, { once: true, margin: '-40px' });
 
   const rows = [
-    { label: 'Oppstart', enterprise: '500 000 kr+', arxon: '< 15 000 kr' },
+    { label: 'Oppstart', enterprise: '500 000 kr+', arxon: 'Tilpasset' },
     { label: 'Leveringstid', enterprise: '6–12 mnd', arxon: '10 dager' },
-    { label: 'Månedlig', enterprise: '~80 000 kr', arxon: '4 990 kr' },
+    { label: 'Månedlig', enterprise: '~80 000 kr', arxon: 'Kontakt for pris' },
     { label: 'Kontakt', enterprise: 'Prosjektleder', arxon: 'Grunnlegger' },
     { label: 'Målgruppe', enterprise: '500+ ansatte', arxon: '5–50 ansatte' },
   ];

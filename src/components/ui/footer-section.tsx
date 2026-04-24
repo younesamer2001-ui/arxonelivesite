@@ -54,7 +54,7 @@ export function Footer() {
         <AnimatedContainer className="space-y-4">
           <span className="text-2xl font-bold text-white">ARXON</span>
           <p className="text-zinc-400 mt-8 text-sm md:mt-0">
-            © {new Date().getFullYear()} Arxon AS. Alle rettigheter reservert.
+            © {new Date().getFullYear()} Arxon. Alle rettigheter reservert.
           </p>
         </AnimatedContainer>
 

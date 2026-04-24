@@ -48,7 +48,7 @@ export const faqContent: { no: FAQContent; en: FAQContent } = {
       {
         question: "Hva koster Arxon?",
         answer:
-          "Arxon Starter koster fra 2 990 kr/mnd og Arxon Pro fra 4 990 kr/mnd. Ved månedlig betaling kommer et engangs oppsettsgebyr (5 000 kr Starter, 15 000 kr Pro). Årlig betaling inkluderer gratis oppsett. Enterprise har tilpasset pris for kjeder.",
+          "Vi tilpasser pris etter bedriftens størrelse, volum og hvilke integrasjoner du trenger. Ta kontakt så gir vi deg et konkret tilbud innen en virkedag.",
       },
       {
         question: "Hvilke bedrifter passer Arxon for?",
@@ -128,7 +128,7 @@ export const faqContent: { no: FAQContent; en: FAQContent } = {
       {
         question: "Hva er typisk ROI for Arxon?",
         answer:
-          "Kunder ser typisk 15–30 % økt bookingrate fordi tapte anrop nå blir besvart. En frisørsalong med 200 samtaler/uke som berget 10 % flere kunder, tjener ~15 000 kr ekstra/mnd — mer enn hele abonnementet.",
+          "Kunder ser typisk 15–30 % økt bookingrate fordi tapte anrop nå blir besvart. En frisørsalong med 200 samtaler/uke som berget 10 % flere kunder, tjener typisk ~15 000 kr ekstra/mnd — som regel langt mer enn hele abonnementet koster.",
       },
       {
         question: "Tilbyr Arxon en demo?",
@@ -158,7 +158,7 @@ export const faqContent: { no: FAQContent; en: FAQContent } = {
       {
         question: "What does Arxon cost?",
         answer:
-          "Arxon Starter starts at NOK 2,990/mo and Arxon Pro at NOK 4,990/mo. Monthly billing includes a one-time setup fee (NOK 5,000 Starter, NOK 15,000 Pro). Annual billing includes free setup. Enterprise has custom pricing.",
+          "Pricing is tailored to your business size, call volume, and required integrations. Get in touch and we'll come back with a concrete proposal within one business day.",
       },
       {
         question: "Which businesses is Arxon for?",
@@ -238,7 +238,7 @@ export const faqContent: { no: FAQContent; en: FAQContent } = {
       {
         question: "What's the typical ROI of Arxon?",
         answer:
-          "Customers typically see 15–30 % increased booking rate because missed calls now get answered. A salon with 200 weekly calls that saves 10 % more customers earns ~15,000 NOK extra per month — more than the subscription itself.",
+          "Customers typically see 15–30 % increased booking rate because missed calls now get answered. A salon with 200 weekly calls that saves 10 % more customers earns roughly ~15,000 NOK extra per month — usually well above the subscription cost.",
       },
       {
         question: "Does Arxon offer a demo?",

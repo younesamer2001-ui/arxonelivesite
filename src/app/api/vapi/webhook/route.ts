@@ -1105,13 +1105,13 @@ function detectGuardrailFlags(
     .map((t) => t.content.toLowerCase());
 
   for (const line of agentLines) {
-    // Fabricated kroner amounts outside the sanctioned from-prices.
+    // Agent should never quote specific Arxon-prices — all pricing is
+    // "contact for pricing". Flag any concrete kroner amount the agent
+    // produces, except when it's clearly relaying a customer-economics
+    // example ("fra X", "koster fra", ranges). Internal guardrail for
+    // the dashboard — does not block the call.
     if (/\b\d{2,3}\s?000\s*kr\b|\b\d{1,3}\s?\d{3}\s*kroner\b/.test(line)) {
-      // Allow explicit 4 990 / 9 990 / 14 990 starter anchors.
-      if (
-        !/4\s?990|9\s?990|14\s?990|4990|9990|14990/.test(line) &&
-        !/fra-pris|fra\s+\d/.test(line)
-      ) {
+      if (!/fra-pris|fra\s+\d|mellom\s+\d|typisk|estimat/.test(line)) {
         flags.add('price-outside-anchor');
       }
     }

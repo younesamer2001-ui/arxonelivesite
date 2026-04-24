@@ -119,13 +119,10 @@ export default async function BransjeLandingPage({
     },
     offers: {
       "@type": "Offer",
-      price: "2990",
-      priceCurrency: "NOK",
       priceSpecification: {
-        "@type": "UnitPriceSpecification",
-        price: "2990",
+        "@type": "PriceSpecification",
         priceCurrency: "NOK",
-        unitText: "MONTH",
+        description: "Tilpasset pris — kontakt for tilbud",
       },
       availability: "https://schema.org/InStock",
     },

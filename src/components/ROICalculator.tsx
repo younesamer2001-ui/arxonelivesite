@@ -10,7 +10,7 @@ interface ROICalculatorProps {
 
 const content = {
   no: {
-    label: 'ROI-kalkulator',
+    label: 'Kostnadskalkulator',
     heading: 'Hvor mye taper du',
     headingAccent: 'på ubesvarte anrop?',
     callsPerDayLabel: 'Anrop per dag',
@@ -18,13 +18,12 @@ const content = {
     avgOrderValueLabel: 'Gjennomsnittlig ordreverdi (kr)',
     missedCallsPerMonthLabel: 'Tapte anrop per måned',
     lostRevenuePerMonthLabel: 'Tapt omsetning per måned',
-    withArxonSaveLabel: 'Med Arxon sparer du',
-    roiLabel: 'ROI',
-    basedOnText: 'Basert på 4 990 kr/mnd',
-    ctaText: 'Se hvor mye du kan spare — book demo',
+    withArxonSaveLabel: 'Med Arxon kan du berge',
+    basedOnText: 'Estimat basert på en typisk fangstrate på 85%. Kontakt oss for pris tilpasset ditt volum.',
+    ctaText: 'Kontakt oss for pris',
   },
   en: {
-    label: 'ROI Calculator',
+    label: 'Cost Calculator',
     heading: 'How much are you losing',
     headingAccent: 'on missed calls?',
     callsPerDayLabel: 'Calls per day',
@@ -32,10 +31,9 @@ const content = {
     avgOrderValueLabel: 'Average order value (NOK)',
     missedCallsPerMonthLabel: 'Missed calls per month',
     lostRevenuePerMonthLabel: 'Lost revenue per month',
-    withArxonSaveLabel: 'With Arxon you save',
-    roiLabel: 'ROI',
-    basedOnText: 'Based on 4,990 NOK/mo',
-    ctaText: 'See how much you can save — book demo',
+    withArxonSaveLabel: 'With Arxon you can recover',
+    basedOnText: 'Estimate based on a typical 85% capture rate. Contact us for pricing tailored to your volume.',
+    ctaText: 'Contact us for pricing',
   },
 };
 
@@ -53,9 +51,6 @@ export default function ROICalculator({ lang = 'no' }: ROICalculatorProps) {
   const missedCallsPerMonth = callsPerDay * (missedCallsPercent / 100) * 30;
   const lostRevenuePerMonth = missedCallsPerMonth * avgOrderValue * 0.3;
   const savedRevenueWithArxon = lostRevenuePerMonth * 0.85;
-  const roi = ((savedRevenueWithArxon - 4990) / 4990) * 100;
-
-  const arxonMonthlyCost = 4990;
 
   return (
     <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
@@ -190,18 +185,8 @@ export default function ROICalculator({ lang = 'no' }: ROICalculatorProps) {
                     </p>
                   </div>
 
-                  {/* ROI */}
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-zinc-400">
-                      {t.roiLabel}
-                    </span>
-                    <div className="bg-emerald-500/20 text-emerald-400 rounded-full px-4 py-1 text-sm font-semibold">
-                      {Math.round(roi)}%
-                    </div>
-                  </div>
-
                   {/* Based On Text */}
-                  <p className="text-xs text-zinc-500 pt-4">
+                  <p className="text-xs text-zinc-500 pt-2">
                     {t.basedOnText}
                   </p>
                 </div>

@@ -19,7 +19,7 @@ export const organizationSchema = {
   "@type": "Organization",
   "@id": `${BASE_URL}/#organization`,
   name: "Arxon",
-  legalName: "Arxon AS",
+  legalName: "Arxon",
   url: BASE_URL,
   logo: {
     "@type": "ImageObject",
@@ -65,7 +65,6 @@ export const localBusinessSchema = {
   url: BASE_URL,
   telephone: "+47-993-53-596",
   email: "kontakt@arxon.no",
-  priceRange: "2 990 - 25 000 NOK/mnd",
   address: {
     "@type": "PostalAddress",
     addressCountry: "NO",
@@ -117,13 +116,10 @@ export const servicesSchema = [
     areaServed: { "@type": "Country", name: "Norway" },
     offers: {
       "@type": "Offer",
-      price: "2990",
-      priceCurrency: "NOK",
       priceSpecification: {
-        "@type": "UnitPriceSpecification",
-        price: "2990",
+        "@type": "PriceSpecification",
         priceCurrency: "NOK",
-        unitText: "MONTH",
+        description: "Tilpasset pris — kontakt for tilbud",
       },
       availability: "https://schema.org/InStock",
     },
@@ -139,13 +135,10 @@ export const servicesSchema = [
     areaServed: { "@type": "Country", name: "Norway" },
     offers: {
       "@type": "Offer",
-      price: "4990",
-      priceCurrency: "NOK",
       priceSpecification: {
-        "@type": "UnitPriceSpecification",
-        price: "4990",
+        "@type": "PriceSpecification",
         priceCurrency: "NOK",
-        unitText: "MONTH",
+        description: "Tilpasset pris — kontakt for tilbud",
       },
       availability: "https://schema.org/InStock",
     },

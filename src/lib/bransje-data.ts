@@ -69,7 +69,7 @@ export const bransjePages: Record<BransjePage["slug"], BransjePage> = {
     metaTitle:
       "AI-resepsjonist for frisørsalonger — book timer mens du klipper | Arxon",
     metaDescription:
-      "Arxon er AI-resepsjonisten for norske frisørsalonger. Tar telefoner når saksen er i bruk, booker timer 24/7, sender SMS-bekreftelse og reduserer no-show. Fra 2 990 kr/mnd.",
+      "Arxon er AI-resepsjonisten for norske frisørsalonger. Tar telefoner når saksen er i bruk, booker timer 24/7, sender SMS-bekreftelse og reduserer no-show.",
     h1: "AI-resepsjonist for frisørsalonger i Norge",
     lede: "Arxon tar telefonen når du ikke kan slippe saksen. AI-en svarer på norsk, booker timer direkte i kalenderen din, sender SMS-bekreftelse, og følger opp no-show — automatisk, 24/7. Bygget for norske frisørsalonger som mister kunder hver dag til telefonen som aldri blir besvart.",
 
@@ -161,7 +161,7 @@ export const bransjePages: Record<BransjePage["slug"], BransjePage> = {
       {
         question: "Hvor mye koster Arxon for en liten salong?",
         answer:
-          "Starter fra 2 990 kr/mnd dekker typisk en salong med 3–5 stoler. Pro-planen (4 990 kr/mnd) passer for salonger med flere stylister eller flerspråklig kundegrunnlag.",
+          "Starter dekker typisk en salong med 3–5 stoler. Pro passer for salonger med flere stylister eller flerspråklig kundegrunnlag. Ta kontakt så skreddersyr vi pakken etter størrelsen din.",
       },
       {
         question: "Kan jeg teste AI-en med mine tjenester?",
@@ -181,7 +181,7 @@ export const bransjePages: Record<BransjePage["slug"], BransjePage> = {
     metaTitle:
       "AI-resepsjonist for bilverksteder — svar kunder 24/7 | Arxon",
     metaDescription:
-      "Arxon er AI-resepsjonisten for norske bilverksteder. Tar telefonen når mekanikerne jobber, booker serviceavtaler, svarer på akuttspørsmål og gir prisestimater — 24/7 på norsk. Fra 2 990 kr/mnd.",
+      "Arxon er AI-resepsjonisten for norske bilverksteder. Tar telefonen når mekanikerne jobber, booker serviceavtaler, svarer på akuttspørsmål og gir prisestimater — 24/7 på norsk.",
     h1: "AI-resepsjonist for bilverksteder i Norge",
     lede: "Arxon svarer når mekanikerne jobber. AI-en tar bookinger for service og EU-kontroll, håndterer akuttsamtaler utenfor åpningstid, gir prisestimater på standard jobber, og ruter komplekse saker til rett tekniker. Bygget for norske bilverksteder som mister kunder fordi telefonen aldri ringer tilbake.",
 
@@ -293,7 +293,7 @@ export const bransjePages: Record<BransjePage["slug"], BransjePage> = {
     metaTitle:
       "AI-resepsjonist for tannleger — reduser no-show og fyll kalenderen | Arxon",
     metaDescription:
-      "Arxon er AI-resepsjonisten for norske tannleger. Booker timer 24/7, reduserer no-show med SMS-påminnelse og depositum, håndterer akuttsamtaler og smertepasienter — GDPR-kompatibelt. Fra 2 990 kr/mnd.",
+      "Arxon er AI-resepsjonisten for norske tannleger. Booker timer 24/7, reduserer no-show med SMS-påminnelse og depositum, håndterer akuttsamtaler og smertepasienter — GDPR-kompatibelt.",
     h1: "AI-resepsjonist for tannleger i Norge",
     lede: "Arxon tar telefonen mens du behandler pasienter. AI-en booker undersøkelser, hygieniketimer og kontroller, håndterer akutt-tannverk-samtaler 24/7, reduserer no-show med SMS-påminnelse og depositum, og er full GDPR-kompatibel med EU-hosting. Bygget for norske tannklinikker som mister pasienter til fulle kalendere og travle telefonlinjer.",
 
@@ -405,7 +405,7 @@ export const bransjePages: Record<BransjePage["slug"], BransjePage> = {
     metaTitle:
       "AI-resepsjonist for legekontor — reduser telefonkø og frigjør helsesekretær | Arxon",
     metaDescription:
-      "Arxon er AI-resepsjonisten for norske legekontor. Tar triage-samtaler, booker konsultasjoner, håndterer reseptfornyelser og reduserer telefonkø — HELFO-kompatibelt og GDPR-sikret. Fra 2 990 kr/mnd.",
+      "Arxon er AI-resepsjonisten for norske legekontor. Tar triage-samtaler, booker konsultasjoner, håndterer reseptfornyelser og reduserer telefonkø — HELFO-kompatibelt og GDPR-sikret.",
     h1: "AI-resepsjonist for legekontor i Norge",
     lede: "Arxon tar telefonkøen mens helsesekretæren hjelper pasienter i resepsjonen. AI-en triage-vurderer henvendelser på norsk, booker konsultasjoner direkte i CGM Allmenn, Infodoc eller System X, håndterer reseptfornyelser og gir informasjon om åpningstider og legevakt — 24/7, GDPR-kompatibelt og hostet i EU. Bygget for norske fastlegekontor som drukner i telefonhenvendelser og taper kapasitet på administrativt arbeid.",
 
@@ -517,7 +517,7 @@ export const bransjePages: Record<BransjePage["slug"], BransjePage> = {
     metaTitle:
       "AI-resepsjonist for hudpleie og skjønnhetsklinikker — fyll kalenderen 24/7 | Arxon",
     metaDescription:
-      "Arxon er AI-resepsjonisten for norske hudpleieklinikker og skjønnhetssalonger. Booker konsultasjoner, tar depositum via Stripe, reduserer no-show og håndterer spørsmål om laser, fillers og behandlinger — 24/7. Fra 2 990 kr/mnd.",
+      "Arxon er AI-resepsjonisten for norske hudpleieklinikker og skjønnhetssalonger. Booker konsultasjoner, tar depositum via Stripe, reduserer no-show og håndterer spørsmål om laser, fillers og behandlinger — 24/7.",
     h1: "AI-resepsjonist for hudpleie og skjønnhetsklinikker",
     lede: "Arxon tar imot bookinger mens terapeutene jobber med kunder. AI-en svarer på norsk, booker i Fresha, Timely eller Booksy, tar inn depositum via Stripe på dyre behandlinger (laser, fillers, hårfjerning), sender SMS-påminnelser og håndterer oppfølging etter behandling. Bygget for norske hudpleieklinikker og skjønnhetssalonger som mister bookinger fordi telefonen ikke kan besvares under behandling.",
 
@@ -614,7 +614,7 @@ export const bransjePages: Record<BransjePage["slug"], BransjePage> = {
       {
         question: "Koster Arxon mer for flerspråklig klientell?",
         answer:
-          "Nei. Starter (2 990 kr/mnd) inkluderer norsk, engelsk og 3 andre språk. Pro (4 990 kr/mnd) inkluderer alle 30+ språk. Samme pris uavhengig av hvilke språk som er i bruk.",
+          "Nei. Alle pakker inkluderer norsk og engelsk. Pro og Enterprise inkluderer alle 30+ språk. Kontakt oss for pris tilpasset dine behov.",
       },
     ],
 
@@ -629,7 +629,7 @@ export const bransjePages: Record<BransjePage["slug"], BransjePage> = {
     metaTitle:
       "AI-resepsjonist for advokatkontor — kvalifiser leads og book konsultasjoner | Arxon",
     metaDescription:
-      "Arxon er AI-resepsjonisten for norske advokatkontor. Svarer på henvendelser 24/7, screener saker, kvalifiserer leads, sjekker konfliktsituasjoner og booker inntaksmøter — konfidensielt og GDPR-sikret. Fra 2 990 kr/mnd.",
+      "Arxon er AI-resepsjonisten for norske advokatkontor. Svarer på henvendelser 24/7, screener saker, kvalifiserer leads, sjekker konfliktsituasjoner og booker inntaksmøter — konfidensielt og GDPR-sikret.",
     h1: "AI-resepsjonist for advokatkontor i Norge",
     lede: "Arxon tar imot henvendelser når advokater er i retten eller i møte. AI-en intervjuer potensielle klienter på norsk, samler grunninfo (sakstype, motpart, tidsfrist), sjekker for åpenbar interessekonflikt, og booker inntaksmøte direkte i kalenderen. Bygget for norske advokatkontor som mister mandater fordi ingen svarer når klienten trenger svar — og som ikke vil bruke sekretær til screening.",
 
@@ -741,7 +741,7 @@ export const bransjePages: Record<BransjePage["slug"], BransjePage> = {
     metaTitle:
       "AI-resepsjonist for regnskapskontor — håndter henvendelser og frigjør tid | Arxon",
     metaDescription:
-      "Arxon er AI-resepsjonisten for norske regnskapskontor. Svarer på bokførings- og MVA-spørsmål, booker konsultasjoner, håndterer papirarbeid-forespørsler og frigjør regnskapsfører-tid — integrert med Tripletex, Fiken og Poweroffice. Fra 2 990 kr/mnd.",
+      "Arxon er AI-resepsjonisten for norske regnskapskontor. Svarer på bokførings- og MVA-spørsmål, booker konsultasjoner, håndterer papirarbeid-forespørsler og frigjør regnskapsfører-tid — integrert med Tripletex, Fiken og Poweroffice.",
     h1: "AI-resepsjonist for regnskapskontor i Norge",
     lede: "Arxon tar imot kundehenvendelser mens regnskapsførere jobber i Tripletex eller Fiken. AI-en svarer på vanlige spørsmål om MVA, frister, skatt og bokføring, booker konsultasjoner, samler inn dokumenter som mangler, og varsler ved kritiske frister (MVA-innsending, årsoppgjør). Bygget for norske regnskapskontor som ønsker å skalere kundeporteføljen uten å ansette flere — og slutte å bruke 30 % av tiden på repeterende spørsmål.",
 
@@ -853,7 +853,7 @@ export const bransjePages: Record<BransjePage["slug"], BransjePage> = {
     metaTitle:
       "AI-resepsjonist for eiendomsmeglere — fang leads 24/7 | Arxon",
     metaDescription:
-      "Arxon er AI-resepsjonisten for norske eiendomsmeglere. Svarer på boligannonser 24/7, kvalifiserer kjøpere, booker visninger og verdivurderinger, integrert med Finn.no og Vitec. Fra 2 990 kr/mnd.",
+      "Arxon er AI-resepsjonisten for norske eiendomsmeglere. Svarer på boligannonser 24/7, kvalifiserer kjøpere, booker visninger og verdivurderinger, integrert med Finn.no og Vitec.",
     h1: "AI-resepsjonist for eiendomsmeglere i Norge",
     lede: "Arxon svarer på henvendelser fra Finn.no 24/7 mens megleren er på visning. AI-en kvalifiserer kjøpere (finansiering på plass, tidsramme, prisklasse), booker visninger og verdivurderinger, gir info om objektet (prospekt, egenandelsberegning, felleskostnader), og varsler megler kun når leaden er reell. Bygget for norske eiendomsmeglere som mister henvendelser om kvelden og i helgen fordi ingen svarer.",
 
@@ -965,7 +965,7 @@ export const bransjePages: Record<BransjePage["slug"], BransjePage> = {
     metaTitle:
       "AI-resepsjonist for rørleggere — vinn akuttsamtaler 24/7 | Arxon",
     metaDescription:
-      "Arxon er AI-resepsjonisten for norske rørleggere. Tar akuttsamtaler (lekkasje, varmtvann, tett avløp), gir prisestimater, booker tid og ruter til vakt-rørlegger — 24/7. Fra 2 990 kr/mnd.",
+      "Arxon er AI-resepsjonisten for norske rørleggere. Tar akuttsamtaler (lekkasje, varmtvann, tett avløp), gir prisestimater, booker tid og ruter til vakt-rørlegger — 24/7.",
     h1: "AI-resepsjonist for rørleggere i Norge",
     lede: "Arxon svarer rørleggerens telefon mens han er under vasken hos en kunde. AI-en vurderer hastegrad (lekkasje? varmt vann borte? tett toalett?), gir prisestimat på standardjobber, booker service, og ruter akuttsamtaler direkte til vakt-rørlegger — 24/7. Bygget for norske rørleggerbedrifter som mister akuttjobber til konkurrenten som faktisk svarer kl. 21 på søndag kveld.",
 
@@ -1077,7 +1077,7 @@ export const bransjePages: Record<BransjePage["slug"], BransjePage> = {
     metaTitle:
       "AI-resepsjonist for elektrikere — vinn akuttsamtaler og el-kontroll | Arxon",
     metaDescription:
-      "Arxon er AI-resepsjonisten for norske elektrikere. Svarer på akutt-strømutfall, booker el-kontroll før salg, gir prisestimater og ruter vakt-elektriker — 24/7. Fra 2 990 kr/mnd.",
+      "Arxon er AI-resepsjonisten for norske elektrikere. Svarer på akutt-strømutfall, booker el-kontroll før salg, gir prisestimater og ruter vakt-elektriker — 24/7.",
     h1: "AI-resepsjonist for elektrikere i Norge",
     lede: "Arxon tar telefonen når elektrikeren er oppe på en stige. AI-en håndterer akutt-strømutfall på sekunder, booker el-kontroll før boligsalg, gir prisestimater på standardjobber (sikringsskap, stikkontakter, lamper), og ruter samtaler til rett elektriker basert på jobb-type — 24/7. Bygget for norske elektrikerbedrifter som taper akuttoppdrag fordi telefonen ikke kan besvares i felten.",
 
@@ -1189,7 +1189,7 @@ export const bransjePages: Record<BransjePage["slug"], BransjePage> = {
     metaTitle:
       "AI-resepsjonist for restauranter — ta bordbestillinger 24/7 | Arxon",
     metaDescription:
-      "Arxon er AI-resepsjonisten for norske restauranter. Tar bordreservasjoner 24/7, håndterer take-away-bestillinger, svarer på allergi- og menyspørsmål, og reduserer no-show — integrert med OpenTable og Dinnerbooking. Fra 2 990 kr/mnd.",
+      "Arxon er AI-resepsjonisten for norske restauranter. Tar bordreservasjoner 24/7, håndterer take-away-bestillinger, svarer på allergi- og menyspørsmål, og reduserer no-show — integrert med OpenTable og Dinnerbooking.",
     h1: "AI-resepsjonist for restauranter i Norge",
     lede: "Arxon tar telefonen mens kokken skjærer, kelneren serverer og maître d' håndterer gjestene i resepsjonen. AI-en tar bordreservasjoner på norsk, håndterer take-away-bestillinger, svarer på meny-, allergi- og åpningstid-spørsmål, og sender SMS-bekreftelse med no-show-depositum på fullbooket kveld. Bygget for norske restauranter som mister reservasjoner fordi telefonen ringer midt i servitt-trafikken.",
 
@@ -1301,7 +1301,7 @@ export const bransjePages: Record<BransjePage["slug"], BransjePage> = {
     metaTitle:
       "AI-resepsjonist for treningssenter — fang leads og book PT-timer 24/7 | Arxon",
     metaDescription:
-      "Arxon er AI-resepsjonisten for norske treningssentre. Svarer på medlemskap-henvendelser 24/7, booker PT-timer og gruppetimer, håndterer medlemskap-endringer og tar betaling via Stripe. Fra 2 990 kr/mnd.",
+      "Arxon er AI-resepsjonisten for norske treningssentre. Svarer på medlemskap-henvendelser 24/7, booker PT-timer og gruppetimer, håndterer medlemskap-endringer og tar betaling via Stripe.",
     h1: "AI-resepsjonist for treningssenter i Norge",
     lede: "Arxon svarer på medlemskap-henvendelser mens de ansatte jobber i resepsjonen. AI-en forklarer priser og fasiliteter, booker PT-timer og gruppetimer, håndterer medlemskap-endringer (pause, oppsigelse, oppgradering), og tar betaling via Stripe-link — 24/7. Bygget for norske treningssentre som mister leads på kveld og helg fordi telefonen ikke besvares, og som kaster bort personaltid på repeterende medlemskap-spørsmål.",
 

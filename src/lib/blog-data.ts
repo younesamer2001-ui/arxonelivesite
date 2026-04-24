@@ -325,8 +325,8 @@ export const posts: BlogPost[] = [
         type: 'stat-row',
         stats: [
           { value: '10 dager', label: 'fra signering til live' },
-          { value: '< 15 000 kr', label: 'oppstartskostnad' },
-          { value: '4 990 kr/mnd', label: 'standard abonnement' },
+          { value: 'Skreddersøm', label: 'tilpasset din bedrift' },
+          { value: 'Kontakt', label: 'for pris' },
         ],
       },
       {
@@ -379,7 +379,7 @@ export const posts: BlogPost[] = [
         type: 'stat-row',
         stats: [
           { value: '990 kr', label: 'chatbot (ikke AI-resepsjonist)' },
-          { value: '2 990 kr', label: 'Arxon Starter — full løsning SMB' },
+          { value: '2 500–5 000 kr', label: 'AI-resepsjonist for SMB (typisk marked)' },
           { value: '25 000 kr', label: 'enterprise-skreddersøm' },
         ],
       },
@@ -393,7 +393,7 @@ export const posts: BlogPost[] = [
       },
       {
         type: 'paragraph',
-        text: 'Segment 2 — AI-resepsjonist for SMB (2 500–5 000 kr/mnd): Arxon, en håndfull internasjonale alternativer. Full løsning: telefon, SMS, e-post, chat, booking, oppfølging. Gir ROI innen 2–3 måneder på de fleste bransjer.',
+        text: 'Segment 2 — AI-resepsjonist for SMB (2 500–5 000 kr/mnd i typisk marked): Arxon og en håndfull internasjonale alternativer. Full løsning: telefon, SMS, e-post, chat, booking, oppfølging. Gir ROI innen 2–3 måneder på de fleste bransjer. (Vår pris tilpasses bedriften — kontakt oss for tilbud.)',
       },
       {
         type: 'paragraph',
@@ -415,7 +415,7 @@ export const posts: BlogPost[] = [
       },
       {
         type: 'heading',
-        text: 'Hva er ROI på 2 990 kr/mnd?',
+        text: 'Hva er ROI på en AI-resepsjonist?',
       },
       {
         type: 'paragraph',
@@ -740,7 +740,7 @@ export const posts: BlogPost[] = [
       },
       {
         type: 'paragraph',
-        text: 'En AI-resepsjonist til 2 990 kr/mnd som fanger 70 % av disse = 40 000 kr/mnd i reddet margin. ROI: 13× på månedsbasis.',
+        text: 'En typisk AI-resepsjonist i SMB-segmentet som fanger 70 % av disse samtalene kan lett berge 40 000 kr/mnd i margin. ROI på en løsning som koster en brøkdel av dette er ofte 10× eller mer.',
       },
       {
         type: 'heading',
