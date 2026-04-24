@@ -1152,7 +1152,7 @@ async function resolveAssistantMapping(
     return { niche: null, customerId: null, internalId: null };
   }
   try {
-    const { data, error } = await supabaseAdmin // admin for vapi_assistants
+    const { data, error } = await supabaseAdmin // admin for RLS
       .from('vapi_assistants')
       .select('id, client_id, customer_id')
       .eq('vapi_assistant_id', vapiAssistantId)
@@ -1254,13 +1254,14 @@ async function persistEndOfCallReport(
 
     const structuredData = analysis.structuredData ?? null;
     const ALLOWED_OUTCOMES = new Set(['booked','no_answer','completed','cancelled','rescheduled','escalated','transferred','voicemail','error']);
-    const rawOutcome = (structuredData as Record<string, unknown> | null)?.outcome?.toString() ?? (toolsUsed.includes('book_meeting') ? 'booked' : transcript.length < 3 ? 'no_answer' : 'completed');
-    const outcome = ALLOWED_OUTCOMES.has(rawOutcome) ? rawOutcome : 'completed';| null)?.outcome?.toString() ??
+    const rawOutcome =
+      (structuredData as Record<string, unknown> | null)?.outcome?.toString() ??
       (toolsUsed.includes('book_meeting')
         ? 'booked'
         : transcript.length < 3
           ? 'no_answer'
           : 'completed');
+    const outcome = ALLOWED_OUTCOMES.has(rawOutcome) ? rawOutcome : 'completed';
 
     const recordingUrl =
       message.recordingUrl ??
