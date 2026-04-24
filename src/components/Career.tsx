@@ -135,19 +135,22 @@ export default function Career({ lang = 'no' }: { lang?: 'no' | 'en' }) {
     const motivation = fd.get('motivation') as string;
 
     try {
-      const { error } = await supabase
-        .from('job_applications')
-        .insert({
+      const res = await fetch('/api/career', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
           name,
           email,
           phone: phone || null,
           role,
           motivation,
-          video_url: null, // TODO: upload to storage later
-          status: 'new',
-        });
-
-      if (error) console.error('Supabase error:', error);
+          videoUrl: null,
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        console.error('Career submit error:', data.error || res.statusText);
+      }
       setSubmitted(true);
     } catch (err) {
       console.error('Submit error:', err);
