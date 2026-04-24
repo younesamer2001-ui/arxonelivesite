@@ -1,7 +1,6 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { supabase } from '@/lib/supabase'
 import ScrollPang from './ScrollPang'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -84,35 +83,24 @@ export default function ContactSection({ lang = 'no' }: ContactSectionProps) {
     const message = formData.get('message') as string
 
     try {
-      // Save to Supabase
-      const { error: dbError } = await supabase
-        .from('contact_submissions')
-        .insert({
-          name,
-          email,
-          phone: phone || null,
-          message,
-          status: 'new',
-          category: 'general',
-        })
-
-      if (dbError) console.error('Supabase error:', dbError)
-
-      // Also send email via EmailJS
-      await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+      // Go through server-side API so service-role writes bypass RLS + notify via Resend
+      const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          service_id: 'service_3azd1ic',
-          template_id: 'template_qbt6k52',
-          user_id: 'Vy-evp6-EBwcwwLf1',
-          template_params: { from_name: name, from_email: email, phone, message },
-        }),
+        body: JSON.stringify({ name, email, phone: phone || null, message }),
       })
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}))
+        console.error('Contact API error:', err)
+        setStatus('error')
+        return
+      }
 
       setStatus('success')
       formRef.current?.reset()
-    } catch {
+    } catch (err) {
+      console.error('Contact submit error:', err)
       setStatus('error')
     } finally {
       setIsSubmitting(false)
