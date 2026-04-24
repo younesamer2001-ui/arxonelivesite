@@ -38,8 +38,15 @@ export async function POST(req: NextRequest) {
           return NextResponse.json({ error: 'Kunne ikke lagre meldingen.' }, { status: 500 });
         }
       } else {
-        console.error(`[contact] insert failed code=${dbError.code} message=${dbError.message} hint=${dbError.hint ?? ''} serviceRole=${hasServiceRole}`);
-        return NextResponse.json({ error: 'Kunne ikke lagre meldingen.' }, { status: 500 });
+        console.error('[contact] FULL ERROR', JSON.stringify({
+          code: dbError.code,
+          message: dbError.message,
+          details: dbError.details,
+          hint: dbError.hint,
+          serviceRole: hasServiceRole,
+          supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL?.slice(0, 40),
+        }));
+        return NextResponse.json({ error: 'Kunne ikke lagre meldingen.', debug: { code: dbError.code, message: dbError.message, serviceRole: hasServiceRole } }, { status: 500 });
       }
     }
 
