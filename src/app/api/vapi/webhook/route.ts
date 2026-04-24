@@ -1152,7 +1152,7 @@ async function resolveAssistantMapping(
     return { niche: null, customerId: null, internalId: null };
   }
   try {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin // admin for vapi_assistants
       .from('vapi_assistants')
       .select('id, client_id, customer_id')
       .eq('vapi_assistant_id', vapiAssistantId)
@@ -1253,8 +1253,9 @@ async function persistEndOfCallReport(
           : 'neutral';
 
     const structuredData = analysis.structuredData ?? null;
-    const outcome =
-      (structuredData as Record<string, unknown> | null)?.outcome?.toString() ??
+    const ALLOWED_OUTCOMES = new Set(['booked','no_answer','completed','cancelled','rescheduled','escalated','transferred','voicemail','error']);
+    const rawOutcome = (structuredData as Record<string, unknown> | null)?.outcome?.toString() ?? (toolsUsed.includes('book_meeting') ? 'booked' : transcript.length < 3 ? 'no_answer' : 'completed');
+    const outcome = ALLOWED_OUTCOMES.has(rawOutcome) ? rawOutcome : 'completed';| null)?.outcome?.toString() ??
       (toolsUsed.includes('book_meeting')
         ? 'booked'
         : transcript.length < 3
