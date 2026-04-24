@@ -818,7 +818,7 @@ export const posts: BlogPost[] = [
       },
       {
         type: 'paragraph',
-        text: 'Vil du ha et regne-eksempel for din spesifikke bransje? Bruk kalkulatoren på arxon.no eller ring oss på +47 993 53 596 — AI-en svarer.',
+        text: 'Vil du ha et regne-eksempel for din spesifikke bransje? Bruk kalkulatoren på arxon.no eller ring oss på +47 78 89 63 86 — AI-en svarer.',
       },
     ],
   },

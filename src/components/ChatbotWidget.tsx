@@ -117,7 +117,7 @@ export default function ChatbotWidget() {
         {
           role: "assistant",
           content:
-            "Stemme-demoen er ikke helt satt opp ennå (mangler NEXT_PUBLIC_VAPI_ASSISTANT_ARXON). Du kan bruke chatten her, eller ringe +47 993 53 596.",
+            "Stemme-demoen er ikke helt satt opp ennå (mangler NEXT_PUBLIC_VAPI_ASSISTANT_ARXON). Du kan bruke chatten her, eller ringe +47 78 89 63 86.",
         },
       ])
       return
@@ -139,12 +139,12 @@ export default function ChatbotWidget() {
       if (msg.includes("permission") || msg.includes("notallowed") || msg.includes("denied"))
         return "Jeg trenger tilgang til mikrofonen din for å ringe. Sjekk nettleserens mikrofon-innstillinger og prøv igjen."
       if (msg.includes("assistant") && msg.includes("not found"))
-        return "Stemme-agenten er ikke riktig konfigurert (assistant not found). Bruk chatten her i mellomtiden, eller ring +47 993 53 596."
+        return "Stemme-agenten er ikke riktig konfigurert (assistant not found). Bruk chatten her i mellomtiden, eller ring +47 78 89 63 86."
       if (msg.includes("domain") || msg.includes("origin") || msg.includes("cors"))
-        return "Denne siden er ikke godkjent for stemme-demoen ennå. Bruk chatten her, eller ring +47 993 53 596."
+        return "Denne siden er ikke godkjent for stemme-demoen ennå. Bruk chatten her, eller ring +47 78 89 63 86."
       if (msg.includes("key") || msg.includes("unauthorized") || msg.includes("401") || msg.includes("403"))
-        return "Stemme-demoen er ikke autentisert riktig akkurat nå. Bruk chatten her, eller ring +47 993 53 596."
-      return `Klarte ikke å koble opp stemme-samtalen (${vapi.error.message}). Bruk chatten her, eller ring +47 993 53 596.`
+        return "Stemme-demoen er ikke autentisert riktig akkurat nå. Bruk chatten her, eller ring +47 78 89 63 86."
+      return `Klarte ikke å koble opp stemme-samtalen (${vapi.error.message}). Bruk chatten her, eller ring +47 78 89 63 86.`
     })()
     setMessages((prev) => [...prev, { role: "assistant", content: friendly }])
   }, [vapi.error])

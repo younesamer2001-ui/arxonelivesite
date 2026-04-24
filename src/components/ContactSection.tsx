@@ -34,7 +34,7 @@ const content = {
     },
     info: [
       { icon: Mail, label: 'E-post', value: 'kontakt@arxon.no' },
-      { icon: Phone, label: 'Telefon', value: '+47 993 53 596' },
+      { icon: Phone, label: 'Telefon', value: '+47 78 89 63 86' },
       { icon: MapPin, label: 'Org.nr', value: '837 230 012' },
     ],
     trust: ['Gratis konsultasjon', 'Ingen bindingstid', '30 dagers pengene-tilbake'],
@@ -59,7 +59,7 @@ const content = {
     },
     info: [
       { icon: Mail, label: 'Email', value: 'kontakt@arxon.no' },
-      { icon: Phone, label: 'Phone', value: '+47 993 53 596' },
+      { icon: Phone, label: 'Phone', value: '+47 78 89 63 86' },
       { icon: MapPin, label: 'Org no.', value: '837 230 012' },
     ],
     trust: ['Free consultation', 'No lock-in', '30-day money-back guarantee'],

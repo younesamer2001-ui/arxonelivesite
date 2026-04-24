@@ -37,7 +37,7 @@ export const organizationSchema = {
   contactPoint: [
     {
       "@type": "ContactPoint",
-      telephone: "+47-993-53-596",
+      telephone: "+47-78-89-63-86",
       contactType: "customer service",
       email: "kontakt@arxon.no",
       areaServed: "NO",
@@ -45,7 +45,7 @@ export const organizationSchema = {
     },
     {
       "@type": "ContactPoint",
-      telephone: "+47-993-53-596",
+      telephone: "+47-78-89-63-86",
       contactType: "sales",
       email: "salg@arxon.no",
       areaServed: "NO",
@@ -63,7 +63,7 @@ export const localBusinessSchema = {
   name: "Arxon",
   image: `${BASE_URL}/images/og-arxon.jpg`,
   url: BASE_URL,
-  telephone: "+47-993-53-596",
+  telephone: "+47-78-89-63-86",
   email: "kontakt@arxon.no",
   address: {
     "@type": "PostalAddress",

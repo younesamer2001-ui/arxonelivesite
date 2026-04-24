@@ -175,7 +175,7 @@ export default function BransjeClient({ page }: Props) {
               <ArrowRight className="w-4 h-4" />
             </Link>
             <a
-              href="tel:+4799353596"
+              href="tel:+4778896386"
               className="inline-flex items-center gap-2 px-6 py-3 border border-zinc-700 hover:border-zinc-500 text-white font-semibold rounded-lg transition-colors"
             >
               <Phone className="w-4 h-4" />
@@ -357,11 +357,11 @@ export default function BransjeClient({ page }: Props) {
               <ArrowRight className="w-4 h-4" />
             </Link>
             <a
-              href="tel:+4799353596"
+              href="tel:+4778896386"
               className="inline-flex items-center gap-2 px-6 py-3 border border-zinc-700 hover:border-zinc-500 text-white font-semibold rounded-lg transition-colors"
             >
               <Phone className="w-4 h-4" />
-              +47 993 53 596
+              +47 78 89 63 86
             </a>
           </div>
 

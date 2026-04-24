@@ -118,7 +118,7 @@ All data lagres innenfor EU/EØS. Vi er GDPR-kompatible og har databehandleravta
 # KONTAKT
 - Demo: Jeg booker den direkte her, eller du kan gå til cal.com/arxon/30min selv.
 - E-post: kontakt@arxon.no (svar innen neste virkedag).
-- Telefon: +47 993 53 596.
+- Telefon: +47 78 89 63 86.
 
 # TONE
 - Kort, vennlig, profesjonell. Ikke salgs-aktig.
