@@ -41,6 +41,7 @@ import {
   type MeetingKind,
 } from '@/lib/calcom';
 import { supabase } from '@/lib/supabase';
+import { supabaseAdmin, hasServiceRole } from '@/lib/supabase-admin';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -1293,8 +1294,19 @@ async function persistEndOfCallReport(
         : null,
     };
 
+    // Writes to `calls` require elevated privileges because of RLS.
+    // Use the service-role admin client. Falls back to anon when the
+    // env var is missing — in that case the insert will fail, but we
+    // surface the full error (code + hint + details) so it's easy to
+    // spot in Vercel logs.
+    if (!hasServiceRole) {
+      console.warn(
+        '[vapi-webhook] SUPABASE_SERVICE_ROLE_KEY is not set — writes to `calls` will likely be blocked by RLS. Add the env var in Vercel to enable persistence.',
+      );
+    }
+
     // Look for existing row on vapi_call_id for update vs insert.
-    const { data: existing } = await supabase
+    const { data: existing } = await supabaseAdmin
       .from('calls')
       .select('id')
       .eq('vapi_call_id', vapiCallId)
@@ -1302,14 +1314,13 @@ async function persistEndOfCallReport(
       .maybeSingle();
 
     if (existing?.id) {
-      const { error } = await supabase
+      const { error } = await supabaseAdmin
         .from('calls')
         .update(row)
         .eq('id', existing.id);
       if (error) {
         console.error(
-          '[vapi-webhook] calls UPDATE failed:',
-          error.message,
+          `[vapi-webhook] calls UPDATE failed  call=${vapiCallId}  code=${error.code}  message=${error.message}  details=${error.details ?? ''}  hint=${error.hint ?? ''}  serviceRole=${hasServiceRole}`,
         );
       } else {
         console.log(
@@ -1317,11 +1328,10 @@ async function persistEndOfCallReport(
         );
       }
     } else {
-      const { error } = await supabase.from('calls').insert(row);
+      const { error } = await supabaseAdmin.from('calls').insert(row);
       if (error) {
         console.error(
-          '[vapi-webhook] calls INSERT failed:',
-          error.message,
+          `[vapi-webhook] calls INSERT failed  call=${vapiCallId}  code=${error.code}  message=${error.message}  details=${error.details ?? ''}  hint=${error.hint ?? ''}  serviceRole=${hasServiceRole}`,
         );
       } else {
         console.log(
