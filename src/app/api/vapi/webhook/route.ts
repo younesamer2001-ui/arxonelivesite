@@ -1187,12 +1187,14 @@ async function persistEndOfCallReport(
   message: VapiMessage,
   fallbackNiche: Niche | null,
 ): Promise<void> {
+  console.log('[vapi-webhook] persist:enter');
   try {
     const call = message.call ?? {};
     const artifact = message.artifact ?? call.artifact ?? {};
     const analysis = message.analysis ?? {};
     const vapiCallId = call.id ?? null;
     const vapiAssistantId = call.assistantId ?? message.assistant?.id ?? null;
+    console.log(`[vapi-webhook] persist:ids  callId=${vapiCallId}  assistantId=${vapiAssistantId}  hasServiceRole=${hasServiceRole}`);
 
     if (!vapiCallId) {
       console.warn('[vapi-webhook] end-of-call-report without call.id — skip persist');
@@ -1202,6 +1204,7 @@ async function persistEndOfCallReport(
     const { niche, customerId, internalId } = await resolveAssistantMapping(
       vapiAssistantId ?? undefined,
     );
+    console.log(`[vapi-webhook] persist:mapping  niche=${niche}  customerId=${customerId}  internalId=${internalId}`);
 
     const rawMessages = artifact.messages ?? message.messages ?? [];
     const transcript = normaliseTranscript(rawMessages);
