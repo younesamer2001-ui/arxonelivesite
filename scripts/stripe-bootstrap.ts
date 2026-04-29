@@ -4,13 +4,17 @@
  * Kjør:   npx tsx scripts/stripe-bootstrap.ts
  *
  * Leser STRIPE_SECRET_KEY fra .env.local, oppretter:
- *   - Product: "Arxon Starter"   + 2 recurring priser (mnd/år) + 1 one-time setup
- *   - Product: "Arxon Pro"       + 2 recurring priser (mnd/år) + 1 one-time setup
+ *   - Product: "Arxon Lite"   + 2 recurring priser (mnd/år) + 1 one-time setup
+ *   - Product: "Arxon Pro"    + 2 recurring priser (mnd/år) + 1 one-time setup
+ *   - Product: "Arxon Scale"  + 2 recurring priser (mnd/år) + 2 one-time setups
+ *                                                            (mnd: 49 990, årlig: 24 990)
+ *
+ * Enterprise håndteres alltid manuelt — ingen Stripe-product for det.
  *
  * Idempotent via product.metadata.arxon_key — kjører du scriptet på nytt,
  * gjenbrukes eksisterende products og priser legges bare til hvis de mangler.
  *
- * Skriver de 6 price-ID-ene tilbake til .env.local automatisk.
+ * Skriver alle price-ID-ene tilbake til .env.local automatisk.
  */
 
 import Stripe from "stripe";
@@ -37,31 +41,31 @@ type ProductDef = {
 
 const PLAN: ProductDef[] = [
   {
-    envKey: "STRIPE_PRODUCT_STARTER",
-    arxon_key: "arxon_starter",
-    name: "Arxon Starter",
+    envKey: "STRIPE_PRODUCT_LITE",
+    arxon_key: "arxon_lite",
+    name: "Arxon Lite",
     description:
-      "AI-resepsjonist 24/7, chatbot, workflows, SMS-bekreftelser, norsk språkstøtte, e-postsupport.",
+      "AI-resepsjonist 24/7 på flytende norsk. Booker timer i Cal.com, sender SMS-bekreftelser og påminnelser, e-post-varsler og ukentlig sammendrag. 300 min telefon + 200 SMS / mnd.",
     prices: [
       {
-        envKey: "STRIPE_PRICE_STARTER_MONTHLY",
-        nickname: "Starter — månedlig",
-        unit_amount: 2990_00,
+        envKey: "STRIPE_PRICE_LITE_MONTHLY",
+        nickname: "Lite — månedlig",
+        unit_amount: 990_00,
         recurring: { interval: "month" },
-        metadata: { plan: "starter", cycle: "monthly" },
+        metadata: { plan: "lite", cycle: "monthly" },
       },
       {
-        envKey: "STRIPE_PRICE_STARTER_YEARLY",
-        nickname: "Starter — årlig",
-        unit_amount: 28_700_00,
+        envKey: "STRIPE_PRICE_LITE_YEARLY",
+        nickname: "Lite — årlig",
+        unit_amount: 9_990_00,
         recurring: { interval: "year" },
-        metadata: { plan: "starter", cycle: "yearly" },
+        metadata: { plan: "lite", cycle: "yearly" },
       },
       {
-        envKey: "STRIPE_PRICE_STARTER_SETUP",
-        nickname: "Starter — engangs oppsett",
-        unit_amount: 5_000_00,
-        metadata: { plan: "starter", kind: "setup" },
+        envKey: "STRIPE_PRICE_LITE_SETUP",
+        nickname: "Lite — engangs oppsett",
+        unit_amount: 4_990_00,
+        metadata: { plan: "lite", kind: "setup" },
       },
     ],
   },
@@ -70,27 +74,62 @@ const PLAN: ProductDef[] = [
     arxon_key: "arxon_pro",
     name: "Arxon Pro",
     description:
-      "Ubegrenset samtaler, sanntids-dashboard, samtaleanalyse, Google Reviews-automatikk, prioritert support, dedikert kontakt, CRM/kalender-integrasjoner.",
+      "Sanntids-dashboard, integrasjoner (Google Calendar, Outlook, HubSpot, Timely), branded web-chat, multi-agent (telefon/chat/SMS), dedikert kontaktperson. 1 200 min + 1 000 SMS / mnd.",
     prices: [
       {
         envKey: "STRIPE_PRICE_PRO_MONTHLY",
         nickname: "Pro — månedlig",
-        unit_amount: 4990_00,
+        unit_amount: 2990_00,
         recurring: { interval: "month" },
         metadata: { plan: "pro", cycle: "monthly" },
       },
       {
         envKey: "STRIPE_PRICE_PRO_YEARLY",
         nickname: "Pro — årlig",
-        unit_amount: 47_900_00,
+        unit_amount: 28_704_00,
         recurring: { interval: "year" },
         metadata: { plan: "pro", cycle: "yearly" },
       },
       {
         envKey: "STRIPE_PRICE_PRO_SETUP",
         nickname: "Pro — engangs oppsett",
-        unit_amount: 15_000_00,
+        unit_amount: 9_990_00,
         metadata: { plan: "pro", kind: "setup" },
+      },
+    ],
+  },
+  {
+    envKey: "STRIPE_PRODUCT_SCALE",
+    arxon_key: "arxon_scale",
+    name: "Arxon Scale",
+    description:
+      "Hele den digitale stacken: branded Next.js-nettside med drift, aktiv SEO, bransje-tilpasset AI-modell, 3 custom n8n-automatiseringer, 1 nisje-solutions-pakke. 2 500 min + ubegrenset SMS, multi-agent (5), opptil 3 lokasjoner.",
+    prices: [
+      {
+        envKey: "STRIPE_PRICE_SCALE_MONTHLY",
+        nickname: "Scale — månedlig",
+        unit_amount: 7990_00,
+        recurring: { interval: "month" },
+        metadata: { plan: "scale", cycle: "monthly" },
+      },
+      {
+        envKey: "STRIPE_PRICE_SCALE_YEARLY",
+        nickname: "Scale — årlig",
+        unit_amount: 76_704_00,
+        recurring: { interval: "year" },
+        metadata: { plan: "scale", cycle: "yearly" },
+      },
+      {
+        envKey: "STRIPE_PRICE_SCALE_SETUP_MONTHLY",
+        nickname: "Scale — engangs oppsett (månedlig plan)",
+        unit_amount: 49_990_00,
+        metadata: { plan: "scale", kind: "setup", cycle: "monthly" },
+      },
+      {
+        envKey: "STRIPE_PRICE_SCALE_SETUP_YEARLY",
+        nickname: "Scale — engangs oppsett (årlig plan, 50 % rabatt)",
+        unit_amount: 24_990_00,
+        metadata: { plan: "scale", kind: "setup", cycle: "yearly" },
       },
     ],
   },

@@ -3,35 +3,65 @@ import Stripe from "stripe";
 
 export const runtime = "nodejs";
 
-type Plan = "starter" | "pro";
+type Plan = "lite" | "pro" | "scale";
 type Cycle = "monthly" | "yearly";
 
 function priceIdFor(plan: Plan, cycle: Cycle): string | undefined {
-  if (plan === "starter") {
-    return cycle === "monthly"
-      ? process.env.STRIPE_PRICE_STARTER_MONTHLY
-      : process.env.STRIPE_PRICE_STARTER_YEARLY;
-  }
-  return cycle === "monthly"
-    ? process.env.STRIPE_PRICE_PRO_MONTHLY
-    : process.env.STRIPE_PRICE_PRO_YEARLY;
+  const map: Record<Plan, { monthly?: string; yearly?: string }> = {
+    lite: {
+      monthly: process.env.STRIPE_PRICE_LITE_MONTHLY,
+      yearly: process.env.STRIPE_PRICE_LITE_YEARLY,
+    },
+    pro: {
+      monthly: process.env.STRIPE_PRICE_PRO_MONTHLY,
+      yearly: process.env.STRIPE_PRICE_PRO_YEARLY,
+    },
+    scale: {
+      monthly: process.env.STRIPE_PRICE_SCALE_MONTHLY,
+      yearly: process.env.STRIPE_PRICE_SCALE_YEARLY,
+    },
+  };
+  return map[plan][cycle];
 }
 
-function setupPriceIdFor(plan: Plan): string | undefined {
-  return plan === "starter"
-    ? process.env.STRIPE_PRICE_STARTER_SETUP
-    : process.env.STRIPE_PRICE_PRO_SETUP;
+/**
+ * Setup-fee-policy per pakke:
+ *  - Lite + Pro:  månedlig = full setup, årlig = GRATIS oppsett (ingen line-item)
+ *  - Scale:       månedlig = 49 990 setup, årlig = 24 990 setup (50 % rabatt) — alltid med
+ */
+function setupPriceIdFor(plan: Plan, cycle: Cycle): string | undefined | null {
+  if (plan === "lite") {
+    if (cycle === "yearly") return null; // gratis oppsett
+    return process.env.STRIPE_PRICE_LITE_SETUP;
+  }
+  if (plan === "pro") {
+    if (cycle === "yearly") return null; // gratis oppsett
+    return process.env.STRIPE_PRICE_PRO_SETUP;
+  }
+  // scale: alltid setup, men beløp avhenger av syklus
+  return cycle === "yearly"
+    ? process.env.STRIPE_PRICE_SCALE_SETUP_YEARLY
+    : process.env.STRIPE_PRICE_SCALE_SETUP_MONTHLY;
+}
+
+function isValidPlan(p: string): p is Plan {
+  return p === "lite" || p === "pro" || p === "scale";
 }
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json().catch(() => ({}));
-    const plan = (body.plan ?? "").toString().toLowerCase() as Plan;
+    const planRaw = (body.plan ?? "").toString().toLowerCase();
     const cycle = (body.cycle ?? "monthly").toString().toLowerCase() as Cycle;
 
-    if (plan !== "starter" && plan !== "pro") {
-      return NextResponse.json({ error: "Ugyldig plan." }, { status: 400 });
+    if (!isValidPlan(planRaw)) {
+      return NextResponse.json(
+        { error: "Ugyldig plan. Bruk lite, pro eller scale." },
+        { status: 400 }
+      );
     }
+    const plan: Plan = planRaw;
+
     if (cycle !== "monthly" && cycle !== "yearly") {
       return NextResponse.json({ error: "Ugyldig syklus." }, { status: 400 });
     }
@@ -39,24 +69,37 @@ export async function POST(req: NextRequest) {
     const secret = process.env.STRIPE_SECRET_KEY;
     if (!secret) {
       console.error("STRIPE_SECRET_KEY mangler");
-      return NextResponse.json({ error: "Betaling er ikke konfigurert." }, { status: 500 });
+      return NextResponse.json(
+        { error: "Betaling er ikke konfigurert." },
+        { status: 500 }
+      );
     }
 
     const subPriceId = priceIdFor(plan, cycle);
-    const setupPriceId = setupPriceIdFor(plan);
-    if (!subPriceId || !setupPriceId) {
-      console.error("Price-ID mangler for", plan, cycle);
-      return NextResponse.json({ error: "Betaling er ikke konfigurert." }, { status: 500 });
+    if (!subPriceId) {
+      console.error("Subscription price-ID mangler for", plan, cycle);
+      return NextResponse.json(
+        { error: "Betaling er ikke konfigurert." },
+        { status: 500 }
+      );
+    }
+
+    // setupPriceId kan være null = bevisst gratis (Lite/Pro årlig)
+    const setupPriceId = setupPriceIdFor(plan, cycle);
+    if (setupPriceId === undefined) {
+      console.error("Setup price-ID mangler for", plan, cycle);
+      return NextResponse.json(
+        { error: "Betaling er ikke konfigurert." },
+        { status: 500 }
+      );
     }
 
     const stripe = new Stripe(secret);
 
-    // Årlig = gratis oppsett (matcher UI-badge "Gratis oppsett ✓").
-    // Månedlig = subscription + one-time setup i samme Checkout.
-    const lineItems: NonNullable<Stripe.Checkout.SessionCreateParams["line_items"]> = [
-      { price: subPriceId, quantity: 1 },
-    ];
-    if (cycle === "monthly") {
+    const lineItems: NonNullable<
+      Stripe.Checkout.SessionCreateParams["line_items"]
+    > = [{ price: subPriceId, quantity: 1 }];
+    if (setupPriceId) {
       lineItems.push({ price: setupPriceId, quantity: 1 });
     }
 
@@ -81,7 +124,10 @@ export async function POST(req: NextRequest) {
     });
 
     if (!session.url) {
-      return NextResponse.json({ error: "Kunne ikke starte betaling." }, { status: 500 });
+      return NextResponse.json(
+        { error: "Kunne ikke starte betaling." },
+        { status: 500 }
+      );
     }
     return NextResponse.json({ url: session.url });
   } catch (err) {
@@ -95,7 +141,6 @@ export async function POST(req: NextRequest) {
     const msg = anyErr?.message ?? "ukjent feil";
     const type = anyErr?.type ?? anyErr?.raw?.type ?? "unknown";
     const code = anyErr?.code ?? anyErr?.raw?.code ?? "unknown";
-    // Logg med tydelige markører så hele teksten er søkbar i Vercel runtime logs.
     console.error(
       `STRIPE_FAIL type=${type} code=${code} status=${anyErr?.statusCode ?? "?"} msg=${msg}`
     );
