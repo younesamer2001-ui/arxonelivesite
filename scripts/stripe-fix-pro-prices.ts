@@ -154,7 +154,7 @@ async function main() {
     process.exit(1);
   }
 
-  const mode = key.startsWith("sk_live_") ? "LIVE" : "TEST";
+  const mode = key.includes("_live_") ? "LIVE" : "TEST";
   console.log(`\nStripe Pro-pris fix (${mode} mode) — produkt ${productId}\n`);
 
   const stripe = new Stripe(key);

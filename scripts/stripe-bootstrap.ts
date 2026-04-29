@@ -245,7 +245,8 @@ async function main() {
     );
     process.exit(1);
   }
-  const mode = key.startsWith("sk_live_") ? "LIVE" : "TEST";
+  // Stripe har flere key-prefikser: sk_live_, rk_live_, sk_test_, rk_test_
+  const mode = key.includes("_live_") ? "LIVE" : "TEST";
   console.log(`\nStripe bootstrap (${mode} mode)\n`);
 
   const stripe = new Stripe(key);
