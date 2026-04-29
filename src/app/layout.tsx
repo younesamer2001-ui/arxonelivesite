@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     template: "%s | Arxon",
   },
   description:
-    "Arxon er Norges AI-resepsjonist for SMB-er. Svarer på telefon, chat og e-post 24/7, booker timer og kvalifiserer leads automatisk — på norsk. Kontakt oss for pris tilpasset ditt behov.",
+    "Arxon er Norges AI-resepsjonist og digitale partner for SMB-er. Svarer på telefon, chat og e-post 24/7, booker timer, bygger nettside og automatiserer drift — på norsk. Faste pakker fra 990 kr/mnd, ingen bindingstid.",
   // `keywords` is ignored by Google (since 2009) and signals outdated SEO.
   // We omit it deliberately. Target keywords live in page copy, H1/H2 and URL slugs.
   authors: [{ name: "Arxon", url: "https://arxon.no" }],
@@ -88,7 +88,7 @@ export const metadata: Metadata = {
     siteName: "Arxon",
     title: "Arxon — AI-resepsjonist for norske bedrifter",
     description:
-      "AI som svarer på telefon, booker timer og kvalifiserer leads — 24/7, på norsk. Kontakt for pris.",
+      "AI som svarer på telefon, booker timer og kvalifiserer leads — 24/7, på norsk. Faste pakker fra 990 kr/mnd, ingen bindingstid.",
     images: [
       {
         url: "/images/og-arxon.jpg",
@@ -103,7 +103,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Arxon — AI-resepsjonist for norske bedrifter",
     description:
-      "AI som svarer på telefon, booker timer og kvalifiserer leads — 24/7, på norsk. Kontakt for pris.",
+      "AI som svarer på telefon, booker timer og kvalifiserer leads — 24/7, på norsk. Faste pakker fra 990 kr/mnd, ingen bindingstid.",
     images: ["/images/og-arxon.jpg"],
   },
   icons: {

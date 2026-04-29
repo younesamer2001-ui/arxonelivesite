@@ -48,7 +48,7 @@ export const faqContent: { no: FAQContent; en: FAQContent } = {
       {
         question: "Hva koster Arxon?",
         answer:
-          "Vi tilpasser pris etter bedriftens størrelse, volum og hvilke integrasjoner du trenger. Ta kontakt så gir vi deg et konkret tilbud innen en virkedag.",
+          "Vi har faste pris-pakker: Lite på 990 kr/mnd, Pro på 2 990 kr/mnd og Scale på 7 990 kr/mnd. Alle priser eks. mva, ingen bindingstid. Ved årlig betaling sparer du 16-20 % og slipper oppsettkostnaden. Enterprise (5+ lokasjoner) forhandles fra 12 990 kr/mnd.",
       },
       {
         question: "Hvilke bedrifter passer Arxon for?",
@@ -158,7 +158,7 @@ export const faqContent: { no: FAQContent; en: FAQContent } = {
       {
         question: "What does Arxon cost?",
         answer:
-          "Pricing is tailored to your business size, call volume, and required integrations. Get in touch and we'll come back with a concrete proposal within one business day.",
+          "Fixed package pricing: Lite at 990 NOK/mo, Pro at 2 990 NOK/mo, and Scale at 7 990 NOK/mo. All prices excl. VAT, no lock-in. Annual billing saves 16-20 % and waives setup. Enterprise (5+ locations) is negotiated from 12 990 NOK/mo.",
       },
       {
         question: "Which businesses is Arxon for?",

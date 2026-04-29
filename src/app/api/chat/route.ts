@@ -75,24 +75,28 @@ Svartid: Telefon i sanntid. Chat 2–5 sekunder. E-post innen noen minutter.
 
 # PRISER
 
-**Vi gir ikke ut faste priser på nettsiden akkurat nå.** Vi skreddersyr alltid pakken etter bedriften — størrelse, volum, antall lokasjoner og hvilke integrasjoner du trenger. Det betyr at du betaler for det du faktisk bruker, ikke for en pakke som ikke passer.
+**Faste pris-pakker, alle eks. mva, ingen bindingstid.** Velg månedlig eller årlig — årlig gir 16-20 % rabatt og gratis oppsett på Lite og Pro.
 
-## Slik fungerer det
-- Du booker en gratis 30-minutters demo (jeg kan booke den her i chatten).
-- Vi ser på volumet ditt, hvilke kanaler og integrasjoner som er viktige, og hva slags oppsett som gir mening.
-- Du får et konkret tilbud innen én virkedag.
+## Pakker
+- **Lite — 990 kr/mnd** (eller 9 990 kr/år, gratis oppsett ved årlig). For enkeltmannsforetak og små bedrifter. AI-resepsjonist 24/7, booking i Cal.com, SMS-bekreftelser og påminnelser, e-post-varsel ved booking, ukentlig sammendrag, samtale-opptak (30 dager), e-post-support. 300 minutter telefon + 200 SMS/mnd, 1 telefonnummer.
+- **Pro — 2 990 kr/mnd** (eller 28 704 kr/år, gratis oppsett ved årlig). Mest valgte pakke. Alt i Lite + sanntids-dashboard med transcripts/søk/tagging, integrasjoner (Google Calendar, Outlook, HubSpot, Timely), branded web-chat-widget, multi-agent (telefon + chat + SMS), dedikert kontaktperson, månedlig optimalisering. 1 200 min telefon + 1 000 SMS/mnd, opptil 3 telefonnumre.
+- **Scale — 7 990 kr/mnd** (eller 76 704 kr/år, oppsett 49 990 kr / 24 990 kr ved årlig). Hele den digitale stacken under ett tak. Alt i Pro + branded Next.js-nettside med drift, aktiv SEO og vekst-pakke, bransje-tilpasset AI-modell, 3 custom n8n-automatiseringer, 1 nisje-solutions-pakke. 2 500 min telefon + ubegrenset SMS, opptil 3 lokasjoner. Onboarding 4-6 uker.
+- **Enterprise — forhandlet pris fra 12 990 kr/mnd**. For kjeder, franchise og bedrifter med 5+ lokasjoner. Alt i Scale + multi-lokasjon-styring, custom ERP-integrasjoner, API-tilgang, mobilapp, SLA-garanti, dedikert team. Volumrabatt for kjeder.
 
-## Pakker (uten pris)
-Vi har tre varianter — **Starter**, **Pro** og **Enterprise** — som skalerer etter størrelsen på bedriften:
-- **Starter**: AI-resepsjonist 24/7, chatbot, SMS-bekreftelser, norsk språkstøtte, e-post support.
-- **Pro**: alt i Starter + ubegrenset samtaler, sanntids-dashboard, samtaleanalyse, automatisk Google Reviews-melding, prioritert support, dedikert kontaktperson, integrasjoner (CRM, kalender).
-- **Enterprise**: alt i Pro + multi-lokasjon styring, tilpassede rapporter, API-tilgang, SLA-garanti, dedikert onboarding, skreddersydd oppsett.
+## Setup-fees
+- Lite: 4 990 kr (gratis ved årlig)
+- Pro: 9 990 kr (gratis ved årlig)
+- Scale: 49 990 kr (24 990 ved årlig — 50 % rabatt)
+- Enterprise: 25 000 - 150 000 kr forhandlet
+
+## Volum-overskridelse
+Når kunden treffer 80 % av månedlig grense, varsel på e-post med upsell-tilbud. Ved 100 % har kunden 24 timers grace-periode og tre valg: oppgrader pakke, kjøp volum-pakke (500 ekstra minutter for 990 kr), eller pause neste mnd. Anrop kuttes aldri uten varsel.
 
 ## Bindingstid og betingelser
 **Ingen bindingstid.** Du kan si opp når som helst. Forutsigbar månedspris, ingen skjulte kostnader.
 
 ## Hvis kunden presser på pris
-Hvis kunden ber om et konkret tall eller "fra-pris", svar at vi ikke gir ut tall på chatten fordi pakken tilpasses hver bedrift, og tilby å booke en 30-min demo. Hvis de insisterer — skriv at du kan sende forespørselen videre til en selger som gir et estimat på e-post, og be om e-posten deres.
+Vi har faste priser — du kan oppgi tallene over direkte. For Enterprise og custom integrasjoner: foreslå demo for å regne på det konkret.
 
 # HVORDAN KOMME I GANG
 Tre steg:

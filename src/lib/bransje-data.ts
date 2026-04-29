@@ -161,7 +161,7 @@ export const bransjePages: Record<BransjePage["slug"], BransjePage> = {
       {
         question: "Hvor mye koster Arxon for en liten salong?",
         answer:
-          "Starter dekker typisk en salong med 3–5 stoler. Pro passer for salonger med flere stylister eller flerspråklig kundegrunnlag. Ta kontakt så skreddersyr vi pakken etter størrelsen din.",
+          "Lite (990 kr/mnd) dekker typisk en salong med 1–2 stoler. Pro (2 990 kr/mnd) passer for salonger med flere stylister, web-chat og integrasjon mot Timely. Scale (7 990 kr/mnd) er for kjeder eller salonger som vil ha hele den digitale stacken samlet — nettside, SEO og custom AI inkludert. Alle priser eks. mva. Ingen bindingstid.",
       },
       {
         question: "Kan jeg teste AI-en med mine tjenester?",

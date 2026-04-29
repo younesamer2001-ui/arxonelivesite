@@ -107,19 +107,23 @@ export const websiteSchema = {
 export const servicesSchema = [
   {
     "@type": "Service",
-    "@id": `${BASE_URL}/#service-resepsjonist`,
-    name: "AI Resepsjonist — Arxon Starter",
+    "@id": `${BASE_URL}/#service-lite`,
+    name: "Arxon Lite — AI-resepsjonist",
     provider: { "@id": `${BASE_URL}/#organization` },
     description:
-      "AI-drevet resepsjonist som svarer på telefon, chat og e-post 24/7. Håndterer booking og kundehenvendelser automatisk.",
+      "AI-resepsjonist 24/7 på flytende norsk. Booker timer i Cal.com, sender SMS-bekreftelser og e-post-varsler. For enkeltmannsforetak og små bedrifter.",
     serviceType: "AI Kundeservice",
     areaServed: { "@type": "Country", name: "Norway" },
     offers: {
       "@type": "Offer",
+      price: "990",
+      priceCurrency: "NOK",
       priceSpecification: {
-        "@type": "PriceSpecification",
+        "@type": "UnitPriceSpecification",
         priceCurrency: "NOK",
-        description: "Tilpasset pris — kontakt for tilbud",
+        price: "990",
+        unitCode: "MON",
+        description: "990 kr/mnd eller 9 990 kr/år (eks. mva, gratis oppsett ved årlig)",
       },
       availability: "https://schema.org/InStock",
     },
@@ -127,18 +131,45 @@ export const servicesSchema = [
   {
     "@type": "Service",
     "@id": `${BASE_URL}/#service-pro`,
-    name: "AI Resepsjonist — Arxon Pro",
+    name: "Arxon Pro — AI-løsning med dashboard og integrasjoner",
     provider: { "@id": `${BASE_URL}/#organization` },
     description:
-      "Full AI-resepsjonist med ubegrensede samtaler, 30+ språk, Stripe-betaling og avanserte integrasjoner.",
+      "Full AI-resepsjonist med sanntids-dashboard, integrasjoner mot Google Calendar, Outlook, HubSpot og Timely, branded web-chat og SMS-agent. Inkluderer dedikert kontaktperson og månedlig optimalisering.",
     serviceType: "AI Kundeservice",
     areaServed: { "@type": "Country", name: "Norway" },
     offers: {
       "@type": "Offer",
+      price: "2990",
+      priceCurrency: "NOK",
       priceSpecification: {
-        "@type": "PriceSpecification",
+        "@type": "UnitPriceSpecification",
         priceCurrency: "NOK",
-        description: "Tilpasset pris — kontakt for tilbud",
+        price: "2990",
+        unitCode: "MON",
+        description: "2 990 kr/mnd eller 28 704 kr/år (eks. mva, gratis oppsett ved årlig)",
+      },
+      availability: "https://schema.org/InStock",
+    },
+  },
+  {
+    "@type": "Service",
+    "@id": `${BASE_URL}/#service-scale`,
+    name: "Arxon Scale — Digital partner med nettside, SEO og custom AI",
+    provider: { "@id": `${BASE_URL}/#organization` },
+    description:
+      "Hele den digitale stacken under ett tak: branded Next.js-nettside med drift, aktiv SEO, bransje-tilpasset AI-modell og custom n8n-automatiseringer. For SMB-er som vil slippe å koordinere flere leverandører.",
+    serviceType: "AI Kundeservice",
+    areaServed: { "@type": "Country", name: "Norway" },
+    offers: {
+      "@type": "Offer",
+      price: "7990",
+      priceCurrency: "NOK",
+      priceSpecification: {
+        "@type": "UnitPriceSpecification",
+        priceCurrency: "NOK",
+        price: "7990",
+        unitCode: "MON",
+        description: "7 990 kr/mnd eller 76 704 kr/år (eks. mva)",
       },
       availability: "https://schema.org/InStock",
     },
@@ -146,10 +177,10 @@ export const servicesSchema = [
   {
     "@type": "Service",
     "@id": `${BASE_URL}/#service-enterprise`,
-    name: "AI Resepsjonist — Arxon Enterprise",
+    name: "Arxon Enterprise — Skreddersydd for kjeder og franchise",
     provider: { "@id": `${BASE_URL}/#organization` },
     description:
-      "Skreddersydd AI-plattform for kjeder og multi-lokasjon. Tilpasset integrasjon, rapportering og SLA.",
+      "Skreddersydd AI-plattform for kjeder, franchise og bedrifter med 5+ lokasjoner. Multi-lokasjon-styring, custom ERP-integrasjoner, API-tilgang, mobilapp, SLA-garanti og dedikert team.",
     serviceType: "AI Kundeservice",
     areaServed: { "@type": "Country", name: "Norway" },
     offers: {
@@ -157,7 +188,7 @@ export const servicesSchema = [
       priceSpecification: {
         "@type": "PriceSpecification",
         priceCurrency: "NOK",
-        description: "Tilpasset pris basert på antall lokasjoner og bruk",
+        description: "Forhandlet pris fra 12 990 kr/mnd. Volumrabatt for kjeder.",
       },
     },
   },
@@ -242,7 +273,7 @@ export function buildHowToSchema() {
         "@type": "HowToStep",
         position: 1,
         name: "Velg pakke",
-        text: "Velg Arxon Starter, Pro eller Enterprise basert på bedriftens størrelse og behov.",
+        text: "Velg Arxon Lite, Pro, Scale eller Enterprise basert på bedriftens størrelse og behov.",
         url: `${BASE_URL}/#priser`,
       },
       {

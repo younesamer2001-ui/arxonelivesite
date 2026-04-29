@@ -10,10 +10,10 @@ interface HeroProps {
 
 const content = {
   no: {
-    badge: 'AI-resepsjonist for norske bedrifter',
+    badge: 'AI-løsninger for norske bedrifter',
     headline: 'Aldri miss',
     headlineAccent: 'et anrop igjen.',
-    sub: 'Hver gang telefonen ringer og ingen svarer, mister du en kunde. Arxon sin AI svarer hvert eneste anrop — booker timer, følger opp leads og gir deg full oversikt.',
+    sub: 'Hver gang telefonen ringer og ingen svarer, mister du en kunde. Arxon svarer hvert anrop, booker timer, følger opp leads — og bygger den digitale stacken bedriften din trenger.',
     cta: 'Book en gratis demo',
     ctaSecondary: 'Ring og test selv',
     stat1: '24/7',
@@ -26,10 +26,10 @@ const content = {
     dashboardFallback: 'Arxon Command Center',
   },
   en: {
-    badge: 'AI receptionist for Norwegian businesses',
+    badge: 'AI solutions for Norwegian businesses',
     headline: 'Never miss',
     headlineAccent: 'a call again.',
-    sub: "Every time the phone rings and nobody answers, you lose a customer. Arxon's AI answers every single call — books appointments, follows up leads and gives you full visibility.",
+    sub: "Every time the phone rings and nobody answers, you lose a customer. Arxon answers every call, books appointments, follows up leads — and builds the digital stack your business needs.",
     cta: 'Book a free demo',
     ctaSecondary: 'Call and test it',
     stat1: '24/7',
