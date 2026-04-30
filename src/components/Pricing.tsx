@@ -23,6 +23,8 @@ interface PlanCopy {
   annualPrice: number | null;
   setupMonthly: string;
   setupAnnual: string;
+  /** Liten grønn tag som rendres etter setupMonthly i månedlig-view ("GRATIS årlig" / "50 % rabatt årlig"). */
+  setupSavingHint?: string;
   popular: boolean;
   custom: boolean;
   includes: string[];
@@ -57,6 +59,7 @@ const planData = {
         annualPrice: 9990,
         setupMonthly: "Oppsett 4 990 kr",
         setupAnnual: "Oppsett: GRATIS",
+        setupSavingHint: "GRATIS ved årlig",
         popular: false,
         custom: false,
         includes: [
@@ -80,6 +83,7 @@ const planData = {
         annualPrice: 28704,
         setupMonthly: "Oppsett 9 990 kr",
         setupAnnual: "Oppsett: GRATIS",
+        setupSavingHint: "GRATIS ved årlig",
         popular: true,
         custom: false,
         includes: [
@@ -103,6 +107,7 @@ const planData = {
         annualPrice: 76704,
         setupMonthly: "Oppsett 49 990 kr",
         setupAnnual: "Oppsett 24 990 kr (50 % rabatt)",
+        setupSavingHint: "50 % rabatt årlig",
         popular: false,
         custom: false,
         includes: [
@@ -169,6 +174,7 @@ const planData = {
         annualPrice: 9990,
         setupMonthly: "Setup 4 990 kr",
         setupAnnual: "Setup: FREE",
+        setupSavingHint: "FREE on annual",
         popular: false,
         custom: false,
         includes: [
@@ -192,6 +198,7 @@ const planData = {
         annualPrice: 28704,
         setupMonthly: "Setup 9 990 kr",
         setupAnnual: "Setup: FREE",
+        setupSavingHint: "FREE on annual",
         popular: true,
         custom: false,
         includes: [
@@ -215,6 +222,7 @@ const planData = {
         annualPrice: 76704,
         setupMonthly: "Setup 49 990 kr",
         setupAnnual: "Setup 24 990 kr (50 % off)",
+        setupSavingHint: "50 % off on annual",
         popular: false,
         custom: false,
         includes: [
@@ -353,8 +361,20 @@ export default function Pricing({ lang = "no" }: PricingProps) {
           </div>
         </ScrollPang>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
+        {/* Cards
+            Mobile: horisontal scroll med snap (kort ved siden av hverandre, swipe).
+            Tablet (md): 2 kolonner i grid.
+            Desktop (lg+): 4 kolonner i grid. */}
+        <div
+          className={cn(
+            "flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4",
+            "-mx-4 px-4",
+            "md:grid md:grid-cols-2 md:overflow-visible md:snap-none md:mx-auto md:px-0 md:pb-0",
+            "lg:grid-cols-4",
+            "max-w-6xl"
+          )}
+          style={{ scrollbarWidth: "thin" }}
+        >
           {t.plans.map((plan, i) => {
             const showAnnual = period === "annual" && plan.annualPrice !== null;
             const monthlyEquivalent =
@@ -363,7 +383,11 @@ export default function Pricing({ lang = "no" }: PricingProps) {
                 : null;
 
             return (
-              <ScrollPang key={plan.key} offset={i}>
+              <ScrollPang
+                key={plan.key}
+                offset={i}
+                className="snap-center shrink-0 w-[85vw] max-w-[320px] md:w-auto md:max-w-none md:shrink"
+              >
                 <Card
                   className={cn(
                     "relative rounded-2xl border bg-zinc-900 transition-shadow duration-300 h-full flex flex-col",
@@ -444,7 +468,21 @@ export default function Pricing({ lang = "no" }: PricingProps) {
                         </>
                       )}
                       <p className="text-[11px] text-zinc-500 mt-1">
-                        {showAnnual ? plan.setupAnnual : plan.setupMonthly}
+                        {showAnnual ? (
+                          plan.setupAnnual
+                        ) : (
+                          <>
+                            {plan.setupMonthly}
+                            {plan.setupSavingHint && (
+                              <>
+                                {" · "}
+                                <span className="text-emerald-400 font-medium">
+                                  {plan.setupSavingHint}
+                                </span>
+                              </>
+                            )}
+                          </>
+                        )}
                       </p>
                     </div>
 
@@ -456,7 +494,7 @@ export default function Pricing({ lang = "no" }: PricingProps) {
                         "block w-full py-2.5 rounded-xl text-sm font-semibold text-center transition-all duration-200 mb-5 disabled:opacity-60 disabled:cursor-not-allowed",
                         plan.popular
                           ? "bg-white text-black hover:bg-zinc-200"
-                          : "bg-zinc-800 text-white hover:bg-zinc-700"
+                          : "border border-white/30 bg-white/5 text-white hover:bg-white/10 hover:border-white/50"
                       )}
                     >
                       {loadingKey === plan.key
