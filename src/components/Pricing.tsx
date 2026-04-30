@@ -271,6 +271,7 @@ export default function Pricing({ lang = "no" }: PricingProps) {
   const t = planData[lang];
   const [period, setPeriod] = useState<BillingPeriod>("monthly");
   const [loadingKey, setLoadingKey] = useState<PlanKey | null>(null);
+  const [errorKey, setErrorKey] = useState<PlanKey | null>(null);
 
   async function handleCheckout(plan: PlanCopy) {
     if (plan.custom) {
@@ -279,6 +280,7 @@ export default function Pricing({ lang = "no" }: PricingProps) {
       return;
     }
     setLoadingKey(plan.key);
+    setErrorKey(null);
     try {
       const res = await fetch("/api/stripe/checkout", {
         method: "POST",
@@ -293,12 +295,11 @@ export default function Pricing({ lang = "no" }: PricingProps) {
         window.location.href = data.url as string;
         return;
       }
-      // Fallback: hvis Stripe ikke er konfigurert, gå til kontaktskjema
-      console.warn("Checkout returned no URL, falling back to demo:", data);
-      window.location.hash = "kontakt";
+      console.warn("Checkout returned no URL:", data);
+      setErrorKey(plan.key);
     } catch (err) {
       console.error("Checkout failed:", err);
-      window.location.hash = "kontakt";
+      setErrorKey(plan.key);
     } finally {
       setLoadingKey(null);
     }
@@ -491,10 +492,11 @@ export default function Pricing({ lang = "no" }: PricingProps) {
                       onClick={() => handleCheckout(plan)}
                       disabled={loadingKey === plan.key}
                       className={cn(
-                        "block w-full py-2.5 rounded-xl text-sm font-semibold text-center transition-all duration-200 mb-5 disabled:opacity-60 disabled:cursor-not-allowed",
+                        "block w-full py-2.5 rounded-xl text-sm font-semibold text-center transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed",
                         plan.popular
                           ? "bg-white text-black hover:bg-zinc-200"
-                          : "border border-white/30 bg-white/5 text-white hover:bg-white/10 hover:border-white/50"
+                          : "border border-white/30 bg-white/5 text-white hover:bg-white/10 hover:border-white/50",
+                        errorKey === plan.key ? "mb-2" : "mb-5"
                       )}
                     >
                       {loadingKey === plan.key
@@ -505,6 +507,12 @@ export default function Pricing({ lang = "no" }: PricingProps) {
                           ? t.ctaEnterprise
                           : t.cta}
                     </button>
+
+                    {errorKey === plan.key && (
+                      <p className="text-[11px] text-red-400 mb-3 leading-snug">
+                        {t.ctaError}
+                      </p>
+                    )}
 
                     <div className="space-y-2 flex-1">
                       {plan.includes.map((item, j) => {
